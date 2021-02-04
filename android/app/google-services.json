@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "670515401029",
+    "project_id": "frc-challenge-app",
+    "storage_bucket": "frc-challenge-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:670515401029:android:8c5de463cec7d49bac2e2c",
+        "android_client_info": {
+          "package_name": "com.example.frc_challenge_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "670515401029-nclbmkcfnfov9c50ejume2i37b46ohg9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBc32_h1CbUopv5n46Y3R7FdHq2XzJRTXU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "670515401029-nclbmkcfnfov9c50ejume2i37b46ohg9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
