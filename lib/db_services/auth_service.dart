@@ -19,7 +19,8 @@ class AuthenticationService{
   static Future<bool> signUpWithEmail(String email, String password) async{
     try{
       var authResult = await firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
-      await UserDb.writeToDb(email : email);
+      await UserDb.writeToDb(email);
+      print("at ${authResult.user != null}");
       return authResult.user != null;
     }
     catch(e){
