@@ -81,8 +81,8 @@ class _SignInScreen extends State<StatefulWidget> {
                   child: Text("sign up"),
                   onPressed: () async{
                     bool success = await AuthenticationService.signUpWithEmail(email, password);
+                    print(success);
                     if(success != null && success){
-                      UserDb.writeToDb(email: email);
                       print("success");
                     }
                     else{
