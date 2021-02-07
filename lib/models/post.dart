@@ -29,4 +29,6 @@ class Post {
       this.latitude,
       this.longitude,
       this.numSignedUp);
+
+
 }

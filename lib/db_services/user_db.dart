@@ -6,6 +6,7 @@ class UserDb {
   static Map<int, User> userMap = new Map<int, User>();
   static Set<int> userIdList = new Set<int>();
   static final firestoreInstance = Firestore.instance;
+  static Map<String, int> emailMap = new Map<String, int>();
 
   static Future<void> syncUserMap() async {
     print("syncing");
@@ -28,7 +29,7 @@ class UserDb {
           print("data: $id , $email, $name $bio");
           userIdList.add(id);
           userMap[id] = u;
-          EmailDb.emailMap[email] = id;
+          emailMap[email] = id;
         });
       });
     } catch (e) {
