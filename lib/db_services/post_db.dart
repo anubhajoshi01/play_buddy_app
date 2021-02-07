@@ -5,6 +5,7 @@ class PostDb {
   static Map<int, Post> localMap = new Map<int, Post>();
   static Set<int> postIdList = new Set<int>();
   static final firestoreInstance = Firestore.instance;
+  
   static Future<void> createPost(
       int id,
       int ownerUserId,
@@ -26,14 +27,14 @@ class PostDb {
 
     await firestoreInstance.collection("Posts").document("$id").setData({
       'id': "$id",
-      'ownerUserId': ownerUserId,
+      'ownerUserId': "$ownerUserId",
       'eventDateTime': date,
       'timeStamp': timestamp,
       'eventDescription': des,
       'latitude': "$lat",
       'longitude': "$long",
       'address': "address",
-      'numSignedUp': "numsignedup",
+      'numSignedUp': "$numsignedup",
       'postType': type,
     });
   }

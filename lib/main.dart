@@ -9,8 +9,6 @@ import 'db_services/user_db.dart';
 void main() async {
   await Hive.initFlutter();
   await UserDb.syncUserMap();
-  await EmailDb.addEmail("shgcw");
-  await EmailDb.addBool(true);
   await EmailDb.init();
   await PostDb.readDb();
   runApp(MyApp());
