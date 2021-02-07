@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:frc_challenge_app/db_services/email_db.dart';
 import 'package:frc_challenge_app/models/user.dart';
 
 class PostType {
@@ -7,7 +9,7 @@ class PostType {
 }
 
 class Post {
-   int id;
+  int id;
   int ownerUserId;
   String postType;
   DateTime timestamp;
@@ -17,7 +19,7 @@ class Post {
   double latitude;
   double longitude;
   int numSignedUp;
-
+  
   Post(
       this.id,
       this.ownerUserId,
@@ -30,5 +32,6 @@ class Post {
       this.longitude,
       this.numSignedUp);
 
+  }
 
-}
+
