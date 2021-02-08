@@ -7,7 +7,7 @@ class CommonAppBar  {
       title: Text(titleString),
       actions: <Widget>[
         Padding(
-          padding: EdgeInsets.only(right: 20.0),
+          padding: EdgeInsets.only(right: 10.0),
           child: GestureDetector(
             onTap: () {},
             child: Icon(

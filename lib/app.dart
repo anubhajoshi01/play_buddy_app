@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: (EmailDb.loggedIn) ? PostMapScreen() : LogInScreen(),
+      home: (EmailDb.loggedIn != null && EmailDb.loggedIn) ? PostMapScreen() : LogInScreen(),
     );
   }
 }
