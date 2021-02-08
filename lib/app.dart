@@ -2,7 +2,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frc_challenge_app/screens/log_in_screen.dart';
+import 'package:frc_challenge_app/screens/post_map_screen.dart';
 import 'package:frc_challenge_app/screens/sign_in_screen.dart';
+
+import 'db_services/email_db.dart';
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -26,7 +29,7 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: LogInScreen(),
+      home: (EmailDb.loggedIn) ? PostMapScreen() : LogInScreen(),
     );
   }
 }
