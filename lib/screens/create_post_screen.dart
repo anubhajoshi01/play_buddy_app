@@ -16,7 +16,9 @@ class _CreatePostScreen extends State<CreatePostScreen> {
   String descriptionStr = "";
   String infoStr = "";
   String activity = "";
-  String dropdownValue = "event date";
+  String dropdownMonth = "";
+  String dropdownYear = "";
+  String dropdownDay = "";
   static final List years = [2021, 2022, 2023, 2024];
   static final List months = [01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12];
 
@@ -81,32 +83,70 @@ class _CreatePostScreen extends State<CreatePostScreen> {
             ),
           ),
           Container(
+
             child:Row(children:<Widget> [
                 DropdownButton(
-                  value: dropdownValue,
-                  hint:Text("Moths"),
+                  value: dropdownMonth,
+                  hint:Text("Months"),
                   icon:Icon(Icons.arrow_drop_down),
                   onChanged: (newValue) {
                     setState:
                     (() {
-                      dropdownValue = newValue;
+                      dropdownMonth = newValue;
                     });
                   },
                   items:
                     months.map((valueItem) {
                       return DropdownMenuItem(
                         value: valueItem,
-                        child: Text(valueItem),
+                        child: Text("$valueItem"),
+                      );
+                    }).toList()
+              ),
+
+              DropdownButton(
+                  value: dropdownDay,
+                  hint:Text("Months"),
+                  icon:Icon(Icons.arrow_drop_down),
+                  onChanged: (newValue) {
+                    setState:
+                    (() {
+                      dropdownDay = newValue;
+                    });
+                  },
+                  items:
+                    months.map((valueItem) {
+                      return DropdownMenuItem(
+                        value: valueItem,
+                        child: Text("$valueItem"),
+                      );
+                    }).toList()
+              ),
+
+              DropdownButton(
+                  value: dropdownYear,
+                  hint:Text("Years"),
+                  icon:Icon(Icons.arrow_drop_down),
+                  onChanged: (newValue) {
+                    setState:
+                    (() {
+                      dropdownYear = newValue;
+                    });
+                  },
+                  items:
+                    months.map((valueItem) {
+                      return DropdownMenuItem(
+                        value: valueItem,
+                        child: Text("$valueItem"),
                       );
                     }).toList()
               ),
           ]
           ),
           )
-          
+        
         ],
       ))),
-
     );
   }
 }
