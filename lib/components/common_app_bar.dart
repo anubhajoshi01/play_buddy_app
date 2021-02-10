@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class CommonAppBar  {
+class CommonAppBar {
 
   static AppBar appBar(String titleString) {
     return AppBar(
       title: Text(titleString),
       actions: <Widget>[
         Padding(
-          padding: EdgeInsets.only(right: 20.0),
+          padding: EdgeInsets.only(right: 10.0),
           child: GestureDetector(
             onTap: () {},
             child: Icon(
@@ -19,4 +19,9 @@ class CommonAppBar  {
       ],
     );
   }
+
+
 }
+
+
+
