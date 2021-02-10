@@ -106,8 +106,6 @@ class _CreatePostScreen extends State<CreatePostScreen> {
           
         ],
       ))),
-        appBar: CommonAppBar.appBar("Create Post"),
-        body: Container()
 
     );
   }
