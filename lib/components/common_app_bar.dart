@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CommonAppBar  {
+class CommonAppBar {
 
   static AppBar appBar(String titleString) {
     return AppBar(
@@ -19,4 +19,9 @@ class CommonAppBar  {
       ],
     );
   }
+
+
 }
+
+
+

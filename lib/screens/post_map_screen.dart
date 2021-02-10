@@ -32,6 +32,9 @@ class _PostMapScreen extends State<PostMapScreen> {
     toggle = ['Map', 'List'];
   }
 
+  //for bottom navigation bar
+  int _currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     print(mapMode);
@@ -44,62 +47,100 @@ class _PostMapScreen extends State<PostMapScreen> {
               BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed)));
     }
     return Scaffold(
-        appBar: CommonAppBar.appBar("View Posts"),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
-          onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => CreatePostScreen()));
-          },
-        ),
-        body: Container(
-            child: Flex(
-          direction: Axis.vertical,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 20.0),
-              child: ToggleSwitch(
-                minWidth: 50.0,
-                minHeight: 50.0,
-                labels: toggle,
-                onToggle: (index) {
-                  setState(() {
-                    String temp = toggle[0];
-                    toggle[0] = toggle[1];
-                    toggle[1] = temp;
-                    mapMode = toggle[0] == "Map";
-                  });
-                },
-              ),
+      appBar: CommonAppBar.appBar("View Posts"),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => CreatePostScreen()));
+        },
+      ),
+      body: Container(
+          child: Flex(
+        direction: Axis.vertical,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 20.0),
+            child: ToggleSwitch(
+              minWidth: 50.0,
+              minHeight: 50.0,
+              labels: toggle,
+              onToggle: (index) {
+                setState(() {
+                  String temp = toggle[0];
+                  toggle[0] = toggle[1];
+                  toggle[1] = temp;
+                  mapMode = toggle[0] == "Map";
+                });
+              },
             ),
-            (mapMode)
-                ? SingleChildScrollView(
-                    child: SizedBox(
-                        width: 1000.0,
-                        height: 900.0,
-                        child: GoogleMap(
-                          markers: markers,
-                          initialCameraPosition: CameraPosition(
-                            target: _center,
-                            zoom: 12,
-                          ),
-                        )))
-                : SingleChildScrollView(
-                    child: ListView.builder(
-                        itemCount: PostDb.postIdList.length,
-                        shrinkWrap: true,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Container(
-                            height: 50,
-                            child: Card(
-                              child: ListTile(
-                                title: Text(
-                                    "${PostDb.localMap[PostDb.postIdList.elementAt(index)].eventDescription}"),
-                              ),
+          ),
+          (mapMode)
+              ? SingleChildScrollView(
+                  child: SizedBox(
+                      width: 1000.0,
+                      height: 900.0,
+                      child: GoogleMap(
+                        markers: markers,
+                        initialCameraPosition: CameraPosition(
+                          target: _center,
+                          zoom: 12,
+                        ),
+                      )))
+              : SingleChildScrollView(
+                  child: ListView.builder(
+                      itemCount: PostDb.postIdList.length,
+                      shrinkWrap: true,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Container(
+                          height: 50,
+                          child: Card(
+                            child: ListTile(
+                              title: Text(
+                                  "${PostDb.localMap[PostDb.postIdList.elementAt(index)].eventDescription}"),
                             ),
-                          );
-                        }))
-          ],
-        ))); /*); */
+                          ),
+                        );
+                      }))
+        ],
+      )),
+
+
+      //bottom Navigation Bar
+      bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _currentIndex,
+
+          type: BottomNavigationBarType.shifting,
+          items: [
+        BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+            backgroundColor: Colors.blue),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Search',
+            backgroundColor: Colors.blue),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.camera),
+            label: 'Placeholder',
+            backgroundColor: Colors.blue),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+            backgroundColor: Colors.blue),
+
+      ],
+
+      onTap: (index){
+         setState((){
+           _currentIndex = index;
+
+         });
+
+      },
+
+      ),
+    );
+
   }
 }
