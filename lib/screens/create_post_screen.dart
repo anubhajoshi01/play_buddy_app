@@ -15,21 +15,8 @@ class _CreatePostScreen extends State<CreatePostScreen> {
   String infoStr = "";
   String activity = "";
   String dropdownValue = "event date";
-  static final List<int> years = [2021, 2022, 2023, 2024];
-  static final List<int> months = [
-    01,
-    02,
-    03,
-    04,
-    05,
-    06,
-    07,
-    08,
-    09,
-    10,
-    11,
-    12
-  ];
+  static final List years = [2021, 2022, 2023, 2024];
+  static final List months = [01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12];
 
   @override
   Widget build(BuildContext context) {
@@ -90,33 +77,29 @@ class _CreatePostScreen extends State<CreatePostScreen> {
             ),
           ),
           Container(
-              padding: EdgeInsets.symmetric(vertical: 40),
-              child: DropdownButton<String>(
-                value: dropdownValue,
-                icon: Icon(Icons.arrow_downward),
-                iconSize: 24,
-                elevation: 16,
-                style: TextStyle(color: Colors.deepPurple),
-                underline: Container(
-                  height: 2,
-                  color: Colors.deepPurpleAccent,
-                ),
-                onChanged: (String newValue) {
-                  setState(() {
-                    dropdownValue = newValue;
-                  });
-                },
-                items: <String>['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20']
-                    .map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-              )),
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 300.0, horizontal: 5.0),
+            child:Row(children:<Widget> [
+                DropdownButton(
+                  value: dropdownValue,
+                  hint:Text("Moths"),
+                  icon:Icon(Icons.arrow_drop_down),
+                  onChanged: (newValue) {
+                    setState:
+                    (() {
+                      dropdownValue = newValue;
+                    });
+                  },
+                  items:
+                    months.map((valueItem) {
+                      return DropdownMenuItem(
+                        value: valueItem,
+                        child: Text(valueItem),
+                      );
+                    }).toList()
+              ),
+          ]
           ),
+          )
+          
         ],
       ))),
     );
