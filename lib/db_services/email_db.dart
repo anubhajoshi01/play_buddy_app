@@ -7,7 +7,7 @@ class EmailDb {
   static String thisEmail;
   static Box box;
 
-  static Future<bool> init() async{
+  static Future<void> init() async{
     await initBox();
     loggedIn = await box.get("isLoggedIn");
     thisEmail = await box.get("email");
