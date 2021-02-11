@@ -5,9 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:frc_challenge_app/components/common_app_bar.dart';
 import 'package:frc_challenge_app/db_services/post_db.dart';
 import 'package:frc_challenge_app/models/post.dart';
+import 'package:frc_challenge_app/screens/bottomNavBar.dart';
 import 'package:frc_challenge_app/screens/create_post_screen.dart';
+import 'package:frc_challenge_app/screens/log_in_screen.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:toggle_switch/toggle_switch.dart';
+import 'package:frc_challenge_app/screens/sign_in_screen.dart';
+import 'package:frc_challenge_app/screens/log_in_screen.dart';
 
 class PostMapScreen extends StatefulWidget {
   @override
@@ -32,8 +36,13 @@ class _PostMapScreen extends State<PostMapScreen> {
     toggle = ['Map', 'List'];
   }
 
-  //for bottom navigation bar
-  int _currentIndex = 0;
+  // //for bottom navigation bar
+  // int _currentIndex = 0;
+  // final List<Widget> _children = [
+  //   PostMapScreen(),
+  //   SignInScreen(),
+  //   LogInScreen(),
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +55,9 @@ class _PostMapScreen extends State<PostMapScreen> {
           icon:
               BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed)));
     }
+
+    Widget widget = Container();
+
     return Scaffold(
       appBar: CommonAppBar.appBar("View Posts"),
       floatingActionButton: FloatingActionButton(
@@ -106,53 +118,10 @@ class _PostMapScreen extends State<PostMapScreen> {
       )),
 
 
-      //bottom Navigation Bar
-      bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _currentIndex,
 
-          type: BottomNavigationBarType.shifting,
-          items: [
-        BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title:Text("Home"),
-            backgroundColor: Colors.blue),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            title:Text("Search"),
-            backgroundColor: Colors.blue),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.camera),
-            title:Text("Placeholder"),
-            backgroundColor: Colors.blue),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            title:Text("Profile"),
 
-            backgroundColor: Colors.blue),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            title: Text('Search'),
-            backgroundColor: Colors.blue),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.camera),
-            title: Text('Placeholder'),
-            backgroundColor: Colors.blue),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            title: Text('Profile'),
-            backgroundColor: Colors.blue),
 
-      ],
-
-      onTap: (index){
-         setState((){
-           _currentIndex = index;
-
-         });
-
-      },
-
-      ),
+      bottomNavigationBar: bottomNavBar(),
     );
 
   }
