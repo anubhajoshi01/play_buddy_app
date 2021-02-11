@@ -23,8 +23,20 @@ class _CreatePostScreen extends State<CreatePostScreen> {
   static final List years = ["2021", "2022", "2023", "2024"];
 
   static final List months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
+  static DateTime selectedDate;
 
-
+  _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate, // Refer step 1
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2025),
+    );
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+      });
+  }
 
 
   @override
@@ -86,49 +98,27 @@ class _CreatePostScreen extends State<CreatePostScreen> {
             ),
           ),
           Container(
-
-            child:Row(children:<Widget> [
-
-              DropdownButton(
-                  value: months[0],
-
-                  hint:Text("Months"),
-                  icon:Icon(Icons.arrow_drop_down),
-                  onChanged: (newValue) {
-                    setState
-                    (() {
-                      dropdownMonth = newValue;
-
-                    });
-                  },
-                  items:
-                    months.map((valueItem) {
-                      return DropdownMenuItem(
-                        value: valueItem,
-                        child: Text(valueItem),
-                      );
-                    }).toList()
-              ),
-
-              DropdownButton(
-                  value: years[0],
-                  hint:Text("Years"),
-                  icon:Icon(Icons.arrow_drop_down),
-                  onChanged: (newValue) {
-                    setState
-                    (() {
-                      dropdownYear = newValue;
-                    });
-                  },
-                  items:
-                    years.map((valueItem) {
-                      return DropdownMenuItem(
-                        value: valueItem,
-                        child:Text(valueItem));
-                      }).toList()
-              ),
-          ]
-          ),
+            child:Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text(
+                  "${selectedDate.toLocal()}".split(' ')[0],
+                  style: TextStyle(fontSize: 55, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                RaisedButton(
+                  onPressed: () => _selectDate(context), // Refer step 3
+                  child: Text(
+                    'Select date',
+                    style:
+                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                  ),
+                  color: Colors.greenAccent,
+                ),
+              ],
+            )
           )
         
         ],
