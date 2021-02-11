@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frc_challenge_app/components/common_app_bar.dart';
+import 'package:frc_challenge_app/services/geolocator.dart';
 
 class CreatePostScreen extends StatefulWidget {
 
@@ -19,11 +20,14 @@ class _CreatePostScreen extends State<CreatePostScreen> {
   String dropdownMonth = "";
   String dropdownYear = "";
   String dropdownDay = "";
+  String address='';
+  static final List status = ["private","public","restricted"];
+  static Map <String, int> mapStatus =  { "private":0, "public":1, "restricted":2} ;
 
-  static final List years = ["2021", "2022", "2023", "2024"];
 
-  static final List months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
   static DateTime selectedDate;
+  static String selectedStatus ="";
+
 
   _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
@@ -119,10 +123,55 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                 ),
               ],
             )
+          ),
+          Container(
+            child:DropdownButton(
+              hint: Text('Status'), // Not necessary for Option 1
+              value: status[0],
+              onChanged: (newValue) {
+                setState(() {
+                  selectedStatus = newValue;
+                  int index = mapStatus[selectedStatus];
+                  print(index);
+                });
+              },
+              items: status.map((st) {
+                return DropdownMenuItem(
+                  child: new Text(st),
+                  value: st,
+                );
+              }).toList(),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 40),
+            child: Text(
+              "Enter the address: ",
+              style: TextStyle(
+                color: Colors.grey[900],
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.all(3),
+            color: Colors.white,
+            child: TextField(
+              keyboardType: TextInputType.text,
+              onChanged: (input) {
+                setState(() {
+                  address = input;
+                  var pos = Geolocate.getLatLong(address);
+                });
+              },
+            ),
           )
-        
-        ],
-      ))),
+
+
+
+           ] )
+      )),
     );
   }
 }
