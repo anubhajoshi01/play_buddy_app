@@ -127,6 +127,19 @@ class _PostMapScreen extends State<PostMapScreen> {
         BottomNavigationBarItem(
             icon: Icon(Icons.person),
             title:Text("Profile"),
+
+            backgroundColor: Colors.blue),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            title: Text('Search'),
+            backgroundColor: Colors.blue),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.camera),
+            title: Text('Placeholder'),
+            backgroundColor: Colors.blue),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            title: Text('Profile'),
             backgroundColor: Colors.blue),
 
       ],

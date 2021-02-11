@@ -19,8 +19,11 @@ class _CreatePostScreen extends State<CreatePostScreen> {
   String dropdownMonth = "";
   String dropdownYear = "";
   String dropdownDay = "";
-  static final List<String> years = ['2021', '2022', '2023', '2024'];
-  static final List<String> months = ['01', '02' ];
+
+  static final List years = ["2021", "2022", "2023", "2024"];
+
+  static final List months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
+
 
 
 
@@ -85,14 +88,17 @@ class _CreatePostScreen extends State<CreatePostScreen> {
           Container(
 
             child:Row(children:<Widget> [
-                DropdownButton(
-                  value: dropdownMonth,
+
+              DropdownButton(
+                  value: months[0],
+
                   hint:Text("Months"),
                   icon:Icon(Icons.arrow_drop_down),
                   onChanged: (newValue) {
                     setState
                     (() {
                       dropdownMonth = newValue;
+
                     });
                   },
                   items:
@@ -105,7 +111,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
               ),
 
               DropdownButton(
-                  value: dropdownYear,
+                  value: years[0],
                   hint:Text("Years"),
                   icon:Icon(Icons.arrow_drop_down),
                   onChanged: (newValue) {
@@ -118,9 +124,8 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                     years.map((valueItem) {
                       return DropdownMenuItem(
                         value: valueItem,
-                        child:Text(valueItem),
-                      );
-                    }).toList()
+                        child:Text(valueItem));
+                      }).toList()
               ),
           ]
           ),
