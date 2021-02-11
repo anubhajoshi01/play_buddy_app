@@ -19,8 +19,9 @@ class _CreatePostScreen extends State<CreatePostScreen> {
   String dropdownMonth = "";
   String dropdownYear = "";
   String dropdownDay = "";
-  static final List years = [2021, 2022, 2023, 2024];
-  static final List months = [01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12];
+  static final List years = ["2021", "2022", "2023", "2024"];
+
+  static final List months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
 
 
 
@@ -85,31 +86,13 @@ class _CreatePostScreen extends State<CreatePostScreen> {
           Container(
 
             child:Row(children:<Widget> [
-                DropdownButton(
-                  value: dropdownMonth,
-                  hint:Text("Months"),
-                  icon:Icon(Icons.arrow_drop_down),
-                  onChanged: (newValue) {
-                    setState:
-                    (() {
-                      dropdownMonth = newValue;
-                    });
-                  },
-                  items:
-                    months.map((valueItem) {
-                      return DropdownMenuItem(
-                        value: valueItem,
-                        child: Text("$valueItem"),
-                      );
-                    }).toList()
-              ),
 
               DropdownButton(
-                  value: dropdownDay,
+                  value: months[0],
                   hint:Text("Months"),
                   icon:Icon(Icons.arrow_drop_down),
                   onChanged: (newValue) {
-                    setState:
+                    setState
                     (() {
                       dropdownDay = newValue;
                     });
@@ -118,26 +101,26 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                     months.map((valueItem) {
                       return DropdownMenuItem(
                         value: valueItem,
-                        child: Text("$valueItem"),
+                        child: Text(valueItem),
                       );
                     }).toList()
               ),
 
               DropdownButton(
-                  value: dropdownYear,
+                  value: years[0],
                   hint:Text("Years"),
                   icon:Icon(Icons.arrow_drop_down),
                   onChanged: (newValue) {
-                    setState:
+                    setState
                     (() {
                       dropdownYear = newValue;
                     });
                   },
                   items:
-                    months.map((valueItem) {
+                    years.map((valueItem) {
                       return DropdownMenuItem(
                         value: valueItem,
-                        child: Text("$valueItem"),
+                        child: Text(valueItem),
                       );
                     }).toList()
               ),
