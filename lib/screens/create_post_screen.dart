@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:frc_challenge_app/components/common_app_bar.dart';
 
 class CreatePostScreen extends StatefulWidget {
-
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -12,17 +11,15 @@ class CreatePostScreen extends StatefulWidget {
 }
 
 class _CreatePostScreen extends State<CreatePostScreen> {
-
   String descriptionStr = "";
   String infoStr = "";
   String activity = "";
   String dropdownMonth = "";
   String dropdownYear = "";
   String dropdownDay = "";
-  static final List years = [2021, 2022, 2023, 2024];
-  static final List months = [01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12];
-
-
+  DateTime event;
+  static final List <String> years = ['2021', '2022', '2023', '2024'];
+  static final List <String> months = ['01', '02'];
 
   @override
   Widget build(BuildContext context) {
@@ -83,68 +80,26 @@ class _CreatePostScreen extends State<CreatePostScreen> {
             ),
           ),
           Container(
-
-            child:Row(children:<Widget> [
-                DropdownButton(
-                  value: dropdownMonth,
-                  hint:Text("Months"),
-                  icon:Icon(Icons.arrow_drop_down),
-                  onChanged: (newValue) {
-                    setState:
-                    (() {
-                      dropdownMonth = newValue;
-                    });
-                  },
-                  items:
-                    months.map((valueItem) {
-                      return DropdownMenuItem(
-                        value: valueItem,
-                        child: Text("$valueItem"),
-                      );
-                    }).toList()
-              ),
-
+            child: Row(children: <Widget>[
               DropdownButton(
-                  value: dropdownDay,
-                  hint:Text("Months"),
-                  icon:Icon(Icons.arrow_drop_down),
-                  onChanged: (newValue) {
-                    setState:
-                    (() {
-                      dropdownDay = newValue;
-                    });
-                  },
-                  items:
-                    months.map((valueItem) {
-                      return DropdownMenuItem(
-                        value: valueItem,
-                        child: Text("$valueItem"),
-                      );
-                    }).toList()
-              ),
-
-              DropdownButton(
-                  value: dropdownYear,
-                  hint:Text("Years"),
-                  icon:Icon(Icons.arrow_drop_down),
-                  onChanged: (newValue) {
-                    setState:
-                    (() {
-                      dropdownYear = newValue;
-                    });
-                  },
-                  items:
-                    months.map((valueItem) {
-                      return DropdownMenuItem(
-                        value: valueItem,
-                        child: Text("$valueItem"),
-                      );
-                    }).toList()
-              ),
-          ]
+            hint: Text('Please choose a location'), // Not necessary for Option 1
+            value: dropdownMonth,
+            onChanged: (newValue) {
+              setState(() {
+                dropdownMonth = newValue;
+              });
+            },
+            items: months.map((location) {
+              return DropdownMenuItem(
+                child: new Text(location),
+                value: location,
+              );
+            }).toList(),
           ),
-          )
+  
         
+            ]),
+          )
         ],
       ))),
     );
