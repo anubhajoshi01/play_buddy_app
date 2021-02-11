@@ -12,7 +12,7 @@ import 'package:toggle_switch/toggle_switch.dart';
 class PostMapScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
- 
+    // TODO: implement createState
     return _PostMapScreen();
   }
 }
@@ -26,6 +26,7 @@ class _PostMapScreen extends State<PostMapScreen> {
 
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
     mapMode = true;
     toggle = ['Map', 'List'];
@@ -113,19 +114,19 @@ class _PostMapScreen extends State<PostMapScreen> {
           items: [
         BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            title: Text('Home'),
+            title:Text("Home"),
             backgroundColor: Colors.blue),
         BottomNavigationBarItem(
             icon: Icon(Icons.search),
-            title: Text('Search'),
+            title:Text("Search"),
             backgroundColor: Colors.blue),
         BottomNavigationBarItem(
             icon: Icon(Icons.camera),
-            title: Text('Placeholder'),
+            title:Text("Placeholder"),
             backgroundColor: Colors.blue),
         BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            title: Text('Profile'),
+            title:Text("Profile"),
             backgroundColor: Colors.blue),
 
       ],
