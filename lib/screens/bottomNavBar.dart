@@ -4,6 +4,7 @@ import 'package:frc_challenge_app/screens/sign_in_screen.dart';
 import 'package:frc_challenge_app/screens/log_in_screen.dart';
 import 'package:frc_challenge_app/screens/post_map_screen.dart';
 import 'package:frc_challenge_app/screens/profile_screen.dart';
+import 'package:frc_challenge_app/screens/search_screen.dart';
 
 
 class bottomNavBar extends StatelessWidget {
@@ -24,7 +25,7 @@ class bottomNavBar extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.search, size: 44.0),
             onPressed: () {
-              // Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) => ProfileScreen()));
+              Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) => SearchScreen()));
             },
           ),
           IconButton(

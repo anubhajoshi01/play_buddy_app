@@ -36,14 +36,6 @@ class _PostMapScreen extends State<PostMapScreen> {
     toggle = ['Map', 'List'];
   }
 
-  // //for bottom navigation bar
-  // int _currentIndex = 0;
-  // final List<Widget> _children = [
-  //   PostMapScreen(),
-  //   SignInScreen(),
-  //   LogInScreen(),
-  // ];
-
   @override
   Widget build(BuildContext context) {
     print(mapMode);
@@ -116,11 +108,7 @@ class _PostMapScreen extends State<PostMapScreen> {
                       }))
         ],
       )),
-
-
-
-
-
+      
       bottomNavigationBar: bottomNavBar(),
     );
 
