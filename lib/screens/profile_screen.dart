@@ -21,7 +21,6 @@ class ProfileScreen extends StatefulWidget {
         bottomNavigationBar: bottomNavBar(),
 
       );
-
     }
   }
 

@@ -115,9 +115,8 @@ class _PostMapScreen extends State<PostMapScreen> {
                       }))
         ],
       )),
-      
+
       bottomNavigationBar: bottomNavBar(),
     );
-
   }
 }
