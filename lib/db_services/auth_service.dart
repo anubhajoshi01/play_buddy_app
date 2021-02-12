@@ -34,4 +34,11 @@ class AuthenticationService{
     }
   }
 
+  static void signOutUser(){
+    firebaseAuth.signOut().then((value) =>
+    {
+      print("sign out")
+    });
+  }
+
 }
