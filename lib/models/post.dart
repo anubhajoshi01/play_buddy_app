@@ -18,7 +18,7 @@ class Post {
   String address;
   double latitude;
   double longitude;
-  int numSignedUp;
+  Set<int> usersSignedUp;
   
   Post(
       this.id,
@@ -30,7 +30,7 @@ class Post {
       this.address,
       this.latitude,
       this.longitude,
-      this.numSignedUp);
+      this.usersSignedUp);
 
   }
 

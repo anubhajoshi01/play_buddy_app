@@ -28,7 +28,6 @@ class _CreatePostScreen extends State<CreatePostScreen> {
   static DateTime selectedDate;
   static String selectedStatus ="";
 
-
   _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
       context: context,

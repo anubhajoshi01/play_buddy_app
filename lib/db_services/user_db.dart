@@ -21,11 +21,12 @@ class UserDb {
           Set<int> requestSentList = stringToSet(data["requestSentList"]);
           Set<int> requestReceivedList =
               stringToSet(data["requestReceivedList"]);
+          Set<int> postsSignedUpFor = stringToSet(data["postsSignedUpFor"]);
           String name = data["name"];
           String bio = data["bio"];
 
           User u = new User(id, email, friendsUserIdList, postIdList,
-              requestSentList, requestReceivedList, name, bio);
+              requestSentList, requestReceivedList, postsSignedUpFor, name, bio);
           print("data: $id , $email, $name $bio");
           userIdList.add(id);
           userMap[id] = u;
@@ -48,6 +49,7 @@ class UserDb {
       "postIdList": "",
       "requestSentList": "",
       "requestReceivedList": "",
+      "postsSignedUpFor" : "",
       "name": "",
       "bio": ""
     });
@@ -59,6 +61,7 @@ class UserDb {
       Set<int> postIdList,
       Set<int> requestSentList,
       Set<int> requestReceivedList,
+        Set<int> postsSignedUpFor,
       String name,
       String bio}) async {
     if (friendsUserIdList != null) {
@@ -72,6 +75,9 @@ class UserDb {
     }
     if(requestReceivedList != null){
       userMap[userId].requestReceivedList = requestReceivedList;
+    }
+    if(postsSignedUpFor != null){
+      userMap[userId].postsSignedUpFor = postsSignedUpFor;
     }
     if (name != null) {
       userMap[userId].name = name;
@@ -89,6 +95,7 @@ class UserDb {
         "postIdList": setToString(userMap[userId].postIdList),
         "requestSentList": setToString(userMap[userId].requestSentList),
         "requestReceivedList": setToString(userMap[userId].requestReceivedList),
+        "postsSignedUpFor": setToString(userMap[userId].postsSignedUpFor),
         "name": userMap[userId].name,
         "bio": userMap[userId].bio
       });

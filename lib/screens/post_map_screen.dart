@@ -7,6 +7,7 @@ import 'package:frc_challenge_app/db_services/post_db.dart';
 import 'package:frc_challenge_app/models/post.dart';
 import 'package:frc_challenge_app/screens/bottomNavBar.dart';
 import 'package:frc_challenge_app/screens/create_post_screen.dart';
+import 'package:frc_challenge_app/screens/display_post_screen.dart';
 import 'package:frc_challenge_app/screens/log_in_screen.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:toggle_switch/toggle_switch.dart';
@@ -45,13 +46,16 @@ class _PostMapScreen extends State<PostMapScreen> {
           markerId: MarkerId("$i"),
           position: LatLng(p.latitude, p.longitude),
           icon:
-              BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed)));
+              BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+          onTap: (){
+            DisplayPostScreen(p);
+          }));
     }
 
     Widget widget = Container();
 
     return Scaffold(
-      appBar: CommonAppBar.appBar("View Posts"),
+      appBar: CommonAppBar.appBar("View Posts", context),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
@@ -82,8 +86,8 @@ class _PostMapScreen extends State<PostMapScreen> {
           (mapMode)
               ? SingleChildScrollView(
                   child: SizedBox(
-                      width: 1000.0,
-                      height: 900.0,
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 0.8,
                       child: GoogleMap(
                         markers: markers,
                         initialCameraPosition: CameraPosition(
@@ -102,6 +106,9 @@ class _PostMapScreen extends State<PostMapScreen> {
                             child: ListTile(
                               title: Text(
                                   "${PostDb.localMap[PostDb.postIdList.elementAt(index)].eventDescription}"),
+                              onTap: (){
+                                DisplayPostScreen(PostDb.localMap[PostDb.postIdList.elementAt(index)]);
+                              },
                             ),
                           ),
                         );

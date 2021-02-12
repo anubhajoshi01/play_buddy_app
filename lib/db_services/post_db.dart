@@ -16,7 +16,7 @@ class PostDb {
       DateTime event,
       String des,
       String address,
-      int numsignedup) async {
+      Set<int> usersSignedUp) async {
     //Post currentPost = new Post(postIdList.length, ownerUserId, type, time,
         //event, des, address, lat, long, numsignedup);
     //ocalMap[id] = currentPost;
@@ -34,7 +34,7 @@ class PostDb {
       'latitude': "$lat",
       'longitude': "$long",
       'address': "address",
-      'numSignedUp': "$numsignedup",
+      'usersSignedUp': setToString(usersSignedUp),
       'postType': type,
     });
   }
@@ -50,12 +50,12 @@ class PostDb {
           int id = int.parse(data["id"]);
           double lat = data["latitude"];
           double long = data["longitude"];
-          int numsignedup = data["numSignedUp"];
+          String usersSignedUpString = data["numSignedUp"];
           int ownerid = data["ownerUserId"];
           String postType = data["postType"];
           DateTime timestamp = data["timestamp"].toDateTime();
           Post currentPost = new Post(id, ownerid, postType, timestamp, event,
-              des, address, lat, long, numsignedup);
+              des, address, lat, long, stringToSet(usersSignedUpString));
           postIdList.add(id);
           localMap[id] = currentPost;
         });
@@ -71,7 +71,7 @@ class PostDb {
     return result;
   }
 
-  static Future<void> updatePost(int id, int ownerId,{
+  static Future<void> updatePost(int id,{
       String type,
       DateTime time,
       double lat,
@@ -79,7 +79,7 @@ class PostDb {
       DateTime event,
       String des,
       String address,
-      int numsignedup 
+      Set<int> usersSignedUp
   }) async {if (type != null) {
       localMap[id].postType = type;
     }
@@ -101,8 +101,8 @@ class PostDb {
     if (address != null) {
       localMap[id].address = address;
     } 
-    if (numsignedup != null) {
-      localMap[id].numSignedUp = numsignedup;
+    if (usersSignedUp != null) {
+      localMap[id].usersSignedUp = usersSignedUp;
     }
     try {
       await firestoreInstance
@@ -110,7 +110,7 @@ class PostDb {
           .document("$id")
           .updateData({
         "address": localMap[id].address,
-        "numSignedUp": localMap[id].numSignedUp,
+        "numSignedUp": setToString(localMap[id].usersSignedUp),
         "eventDateTime": localMap[id].eventDateTime,
         "eventDescription": localMap[id].eventDescription,
         "latitude": localMap[id].latitude,
@@ -128,4 +128,24 @@ class PostDb {
 
   }
   // make read method(); save each id in a set;
+  static String setToString(Set<int> set) {
+    String s = "";
+    set.forEach((element) {
+      s += "$element";
+    });
+    s.trim();
+    return s;
+  }
+
+  static Set<int> stringToSet(String set) {
+    if (set.length == 0) {
+      return Set<int>();
+    }
+    List<String> list = set.split(" ");
+    Set<int> intset = Set<int>();
+    list.forEach((element) {
+      intset.add(int.parse(element));
+    });
+    return intset;
+  }
 }
