@@ -31,10 +31,12 @@ class UserDb {
           userIdList.add(id);
           userMap[id] = u;
           emailMap[email] = id;
+
+          print("email: $email id : $id");
         });
       });
     } catch (e) {
-      print("error : ${e.toString()}");
+      print("Error sync map : ${e.toString()}");
     }
   }
 
@@ -102,6 +104,8 @@ class UserDb {
     } catch (e) {
       print(e.toString());
     }
+
+    await syncUserMap();
   }
 
   static String setToString(Set<int> set) {
@@ -114,7 +118,7 @@ class UserDb {
   }
 
   static Set<int> stringToSet(String set) {
-    if (set.length == 0) {
+    if (set == null || set.isEmpty|| set.length == 0 ) {
       return Set<int>();
     }
     List<String> list = set.split(" ");
