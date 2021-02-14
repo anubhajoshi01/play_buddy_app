@@ -25,12 +25,16 @@ class DisplayPostScreen extends StatefulWidget {
 class _DisplayPostScreen extends State<DisplayPostScreen> {
   Set<Marker> markers = new HashSet();
   int numSignedUp;
+  bool signedUp;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     numSignedUp = this.widget.post.usersSignedUp.length;
+    signedUp = UserDb
+        .userMap[UserDb.emailMap[EmailDb.thisEmail]].postsSignedUpFor
+        .contains(this.widget.post.id);
   }
 
   @override
@@ -38,51 +42,87 @@ class _DisplayPostScreen extends State<DisplayPostScreen> {
     markers.add(new Marker(
         markerId: MarkerId("${this.widget.post.id}"),
         position:
-            LatLng(this.widget.post.latitude, this.widget.post.longitude)));
+        LatLng(this.widget.post.latitude, this.widget.post.longitude)));
     return Scaffold(
       appBar: CommonAppBar.appBar("View Post", context),
       backgroundColor: Colors.greenAccent,
       body: Container(
         child: SingleChildScrollView(
             child: Column(children: <Widget>[
-          SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.5,
-              child: GoogleMap(
-                markers: markers,
-                initialCameraPosition: CameraPosition(
-                  target: LatLng(
-                      this.widget.post.latitude, this.widget.post.longitude),
-                  zoom: 12,
-                ),
-              )),
-              Text(
-                "${this.widget.post.eventDescription}"
-              ),
-              Text(
-                "${this.widget.post.eventDateTime.toString()}"
-              ),
-              Text(
-                "${this.widget.post.usersSignedUp.length} have signed up!"
-              ),
+              SizedBox(
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width,
+                  height: MediaQuery
+                      .of(context)
+                      .size
+                      .height * 0.5,
+                  child: GoogleMap(
+                    markers: markers,
+                    initialCameraPosition: CameraPosition(
+                      target: LatLng(
+                          this.widget.post.latitude,
+                          this.widget.post.longitude),
+                      zoom: 12,
+                    ),
+                  )),
+              Text("${this.widget.post.eventDescription}"),
+              Text("${this.widget.post.eventDateTime.toString()}"),
+              Text("${this.widget.post.address}"),
+              Text("${this.widget.post.usersSignedUp.length} have signed up!"),
+              (!signedUp) ?
               FlatButton(
-                  color: Colors.red,
-                  child: Text("sign up"),
-                  onPressed: () {
-                    Set<int> postsSignedUpFor = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]].postsSignedUpFor;
-                    postsSignedUpFor.add(this.widget.post.id);
-                    UserDb.updateData(UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]].id, postsSignedUpFor: postsSignedUpFor);
+                color: Colors.red,
+                child: Text("sign up"),
+                onPressed: () {
+                  Set<int> postsSignedUpFor = UserDb
+                      .userMap[UserDb.emailMap[EmailDb.thisEmail]]
+                      .postsSignedUpFor;
+                  postsSignedUpFor.add(this.widget.post.id);
+                  UserDb.updateData(
+                      UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]].id,
+                      postsSignedUpFor: postsSignedUpFor);
 
-                    Set<int> usersSignedUpForEvent = this.widget.post.usersSignedUp;
-                    usersSignedUpForEvent.add(UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]].id);
-                    PostDb.updatePost(this.widget.post.id, usersSignedUp: usersSignedUpForEvent);
+                  Set<int> usersSignedUpForEvent = this.widget.post
+                      .usersSignedUp;
+                  usersSignedUpForEvent
+                      .add(
+                      UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]].id);
+                  PostDb.updatePost(this.widget.post.id,
+                      usersSignedUp: usersSignedUpForEvent);
 
-                    setState(() {
-                      numSignedUp = this.widget.post.usersSignedUp.length;
-                    });
-                  },
+                  setState(() {
+                    numSignedUp = this.widget.post.usersSignedUp.length;
+                    signedUp = true;
+                  });
+                },
+              ) :
+              FlatButton(
+                color: Colors.red,
+                child: Text("delete"),
+                onPressed: () {
+                  Set<int> postsSignedUpFor = UserDb
+                      .userMap[UserDb.emailMap[EmailDb.thisEmail]]
+                      .postsSignedUpFor;
+                  postsSignedUpFor.remove(this.widget.post.id);
+                  UserDb.updateData(UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]].id,
+                      postsSignedUpFor: postsSignedUpFor);
+
+                  Set<int> usersSignedUpForEvent = this.widget.post
+                      .usersSignedUp;
+                  usersSignedUpForEvent
+                      .remove(
+                      UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]].id);
+                  PostDb.updatePost(this.widget.post.id, usersSignedUp: usersSignedUpForEvent);
+
+                  setState(() {
+                    numSignedUp = this.widget.post.usersSignedUp.length;
+                    signedUp = false;
+                  });
+                },
               )
-        ])),
+            ])),
       ),
     );
   }
