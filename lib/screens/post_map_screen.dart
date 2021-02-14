@@ -48,7 +48,7 @@ class _PostMapScreen extends State<PostMapScreen> {
           icon:
               BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
           onTap: (){
-            DisplayPostScreen(p);
+            Navigator.push(context, MaterialPageRoute(builder: (context) => DisplayPostScreen(p)));
           }));
     }
 
@@ -87,7 +87,7 @@ class _PostMapScreen extends State<PostMapScreen> {
               ? SingleChildScrollView(
                   child: SizedBox(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.75,
                       child: GoogleMap(
                         markers: markers,
                         initialCameraPosition: CameraPosition(
@@ -107,7 +107,7 @@ class _PostMapScreen extends State<PostMapScreen> {
                               title: Text(
                                   "${PostDb.localMap[PostDb.postIdList.elementAt(index)].eventDescription}"),
                               onTap: (){
-                                DisplayPostScreen(PostDb.localMap[PostDb.postIdList.elementAt(index)]);
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => DisplayPostScreen(PostDb.localMap[PostDb.postIdList.elementAt(index)])));
                               },
                             ),
                           ),

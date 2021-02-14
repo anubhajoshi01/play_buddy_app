@@ -6,8 +6,7 @@ class PostDb {
   static Set<int> postIdList = new Set<int>();
   static final firestoreInstance = Firestore.instance;
   
-  static Future<void> createPost(
-      int id,
+  static Future<Post> createPost(
       int ownerUserId,
       String type,
       DateTime time,
@@ -16,27 +15,37 @@ class PostDb {
       DateTime event,
       String des,
       String address,
-      Set<int> usersSignedUp) async {
+      ) async {
     //Post currentPost = new Post(postIdList.length, ownerUserId, type, time,
         //event, des, address, lat, long, numsignedup);
     //ocalMap[id] = currentPost;
 
+    await readDb();
+    int id = postIdList.length;
+
     String date = "${time.day} ${time.month} ${time.year}";
-    String timestamp = "${event.hour} ${event.minute} ${event.second}";
+    String timestamp = "${event.hour} ${event.minute}";
     final firestoreInstance = Firestore.instance;
+    Set<int> usersSignedUp = Set();
+    usersSignedUp.add(ownerUserId);
 
     await firestoreInstance.collection("Posts").document("$id").setData({
       'id': "$id",
       'ownerUserId': "$ownerUserId",
-      'eventDateTime': date,
-      'timeStamp': timestamp,
+      'eventDateTime': dateTimeToString(event),
+      'timeStamp': dateTimeToString(time),
       'eventDescription': des,
       'latitude': "$lat",
       'longitude': "$long",
-      'address': "address",
+      'address': "$address",
       'usersSignedUp': setToString(usersSignedUp),
       'postType': type,
     });
+
+    Post post = new Post(id, ownerUserId, type, time, event, des, address, lat, long, usersSignedUp);
+    await readDb();
+    print("done post create");
+    return post;
   }
 
   static Future<void> readDb() async {
@@ -45,28 +54,30 @@ class PostDb {
         value.documents.forEach((element) {
           var data = element.data;
           String address = data["address"];
-          DateTime event = data["eventDateTime"].toDateTime();
+          DateTime event = toDateTime(data["eventDateTime"]);
           String des = data["eventDescription"];
           int id = int.parse(data["id"]);
-          double lat = data["latitude"];
-          double long = data["longitude"];
+          double lat = double.parse(data["latitude"]);
+          double long = double.parse(data["longitude"]);
           String usersSignedUpString = data["numSignedUp"];
-          int ownerid = data["ownerUserId"];
+          int ownerid = int.parse(data["ownerUserId"]);
           String postType = data["postType"];
-          DateTime timestamp = data["timestamp"].toDateTime();
+          DateTime timestamp = toDateTime(data["timeStamp"]);
           Post currentPost = new Post(id, ownerid, postType, timestamp, event,
               des, address, lat, long, stringToSet(usersSignedUpString));
           postIdList.add(id);
           localMap[id] = currentPost;
         });
       });
-    } catch (e) {}
+    } catch (e) {
+      print("error in post sync: ${e.toString()}");
+    }
   }
 
   static DateTime toDateTime(String str) {
     List<String> split = str.split(" ");
-    DateTime result = new DateTime(
-        int.parse(split[0]), int.parse(split[1]), int.parse(split[2]));
+    print("length to date time ${split.length}");
+    DateTime result = new DateTime(int.parse(split[0]), int.parse(split[1]), int.parse(split[2]), int.parse(split[3]), int.parse(split[4]));
 
     return result;
   }
@@ -111,12 +122,12 @@ class PostDb {
           .updateData({
         "address": localMap[id].address,
         "numSignedUp": setToString(localMap[id].usersSignedUp),
-        "eventDateTime": localMap[id].eventDateTime,
+        "eventDateTime": dateTimeToString(localMap[id].eventDateTime),
         "eventDescription": localMap[id].eventDescription,
-        "latitude": localMap[id].latitude,
-        "longitude": localMap[id].longitude,
+        "latitude": "${localMap[id].latitude}",
+        "longitude": "${localMap[id].longitude}",
         "postType":localMap[id].postType,
-        "timeStamp":localMap[id].timestamp,
+        "timeStamp": dateTimeToString(localMap[id].timestamp),
       });
     } catch (e) {
       print(e.toString());
@@ -125,7 +136,7 @@ class PostDb {
 
 
   static String dateTimeToString(DateTime d){
-
+    return "${d.year} ${d.month} ${d.day} ${d.hour} ${d.minute}";
   }
   // make read method(); save each id in a set;
   static String setToString(Set<int> set) {
@@ -138,7 +149,7 @@ class PostDb {
   }
 
   static Set<int> stringToSet(String set) {
-    if (set.length == 0) {
+    if (set == null || set.isEmpty || set.length == 0) {
       return Set<int>();
     }
     List<String> list = set.split(" ");
