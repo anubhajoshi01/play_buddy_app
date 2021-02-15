@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:frc_challenge_app/db_services/email_db.dart';
+import 'package:frc_challenge_app/db_services/user_db.dart';
 import 'package:frc_challenge_app/models/post.dart';
 
 class PostDb {
@@ -43,6 +45,9 @@ class PostDb {
     });
 
     Post post = new Post(id, ownerUserId, type, time, event, des, address, lat, long, usersSignedUp);
+    Set<int> postsSignedUpFor = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]].postsSignedUpFor;
+    postsSignedUpFor.add(id);
+    await UserDb.updateData(UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]].id, postsSignedUpFor: postsSignedUpFor);
     await readDb();
     print("done post create");
     return post;
@@ -59,7 +64,7 @@ class PostDb {
           int id = int.parse(data["id"]);
           double lat = double.parse(data["latitude"]);
           double long = double.parse(data["longitude"]);
-          String usersSignedUpString = data["numSignedUp"];
+          String usersSignedUpString = data["usersSignedUp"];
           int ownerid = int.parse(data["ownerUserId"]);
           String postType = data["postType"];
           DateTime timestamp = toDateTime(data["timeStamp"]);
@@ -121,7 +126,7 @@ class PostDb {
           .document("$id")
           .updateData({
         "address": localMap[id].address,
-        "numSignedUp": setToString(localMap[id].usersSignedUp),
+        "usersSignedUp": setToString(localMap[id].usersSignedUp),
         "eventDateTime": dateTimeToString(localMap[id].eventDateTime),
         "eventDescription": localMap[id].eventDescription,
         "latitude": "${localMap[id].latitude}",

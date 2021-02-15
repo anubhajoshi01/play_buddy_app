@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frc_challenge_app/screens/friends_screen.dart';
 
 import 'package:frc_challenge_app/screens/sign_in_screen.dart';
 import 'package:frc_challenge_app/screens/log_in_screen.dart';
@@ -19,19 +20,19 @@ class bottomNavBar extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.home, size: 44.0),
             onPressed: () {
-              Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) => PostMapScreen()));
+              Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) => ProfileScreen()));
             },
           ),
           IconButton(
             icon: Icon(Icons.search, size: 44.0),
             onPressed: () {
-              Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) => SearchScreen()));
+              Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) => PostMapScreen()));
             },
           ),
           IconButton(
             icon: Icon(Icons.person, size: 44.0),
             onPressed: () {
-              Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) => ProfileScreen()));
+              Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) => FriendsScreen()));
             },
           ),
         ],

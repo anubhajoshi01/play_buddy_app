@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:frc_challenge_app/components/common_app_bar.dart';
 import 'package:frc_challenge_app/db_services/post_db.dart';
 import 'package:frc_challenge_app/models/post.dart';
-import 'package:frc_challenge_app/screens/bottomNavBar.dart';
+import 'file:///E:/cu_hacking/frc_challenge_app/lib/components/bottomNavBar.dart';
 import 'package:frc_challenge_app/screens/create_post_screen.dart';
 import 'package:frc_challenge_app/screens/display_post_screen.dart';
 import 'package:frc_challenge_app/screens/log_in_screen.dart';
@@ -42,14 +42,20 @@ class _PostMapScreen extends State<PostMapScreen> {
     print(mapMode);
     for (int i = 0; i < PostDb.postIdList.length; i++) {
       Post p = PostDb.localMap[PostDb.postIdList.elementAt(i)];
-      markers.add(Marker(
-          markerId: MarkerId("$i"),
-          position: LatLng(p.latitude, p.longitude),
-          icon:
-              BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
-          onTap: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => DisplayPostScreen(p)));
-          }));
+      DateTime now = DateTime.now();
+      if (p.eventDateTime.isAfter(now)) {
+        markers.add(Marker(
+            markerId: MarkerId("$i"),
+            position: LatLng(p.latitude, p.longitude),
+            icon:
+                BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => DisplayPostScreen(p)));
+            }));
+      }
     }
 
     Widget widget = Container();
@@ -100,22 +106,29 @@ class _PostMapScreen extends State<PostMapScreen> {
                       itemCount: PostDb.postIdList.length,
                       shrinkWrap: true,
                       itemBuilder: (BuildContext context, int index) {
-                        return Container(
+                        DateTime now = DateTime.now();
+                        Post atIndex = PostDb.localMap[PostDb.postIdList.elementAt(index)];
+                        return (atIndex.eventDateTime.isAfter(now)) ? Container(
                           height: 50,
                           child: Card(
                             child: ListTile(
                               title: Text(
                                   "${PostDb.localMap[PostDb.postIdList.elementAt(index)].eventDescription}"),
-                              onTap: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => DisplayPostScreen(PostDb.localMap[PostDb.postIdList.elementAt(index)])));
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => DisplayPostScreen(
+                                            PostDb.localMap[PostDb.postIdList
+                                                .elementAt(index)])));
                               },
                             ),
                           ),
-                        );
+                        ) :
+                        Container();
                       }))
         ],
       )),
-
       bottomNavigationBar: bottomNavBar(),
     );
   }
