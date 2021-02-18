@@ -4,7 +4,7 @@ import 'package:frc_challenge_app/components/common_app_bar.dart';
 import 'package:frc_challenge_app/db_services/email_db.dart';
 import 'package:frc_challenge_app/db_services/user_db.dart';
 import 'package:frc_challenge_app/models/user.dart';
-import 'package:frc_challenge_app/screens/profile_screen.dart';
+import 'package:frc_challenge_app/screens/home_pages/profile_screen.dart';
 
 class EditProfileScreen extends StatefulWidget{
   @override

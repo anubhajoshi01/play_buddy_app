@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'file:///E:/cu_hacking/frc_challenge_app/lib/components/bottomNavBar.dart';
+import 'package:frc_challenge_app/components/bottomNavBar.dart';
 
 class SearchScreen extends StatefulWidget {
   //placeholders for the event posts

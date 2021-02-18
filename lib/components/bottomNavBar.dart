@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:frc_challenge_app/screens/friends_screen.dart';
+import 'package:frc_challenge_app/screens/friends_pages/friends_screen.dart';
 
-import 'package:frc_challenge_app/screens/sign_in_screen.dart';
-import 'package:frc_challenge_app/screens/log_in_screen.dart';
-import 'package:frc_challenge_app/screens/post_map_screen.dart';
-import 'package:frc_challenge_app/screens/profile_screen.dart';
+import 'package:frc_challenge_app/screens/auth_pages/sign_in_screen.dart';
+import 'package:frc_challenge_app/screens/auth_pages/log_in_screen.dart';
+import 'package:frc_challenge_app/screens/post_pages/post_map_screen.dart';
+import 'package:frc_challenge_app/screens/home_pages/profile_screen.dart';
 import 'package:frc_challenge_app/screens/search_screen.dart';
 
 

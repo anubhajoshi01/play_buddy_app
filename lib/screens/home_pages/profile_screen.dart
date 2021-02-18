@@ -1,11 +1,11 @@
 // import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'file:///E:/cu_hacking/frc_challenge_app/lib/components/bottomNavBar.dart';
+import 'package:frc_challenge_app/components/bottomNavBar.dart';
 import 'package:frc_challenge_app/components/common_app_bar.dart';
 import 'package:frc_challenge_app/db_services/email_db.dart';
 import 'package:frc_challenge_app/db_services/user_db.dart';
 import 'package:frc_challenge_app/models/user.dart';
-import 'package:frc_challenge_app/screens/edit_profile_screen.dart';
+import 'package:frc_challenge_app/screens/home_pages/edit_profile_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override

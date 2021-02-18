@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frc_challenge_app/db_services/auth_service.dart';
 import 'package:frc_challenge_app/db_services/user_db.dart';
-import 'package:frc_challenge_app/screens/post_map_screen.dart';
-import 'package:frc_challenge_app/screens/log_in_screen.dart';
+import 'package:frc_challenge_app/screens/post_pages/post_map_screen.dart';
+import 'package:frc_challenge_app/screens/auth_pages/log_in_screen.dart';
 
 import 'log_in_screen.dart';
 
