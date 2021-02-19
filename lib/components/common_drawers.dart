@@ -39,4 +39,28 @@ class CommonDrawers{
       )
     );
   }
+
+  static Drawer friendDrawer(BuildContext context){
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.symmetric(vertical: 5),
+        children: <Widget>[
+          DrawerHeader(
+            child: Text("Navigate"),
+            decoration: BoxDecoration(
+              color: Colors.greenAccent
+            ),
+          ),
+          ListTile(
+            title: Text("My Friends"),
+            onTap: (){},
+          ),
+          ListTile(
+            title: Text("Requests"),
+            onTap: (){},
+          )
+        ],
+      )
+    );
+  }
 }
