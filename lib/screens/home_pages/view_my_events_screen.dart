@@ -26,7 +26,7 @@ class _ViewMyEventsScreen extends State<ViewMyEventsScreen> {
     User thisUser = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
     for (int i = 0; i < thisUser.postIdList.length; i++) {
       Post p = PostDb.localMap[thisUser.postIdList.elementAt(i)];
-      if(p.active) {
+      if (p.active) {
         myPostsList.add(p);
       }
     }
@@ -38,39 +38,46 @@ class _ViewMyEventsScreen extends State<ViewMyEventsScreen> {
       appBar: CommonAppBar.appBar("My Events", context),
       drawer: CommonDrawers.profileDrawer(context),
       body: Container(
-        child: ListView.builder(
-            itemCount: myPostsList.length, itemBuilder: (context, index) {
-              return Dismissible(
-                key: Key("$index"),
-                onDismissed: (direction){
+        child: SingleChildScrollView(
+            child: ListView.builder(
+                itemCount: myPostsList.length,
+                itemBuilder: (context, index) {
+                  return Dismissible(
+                    key: Key("$index"),
+                    onDismissed: (direction) {
+                      User thisUser =
+                          UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
+                      Set<int> myPosts = thisUser.postIdList;
+                      myPosts.remove(myPostsList[index].id);
+                      UserDb.updateData(thisUser.id, postsSignedUpFor: myPosts);
 
-                  User thisUser = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
-                  Set<int> myPosts = thisUser.postIdList;
-                  myPosts.remove(myPostsList[index].id);
-                  UserDb.updateData(thisUser.id, postsSignedUpFor: myPosts);
-
-                  PostDb.deletePostFromDb(myPostsList[index].id);
-                  setState(() {
-                    List<Post> newPostList = new List<Post>();
-                    for(int i = 0; i < thisUser.postIdList.length; i++){
-                      Post p = PostDb.localMap[thisUser.postIdList.elementAt(i)];
-                      if(p.active){
-                        newPostList.add(p);
-                      }
-                    }
-                    myPostsList = newPostList;
-                  });
-                },
-                child: Card(
-                  child: ListTile(
-                    title: Text("${myPostsList[index].address}"),
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=> DisplayPostScreen(myPostsList[index])));
+                      PostDb.deletePostFromDb(myPostsList[index].id);
+                      setState(() {
+                        List<Post> newPostList = new List<Post>();
+                        for (int i = 0; i < thisUser.postIdList.length; i++) {
+                          Post p =
+                              PostDb.localMap[thisUser.postIdList.elementAt(i)];
+                          if (p.active) {
+                            newPostList.add(p);
+                          }
+                        }
+                        myPostsList = newPostList;
+                      });
                     },
-                  ),
-                ),
-              );
-        }),
+                    child: Card(
+                      child: ListTile(
+                        title: Text("${myPostsList[index].address}"),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      DisplayPostScreen(myPostsList[index])));
+                        },
+                      ),
+                    ),
+                  );
+                })),
       ),
     );
   }

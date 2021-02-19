@@ -54,7 +54,7 @@ class _ProfileScreen extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CommonAppBar.appBar("My Profile", context),
-      drawer: CommonDrawers.profileDrawer(context),
+      drawer: (this.widget.user == null) ? CommonDrawers.profileDrawer(context) : null,
       body: Container(
         child: SingleChildScrollView(
           child: Column(
@@ -134,7 +134,7 @@ class _ProfileScreen extends State<ProfileScreen> {
                            Set<int> newFriendList2 = this.widget.user.friendsUserIdList;
                            newRequestSentList.remove(thisUser.id);
                            newFriendList2.add(thisUser.id);
-                           await UserDb.updateData(thisUser.id, requestSentList: newRequestSentList, friendsUserIdList: newFriendList2);
+                           await UserDb.updateData(this.widget.user.id, requestSentList: newRequestSentList, friendsUserIdList: newFriendList2);
 
                            setState(() {
                              isFriend = true;
@@ -152,7 +152,7 @@ class _ProfileScreen extends State<ProfileScreen> {
 
                            Set<int> newRequestSentList = this.widget.user.requestSentList;
                            newRequestSentList.remove(thisUser.id);
-                           await UserDb.updateData(thisUser.id, requestSentList: newRequestSentList);
+                           await UserDb.updateData(this.widget.user.id, requestSentList: newRequestSentList);
 
                            setState(() {
                              requestRecieved = false;

@@ -48,6 +48,7 @@ class PostDb {
     Post post = new Post(id, ownerUserId, type, time, event, des, address, lat, long, usersSignedUp, true);
     Set<int> postsSignedUpFor = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]].postsSignedUpFor;
     postsSignedUpFor.add(id);
+    localMap[id] = post;
     await UserDb.updateData(UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]].id, postsSignedUpFor: postsSignedUpFor);
     await readDb();
     print("done post create");
@@ -140,12 +141,15 @@ class PostDb {
     } catch (e) {
       print(e.toString());
     }
+
+    await readDb();
   }
 
   static Future<void> deletePostFromDb(int postId) async{
     localMap[postId].active = false;
 
     await firestoreInstance.collection("Posts").document("$postId").updateData({"active":"false"});
+    await readDb();
   }
 
   static String dateTimeToString(DateTime d){
