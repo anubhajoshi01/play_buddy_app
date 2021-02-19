@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:frc_challenge_app/components/bottomNavBar.dart';
 import 'package:frc_challenge_app/components/common_app_bar.dart';
+import 'package:frc_challenge_app/components/common_drawers.dart';
 import 'package:frc_challenge_app/db_services/email_db.dart';
 import 'package:frc_challenge_app/db_services/user_db.dart';
 import 'package:frc_challenge_app/models/user.dart';
@@ -31,6 +32,7 @@ class _ProfileScreen extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CommonAppBar.appBar("My Profile", context),
+      drawer: CommonDrawers.profileDrawer(context),
       body: Container(
         child: SingleChildScrollView(
           child: Column(

@@ -42,9 +42,10 @@ class PostDb {
       'address': "$address",
       'usersSignedUp': setToString(usersSignedUp),
       'postType': type,
+      'active': "true"
     });
 
-    Post post = new Post(id, ownerUserId, type, time, event, des, address, lat, long, usersSignedUp);
+    Post post = new Post(id, ownerUserId, type, time, event, des, address, lat, long, usersSignedUp, true);
     Set<int> postsSignedUpFor = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]].postsSignedUpFor;
     postsSignedUpFor.add(id);
     await UserDb.updateData(UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]].id, postsSignedUpFor: postsSignedUpFor);
@@ -68,8 +69,10 @@ class PostDb {
           int ownerid = int.parse(data["ownerUserId"]);
           String postType = data["postType"];
           DateTime timestamp = toDateTime(data["timeStamp"]);
+          bool active = data["active"] == "true";
           Post currentPost = new Post(id, ownerid, postType, timestamp, event,
-              des, address, lat, long, stringToSet(usersSignedUpString));
+              des, address, lat, long, stringToSet(usersSignedUpString), active);
+
           postIdList.add(id);
           localMap[id] = currentPost;
         });
@@ -139,6 +142,11 @@ class PostDb {
     }
   }
 
+  static Future<void> deletePostFromDb(int postId) async{
+    localMap[postId].active = false;
+
+    await firestoreInstance.collection("Posts").document("$postId").updateData({"active":"false"});
+  }
 
   static String dateTimeToString(DateTime d){
     return "${d.year} ${d.month} ${d.day} ${d.hour} ${d.minute}";

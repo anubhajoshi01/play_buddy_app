@@ -26,6 +26,7 @@ class _DisplayPostScreen extends State<DisplayPostScreen> {
   Set<Marker> markers = new HashSet();
   int numSignedUp;
   bool signedUp;
+  bool owned;
 
   @override
   void initState() {
@@ -35,6 +36,8 @@ class _DisplayPostScreen extends State<DisplayPostScreen> {
     signedUp = UserDb
         .userMap[UserDb.emailMap[EmailDb.thisEmail]].postsSignedUpFor
         .contains(this.widget.post.id);
+    int thisUser = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]].id;
+    owned = this.widget.post.ownerUserId == thisUser;
   }
 
   @override
@@ -121,7 +124,19 @@ class _DisplayPostScreen extends State<DisplayPostScreen> {
                     signedUp = false;
                   });
                 },
-              )
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 5.0),
+              ),
+              (owned) ? FlatButton(
+                color: Colors.red,
+                child: Text("Delete post"),
+                onPressed: () async{
+                  await PostDb.deletePostFromDb(this.widget.post.id);
+                  Navigator.pop(context);
+                },
+              ) :
+                  Container()
             ])),
       ),
     );

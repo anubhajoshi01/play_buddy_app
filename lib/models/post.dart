@@ -19,6 +19,7 @@ class Post {
   double latitude;
   double longitude;
   Set<int> usersSignedUp;
+  bool active;
   
   Post(
       this.id,
@@ -30,7 +31,8 @@ class Post {
       this.address,
       this.latitude,
       this.longitude,
-      this.usersSignedUp);
+      this.usersSignedUp,
+      this.active);
 
   }
 

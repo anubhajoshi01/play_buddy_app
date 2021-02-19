@@ -2,11 +2,9 @@ import 'package:async_loader/async_loader.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frc_challenge_app/db_services/auth_service.dart';
-import 'package:frc_challenge_app/db_services/user_db.dart';
 import 'package:frc_challenge_app/screens/post_pages/post_map_screen.dart';
 import 'package:frc_challenge_app/screens/auth_pages/log_in_screen.dart';
 
-import 'log_in_screen.dart';
 
 class SignInScreen extends StatefulWidget {
   @override
