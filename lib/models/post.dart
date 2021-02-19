@@ -3,9 +3,9 @@ import 'package:frc_challenge_app/db_services/email_db.dart';
 import 'package:frc_challenge_app/models/user.dart';
 
 class PostType {
-  final String PUBLIC = "anyone can view";
-  final String PRIVATE = "users can view";
-  final String RESTRICTED = "friends can view";
+  final String PUBLIC = "public";
+  final String PRIVATE = "private";
+  final String RESTRICTED = "restricted";
 }
 
 class Post {
@@ -19,6 +19,7 @@ class Post {
   double latitude;
   double longitude;
   Set<int> usersSignedUp;
+  bool active;
   
   Post(
       this.id,
@@ -30,7 +31,8 @@ class Post {
       this.address,
       this.latitude,
       this.longitude,
-      this.usersSignedUp);
+      this.usersSignedUp,
+      this.active);
 
   }
 

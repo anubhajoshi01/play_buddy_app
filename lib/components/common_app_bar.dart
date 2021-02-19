@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frc_challenge_app/db_services/auth_service.dart';
 import 'package:frc_challenge_app/db_services/email_db.dart';
-import 'package:frc_challenge_app/screens/log_in_screen.dart';
+import 'package:frc_challenge_app/screens/auth_pages/log_in_screen.dart';
 
 class CommonAppBar {
 
