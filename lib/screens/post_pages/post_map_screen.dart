@@ -13,7 +13,9 @@ import 'package:toggle_switch/toggle_switch.dart';
 import 'package:frc_challenge_app/services/geolocator.dart';
 
 import 'create_post_screen.dart';
+
 import 'display_post_screen.dart';
+
 
 class PostMapScreen extends StatefulWidget {
 
