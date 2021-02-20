@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frc_challenge_app/services/geolocator.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'app.dart';
@@ -11,5 +12,6 @@ void main() async {
   await UserDb.syncUserMap();
   await EmailDb.init();
   await PostDb.readDb();
+  await Geolocate.getCurrentLocation();
   runApp(MyApp());
 }

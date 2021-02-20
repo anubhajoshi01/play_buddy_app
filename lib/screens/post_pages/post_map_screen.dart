@@ -6,13 +6,16 @@ import 'package:frc_challenge_app/components/bottomNavBar.dart';
 import 'package:frc_challenge_app/components/common_app_bar.dart';
 import 'package:frc_challenge_app/db_services/post_db.dart';
 import 'package:frc_challenge_app/models/post.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:toggle_switch/toggle_switch.dart';
+import 'package:frc_challenge_app/services/geolocator.dart';
 
 import 'create_post_screen.dart';
 import 'display_post_screen.dart';
 
 class PostMapScreen extends StatefulWidget {
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -21,11 +24,12 @@ class PostMapScreen extends StatefulWidget {
 }
 
 class _PostMapScreen extends State<PostMapScreen> {
+
   Set<Marker> markers = new HashSet<Marker>();
   bool mapMode;
   List<String> toggle = ['Map', 'List'];
-
-  static const LatLng _center = const LatLng(45.521563, -122.677433);
+  static Position temp = Geolocate.currLocation;
+  static  LatLng _center =  LatLng(temp.latitude, temp.longitude);
 
   @override
   void initState() {
