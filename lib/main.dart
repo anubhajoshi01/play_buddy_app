@@ -13,5 +13,6 @@ void main() async {
   await EmailDb.init();
   await PostDb.readDb();
   await Geolocate.getCurrentLocation();
+
   runApp(MyApp());
 }

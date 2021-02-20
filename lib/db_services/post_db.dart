@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:frc_challenge_app/db_services/email_db.dart';
 import 'package:frc_challenge_app/db_services/user_db.dart';
 import 'package:frc_challenge_app/models/post.dart';
+import 'package:frc_challenge_app/services/geolocator.dart';
 
 class PostDb {
   static Map<int, Post> localMap = new Map<int, Post>();
@@ -58,7 +59,7 @@ class PostDb {
   static Future<void> readDb() async {
     try {
       await firestoreInstance.collection("Posts").getDocuments().then((value) {
-        value.documents.forEach((element) {
+        value.documents.forEach((element) async {
           var data = element.data;
           String address = data["address"];
           DateTime event = toDateTime(data["eventDateTime"]);
@@ -76,6 +77,10 @@ class PostDb {
 
           postIdList.add(id);
           localMap[id] = currentPost;
+          List<double> latlong = new List<double>();
+          latlong.add(lat);
+          latlong.add(long);
+          await Geolocate.getDistance(id,latlong);
         });
       });
     } catch (e) {
