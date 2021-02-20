@@ -69,6 +69,7 @@ class _SignInScreen extends State<StatefulWidget> {
                   color: Colors.white,
                   child: TextField(
                     keyboardType: TextInputType.text,
+                    obscureText: true,
                     onChanged: (input){
                       setState(() {
                         password = input;

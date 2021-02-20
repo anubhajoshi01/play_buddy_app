@@ -2,17 +2,15 @@ import 'dart:collection';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:frc_challenge_app/components/bottomNavBar.dart';
 import 'package:frc_challenge_app/components/common_app_bar.dart';
 import 'package:frc_challenge_app/db_services/post_db.dart';
 import 'package:frc_challenge_app/models/post.dart';
-import 'file:///E:/cu_hacking/frc_challenge_app/lib/components/bottomNavBar.dart';
-import 'file:///E:/cu_hacking/frc_challenge_app/lib/screens/post_pages/create_post_screen.dart';
-import 'file:///E:/cu_hacking/frc_challenge_app/lib/screens/post_pages/display_post_screen.dart';
-import 'file:///E:/cu_hacking/frc_challenge_app/lib/screens/auth_pages/log_in_screen.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:toggle_switch/toggle_switch.dart';
-import 'file:///E:/cu_hacking/frc_challenge_app/lib/screens/auth_pages/sign_in_screen.dart';
-import 'file:///E:/cu_hacking/frc_challenge_app/lib/screens/auth_pages/log_in_screen.dart';
+
+import 'create_post_screen.dart';
+import 'display_post_screen.dart';
 
 class PostMapScreen extends StatefulWidget {
   @override

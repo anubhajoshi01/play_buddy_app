@@ -68,6 +68,7 @@ class _LogInScreen extends State<LogInScreen>{
                     color: Colors.white,
                     child: TextField(
                       keyboardType: TextInputType.text,
+                      obscureText: true,
                       onChanged: (input){
                         setState(() {
                           password = input;
