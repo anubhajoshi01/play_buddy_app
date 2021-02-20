@@ -40,7 +40,11 @@ class _ViewSignedUpEvents extends State<ViewSignedUpEvents> {
       drawer: CommonDrawers.profileDrawer(context),
       body: Container(
         child: SingleChildScrollView(
-            child: ListView.builder(
+
+            child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height*0.6,
+                child:ListView.builder(
                 itemCount: signedUpEvents.length,
                 itemBuilder: (context, index) {
                   return Dismissible(
@@ -85,7 +89,7 @@ class _ViewSignedUpEvents extends State<ViewSignedUpEvents> {
                     },
                     background: Container(color: Colors.red),
                   );
-                })),
+                }))),
       ),
     );
   }

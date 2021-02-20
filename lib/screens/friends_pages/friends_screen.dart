@@ -36,6 +36,9 @@ class _FriendsScreen extends State<FriendsScreen> {
       drawer: CommonDrawers.friendDrawer(context),
       body: Container(
         child: SingleChildScrollView(
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height*0.6,
+            width: MediaQuery.of(context).size.width,
             child: ListView.builder(
                 itemCount: friendList.length,
                 itemBuilder: (context, index) {
@@ -85,7 +88,7 @@ class _FriendsScreen extends State<FriendsScreen> {
                     background:
                         Container(color: Colors.red, child: Icon(Icons.remove)),
                   );
-                })),
+                }))),
       ),
     );
   }

@@ -164,7 +164,7 @@ class PostDb {
   static String setToString(Set<int> set) {
     String s = "";
     set.forEach((element) {
-      s += "$element";
+      s += " $element";
     });
     s.trim();
     return s;

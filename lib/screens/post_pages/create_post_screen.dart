@@ -5,6 +5,7 @@ import 'package:frc_challenge_app/db_services/email_db.dart';
 import 'package:frc_challenge_app/db_services/post_db.dart';
 import 'package:frc_challenge_app/db_services/user_db.dart';
 import 'package:frc_challenge_app/models/post.dart';
+import 'package:frc_challenge_app/models/user.dart';
 import 'package:frc_challenge_app/screens/post_pages/post_map_screen.dart';
 import 'package:frc_challenge_app/services/geolocator.dart';
 import 'package:geolocator/geolocator.dart';
@@ -296,10 +297,11 @@ class _CreatePostScreen extends State<CreatePostScreen> {
     print("this user ${UserDb.userMap[EmailDb.thisEmail]}");
     DateTime time = DateTime(selectedDate.year, selectedDate.month, selectedDate.day, selectedTime.hour, selectedDate.minute);
     Position pos = await Geolocate.getLatLong(address);
-    Post p = await PostDb.createPost(UserDb.emailMap[EmailDb.thisEmail], selectedStatus, DateTime.now(), pos.latitude, pos.longitude, time, descriptionStr, address);
-    Set<int> posts = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]].postIdList;
+    User thisUser = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
+    Post p = await PostDb.createPost(thisUser.id, selectedStatus, DateTime.now(), pos.latitude, pos.longitude, time, descriptionStr, address);
+    Set<int> posts = thisUser.postIdList;
     posts.add(p.id);
-    await UserDb.updateData(UserDb.emailMap[EmailDb.thisEmail], postIdList: posts);
+    await UserDb.updateData(thisUser.id, postIdList: posts);
   }
 
 }
