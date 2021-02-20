@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:core';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,11 @@ class _PostMapScreen extends State<PostMapScreen> {
   List<String> toggle = ['Map', 'List'];
   static Position temp = Geolocate.currLocation;
   static  LatLng _center =  LatLng(temp.latitude, temp.longitude);
+  static List<double> compareV =[temp.latitude,temp.longitude];
+  static List<Post> sortedPos = new List<Post>();
+  static List<List<double>> pos = new List<List<double>>();
+
+
 
   @override
   void initState() {
@@ -46,6 +52,10 @@ class _PostMapScreen extends State<PostMapScreen> {
       Post p = PostDb.localMap[PostDb.postIdList.elementAt(i)];
       DateTime now = DateTime.now();
       if (p.eventDateTime.isAfter(now)) {
+        List<double> temp = List<double>();
+        temp.add(p.latitude);
+        temp.add(p.longitude);
+        sortedPos.add(p);
         markers.add(Marker(
             markerId: MarkerId("$i"),
             position: LatLng(p.latitude, p.longitude),
@@ -58,7 +68,22 @@ class _PostMapScreen extends State<PostMapScreen> {
                       builder: (context) => DisplayPostScreen(p)));
             }));
       }
+
+      sortedPos.sort((a, b) {
+        double d1 = Geolocate.distancesM[a.id];
+        double d2 =  Geolocate.distancesM[b.id];
+        int num =  d1.compareTo(d2);
+        if(num==0){
+          bool isAfter=a.eventDateTime.isAfter(b.eventDateTime);
+          if(isAfter){
+            return 1;
+          }return -1;
+        }
+        return num;
+      });
+
     }
+
 
     Widget widget = Container();
 
@@ -105,23 +130,23 @@ class _PostMapScreen extends State<PostMapScreen> {
                       )))
               : SingleChildScrollView(
                   child: ListView.builder(
-                      itemCount: PostDb.postIdList.length,
+                      itemCount: sortedPos.length,
                       shrinkWrap: true,
                       itemBuilder: (BuildContext context, int index) {
                         DateTime now = DateTime.now();
-                        Post atIndex = PostDb.localMap[PostDb.postIdList.elementAt(index)];
+                        Post atIndex = PostDb.localMap[sortedPos.elementAt(index)];
                         return (atIndex.eventDateTime.isAfter(now)) ? Container(
                           height: 50,
                           child: Card(
                             child: ListTile(
                               title: Text(
-                                  "${PostDb.localMap[PostDb.postIdList.elementAt(index)].eventDescription}"),
+                                  "${PostDb.localMap[sortedPos.elementAt(index)].eventDescription}"),
                               onTap: () {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => DisplayPostScreen(
-                                            PostDb.localMap[PostDb.postIdList
+                                            PostDb.localMap[sortedPos
                                                 .elementAt(index)])));
                               },
                             ),
