@@ -5,7 +5,7 @@ import 'package:frc_challenge_app/db_services/email_db.dart';
 import 'package:frc_challenge_app/db_services/post_db.dart';
 import 'package:frc_challenge_app/db_services/user_db.dart';
 import 'package:frc_challenge_app/models/post.dart';
-import 'file:///E:/cu_hacking/frc_challenge_app/lib/screens/post_pages/post_map_screen.dart';
+import 'package:frc_challenge_app/screens/post_pages/post_map_screen.dart';
 import 'package:frc_challenge_app/services/geolocator.dart';
 import 'package:geolocator/geolocator.dart';
 
