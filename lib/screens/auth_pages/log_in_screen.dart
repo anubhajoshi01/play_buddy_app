@@ -23,7 +23,7 @@ class _LogInScreen extends State<LogInScreen>{
     return Scaffold(
       appBar: AppBar(
         title: Text("Log in"),
-        backgroundColor: Colors.greenAccent,
+        backgroundColor: Colors.lightBlue,
       ),
         body: SingleChildScrollView(
           child: Container(
@@ -59,6 +59,7 @@ class _LogInScreen extends State<LogInScreen>{
                         color: Colors.grey[900],
                         fontSize:20,
                         fontWeight: FontWeight.bold,
+
                       ),
                     ),
                   ),
@@ -75,8 +76,8 @@ class _LogInScreen extends State<LogInScreen>{
                     ),
                   ),
                   FlatButton(
-                    color: Colors.red,
-                    child: Text("log in"),
+                    color: Colors.lightBlueAccent,
+                    child: Text("Log in"),
                     onPressed: () async{
                       bool success = await AuthenticationService.loginWithEmail(email, password);
                       if(success != null && success){
@@ -92,7 +93,7 @@ class _LogInScreen extends State<LogInScreen>{
                     },
                   ),
                   InkWell(
-                    child: Text("Don't have an account? sign up"),
+                    child: Text("Don't have an account? Sign up!"),
                     onTap: (){
                       Navigator.push(context, MaterialPageRoute(
                       builder: (context) => SignInScreen()
