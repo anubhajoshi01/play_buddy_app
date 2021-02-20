@@ -60,6 +60,7 @@ class _LogInScreen extends State<LogInScreen>{
                         fontSize:20,
                         fontWeight: FontWeight.bold,
 
+
                       ),
                     ),
                   ),

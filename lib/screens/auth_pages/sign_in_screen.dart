@@ -79,7 +79,7 @@ class _SignInScreen extends State<StatefulWidget> {
                 ),
                 FlatButton(
                   color: Colors.red,
-                  child: Text("sign up"),
+                  child: Text("Sign up"),
                   onPressed: () async{
                     bool success = await AuthenticationService.signUpWithEmail(email, password);
                     print(success);
