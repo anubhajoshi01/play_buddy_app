@@ -22,16 +22,41 @@ class _LogInScreen extends State<LogInScreen>{
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
-        title: Text("Log in"),
+        title: Text("  Workout Buddy",
+            style: TextStyle(color: Color(0xffffffaa)),
+        ),
         backgroundColor: Colors.lightBlue,
       ),
         body: SingleChildScrollView(
+
           child: Container(
+
+              // decoration: BoxDecoration(
+              //   image: DecorationImage(
+              //     image: AssetImage("play_buddy_app/playappbackground.png"),
+              //     fit: BoxFit.cover,
+              //   ),
+              // ),
+
               child: Column(
                 children: <Widget>[
                   Container(
-                    padding: EdgeInsets.symmetric(vertical: 40),
-                    child: Text("Enter your email",
+                    // maybe add a logo here
+                    padding: EdgeInsets.symmetric(vertical: 35),
+                    child: Text("Login",
+                        style: TextStyle(
+                          color: Colors.grey[900],
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold,
+                        )
+                    ),
+                  ),
+
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    margin: const EdgeInsets.only(left:15.0),
+                    padding: EdgeInsets.symmetric(vertical: 20),
+                    child: Text("Enter email",
                         style: TextStyle(
                           color: Colors.grey[900],
                           fontSize: 20,
@@ -44,6 +69,22 @@ class _LogInScreen extends State<LogInScreen>{
                     color: Colors.white,
                     child: TextField(
                       keyboardType: TextInputType.text,
+                      decoration: InputDecoration(
+                        hintText: "   Email"
+                      ),
+                      // decoration: InputDecoration(
+                      //   hintText: 'Enter your email here',
+                      //   hintStyle: TextStyle(fontSize:16),
+                      //   border: OutlineInputBorder(
+                      //     borderRadius: BorderRadius.circular(8),
+                      //     borderSide: BorderSide(
+                      //       width: 100,
+                      //       style: BorderStyle.none
+                      //     ),
+                      //   ),
+                      //
+                      // ),
+
                       onChanged: (input){
                         setState(() {
                           email = input;
@@ -52,23 +93,37 @@ class _LogInScreen extends State<LogInScreen>{
                     ),
                   ),
                   Container(
+                   alignment: Alignment.centerLeft,
+                    margin: const EdgeInsets.only(left:15.0),
                     padding: EdgeInsets.symmetric(vertical: 40),
                     child: Text(
-                      "Enter a password",
+                      "Enter password",
                       style: TextStyle(
                         color: Colors.grey[900],
                         fontSize:20,
                         fontWeight: FontWeight.bold,
-
-
                       ),
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(3),
                     color: Colors.white,
                     child: TextField(
                       keyboardType: TextInputType.text,
+                      decoration: InputDecoration(
+                          hintText: "   Password"
+                      ),
+                      // decoration: InputDecoration(
+                      //   hintText: 'Enter your email here',
+                      //   hintStyle: TextStyle(fontSize:16),
+                      //   border: OutlineInputBorder(
+                      //     borderRadius: BorderRadius.circular(8),
+                      //     borderSide: BorderSide(
+                      //         width: 100,
+                      //         style: BorderStyle.none
+                      //     ),
+                      //   ),
+                      //
+                      // ),
                       obscureText: true,
                       onChanged: (input){
                         setState(() {
@@ -77,9 +132,22 @@ class _LogInScreen extends State<LogInScreen>{
                       },
                     ),
                   ),
+
+                  Container(
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                  ),
+
                   FlatButton(
+                    padding: EdgeInsets.symmetric(vertical: 15),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                        side: BorderSide(color: Colors.lightBlueAccent)
+                    ),
                     color: Colors.lightBlueAccent,
-                    child: Text("Log in"),
+
+                    child: Text("Log In",
+                      style: TextStyle(fontSize: 15, color: Color(0xffffffaa)),
+                    ),
                     onPressed: () async{
                       bool success = await AuthenticationService.loginWithEmail(email, password);
                       if(success != null && success){
@@ -94,6 +162,11 @@ class _LogInScreen extends State<LogInScreen>{
                       }
                     },
                   ),
+
+                  Container(
+                    padding: EdgeInsets.symmetric(vertical: 5),
+                  ),
+
                   InkWell(
                     child: Text("Don't have an account? Sign up!"),
                     onTap: (){

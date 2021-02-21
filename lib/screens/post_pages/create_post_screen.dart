@@ -83,24 +83,45 @@ class _CreatePostScreen extends State<CreatePostScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Create a Post"),
+        title: Text("Create a Post",
+          style: TextStyle(color: Colors.white)
+        ),
         centerTitle: true,
-        backgroundColor: Colors.red[700],
+        backgroundColor: Colors.lightBlue[200],
       ),
       body: SingleChildScrollView(
           child: Container(
               child: Column(children: <Widget>[
         Container(
-          padding: EdgeInsets.symmetric(vertical: 40),
+          alignment: Alignment.centerLeft,
+          padding: EdgeInsets.symmetric(vertical: 35),
           child: Text(
-            "Enter the activity type: ",
+            "  Enter the activity type: ",
             style: TextStyle(
               color: Colors.grey[900],
-              fontSize: 20,
+              fontSize: 22,
               fontWeight: FontWeight.bold,
             ),
           ),
         ),
+
+
+
+        // Container(
+        //   alignment: Alignment.centerLeft,
+        //   padding: EdgeInsets.symmetric(vertical: 5),
+        //   child: Text(
+        //     "    Ex: Soccer, Basketball",
+        //     style: TextStyle(
+        //       color: Colors.grey[700],
+        //       fontSize: 14,
+        //
+        //     ),
+        //   ),
+        //
+        // ),
+
+
         Container(
           padding: EdgeInsets.all(3),
           color: Colors.white,
@@ -114,12 +135,13 @@ class _CreatePostScreen extends State<CreatePostScreen> {
           ),
         ),
         Container(
+          alignment: Alignment.centerLeft,
           padding: EdgeInsets.symmetric(vertical: 40),
           child: Text(
-            "Enter the descripton of the event:  ",
+            "  Enter a description of the event:  ",
             style: TextStyle(
               color: Colors.grey[900],
-              fontSize: 20,
+              fontSize: 22,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -128,6 +150,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
           padding: EdgeInsets.all(3),
           color: Colors.white,
           child: TextField(
+
             keyboardType: TextInputType.text,
             onChanged: (input) {
               setState(() {
@@ -137,12 +160,17 @@ class _CreatePostScreen extends State<CreatePostScreen> {
           ),
         ),
         Container(
+
+          padding: EdgeInsets.symmetric(vertical: 20),
+        ),
+
+        Container(
             child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Text(
               "${selectedDate.toLocal()}".split(' ')[0],
-              style: TextStyle(fontSize: 55, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
             ),
             SizedBox(
               height: 20.0,
@@ -153,12 +181,26 @@ class _CreatePostScreen extends State<CreatePostScreen> {
               child: Text(
                 'Select date',
                 style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ),
-              color: Colors.greenAccent,
+              color: Colors.lightBlue[200],
             ),
           ],
         )),
+
+                Container(
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.symmetric(vertical: 40),
+                  child: Text(
+                    "  Select status: ",
+                    style: TextStyle(
+                      color: Colors.grey[900],
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+
         Container(
           child: DropdownButton(
             hint: Text('Status'), // Not necessary for Option 1
@@ -178,30 +220,19 @@ class _CreatePostScreen extends State<CreatePostScreen> {
             }).toList(),
           ),
         ),
-        Container(
-          padding: EdgeInsets.symmetric(vertical: 40),
-          child: Text(
-            "Enter the address: ",
-            style: TextStyle(
-              color: Colors.grey[900],
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        Container(
-          padding: EdgeInsets.all(3),
-          color: Colors.white,
-          child: TextField(
-            keyboardType: TextInputType.text,
-            onChanged: (input) {
-              setState(() {
-                address = input;
-                print("address $address");
-              });
-            },
-          ),
-        ),
+
+                Container(
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.symmetric(vertical: 40),
+                  child: Text(
+                    "  Enter the time: ",
+                    style: TextStyle(
+                      color: Colors.grey[900],
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
                 IconButton(
                   icon: Icon(Icons.alarm),
                   onPressed: () async{
@@ -212,8 +243,45 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                 Text(
                   "${selectedTime.hour} : ${selectedTime.minute}"
                 ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.symmetric(vertical: 40),
+                  child: Text(
+                    "  Enter the address: ",
+                    style: TextStyle(
+                      color: Colors.grey[900],
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.all(3),
+                  color: Colors.white,
+                  child: TextField(
+                    keyboardType: TextInputType.text,
+                    onChanged: (input) {
+                      setState(() {
+                        address = input;
+                        print("address $address");
+                      });
+                    },
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 6),
+                ),
+
                 FlatButton(
-                  child: Text("Post"),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24.0),
+                        side: BorderSide(color: Colors.lightBlue[200])
+                    ),
+                    color: Colors.lightBlue[200],
+                  height: 45,
+                  child: Text("Post",
+                    style: TextStyle(fontSize: 20, color: Colors.white),
+                  ),
                   onPressed: () async{
                     await saveToDb();
                     Navigator.push(context, MaterialPageRoute(builder: (context) => PostMapScreen()));
