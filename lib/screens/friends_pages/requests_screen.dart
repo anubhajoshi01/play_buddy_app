@@ -43,163 +43,203 @@ class _RequestsScreen extends State<RequestsScreen> {
       drawer: CommonDrawers.friendDrawer(context),
       body: Container(
           child: SizedBox(
-        height: MediaQuery.of(context).size.height * 0.7,
-        width: MediaQuery.of(context).size.width,
-        child: SingleChildScrollView(
-            child: Column(
-          children: <Widget>[
-            Text("Your sent requests:"),
-            ListView.builder(
-                itemCount: requestsSent.length,
-                itemBuilder: (context, index) {
-                  return Dismissible(
-                    key: Key("$index"),
-                    child: Card(
-                      child: ListTile(
-                        title: Text("${requestsSent[index].name}"),
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ProfileScreen(
-                                      user: requestsSent[index])));
+            height: MediaQuery
+                .of(context)
+                .size
+                .height * 0.7,
+            width: MediaQuery
+                .of(context)
+                .size
+                .width,
+            child: SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    Text("Your sent requests:"),
+                    SizedBox(
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width,
+                        height: MediaQuery
+                            .of(context)
+                            .size
+                            .height * 0.4,
+                        child: ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: requestsSent.length,
+                            itemBuilder: (context, index) {
+                              return Dismissible(
+                                key: Key("$index"),
+                                child: Card(
+                                  child: ListTile(
+                                    title: Text("${requestsSent[index].name}"),
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ProfileScreen(
+                                                      user: requestsSent[index])));
 
-                          setState(() {
-                            User thisUser = UserDb
-                                .userMap[UserDb.emailMap[EmailDb.thisEmail]];
-                            List<User> newList = new List<User>();
-                            for (int i = 0;
-                                i < thisUser.requestSentList.length;
-                                i++) {
-                              User u = UserDb.userMap[
-                                  thisUser.requestSentList.elementAt(i)];
-                              newList.add(u);
-                            }
-                            requestsSent = newList;
-                          });
-                        },
-                      ),
-                    ),
-                    onDismissed: (direction) {
-                      User thisUser =
-                          UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
-                      Set<int> newRequestSentList = thisUser.requestSentList;
-                      newRequestSentList.remove(requestsSent[index].id);
+                                      setState(() {
+                                        User thisUser = UserDb.userMap[
+                                        UserDb.emailMap[EmailDb.thisEmail]];
+                                        List<User> newList = new List<User>();
+                                        for (int i = 0;
+                                        i < thisUser.requestSentList.length;
+                                        i++) {
+                                          User u = UserDb.userMap[
+                                          thisUser.requestSentList.elementAt(
+                                              i)];
+                                          newList.add(u);
+                                        }
+                                        requestsSent = newList;
+                                      });
+                                    },
+                                  ),
+                                ),
+                                onDismissed: (direction) {
+                                  User thisUser = UserDb
+                                      .userMap[UserDb.emailMap[EmailDb
+                                      .thisEmail]];
+                                  Set<int> newRequestSentList =
+                                      thisUser.requestSentList;
+                                  newRequestSentList.remove(
+                                      requestsSent[index].id);
 
-                      UserDb.updateData(thisUser.id,
-                          requestSentList: newRequestSentList);
+                                  UserDb.updateData(thisUser.id,
+                                      requestSentList: newRequestSentList);
 
-                      Set<int> newRequestRecieved =
-                          requestsSent[index].requestReceivedList;
-                      newRequestSentList.remove(thisUser.id);
+                                  Set<int> newRequestRecieved =
+                                      requestsSent[index].requestReceivedList;
+                                  newRequestSentList.remove(thisUser.id);
 
-                      UserDb.updateData(requestsSent[index].id,
-                          requestReceivedList: newRequestRecieved);
+                                  UserDb.updateData(requestsSent[index].id,
+                                      requestReceivedList: newRequestRecieved);
 
-                      setState(() {
-                        requestsSent.removeAt(index);
-                      });
-                    },
-                    background: Container(
-                      color: Colors.red,
-                      child: Icon(Icons.remove),
-                    ),
-                  );
-                }),
-            Text("Recieved Requests:"),
-            ListView.builder(
-                itemCount: requestsReceived.length,
-                itemBuilder: (context, index) {
-                  return Dismissible(
-                    key: Key("$index"),
-                    child: Card(
-                      child: ListTile(
-                        title: Text(requestsReceived[index].name),
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ProfileScreen(
-                                        user: requestsReceived[index],
-                                      )));
+                                  setState(() {
+                                    requestsSent.removeAt(index);
+                                  });
+                                },
+                                background: Container(
+                                  color: Colors.red,
+                                  child: Icon(Icons.remove),
+                                ),
+                              );
+                            })),
+                    Text("Recieved Requests:"),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height*0.4,
+                        width: MediaQuery.of(context).size.width,
+                        child:
+                        ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: requestsReceived.length,
+                            itemBuilder: (context, index) {
+                              return Dismissible(
+                                key: Key("$index"),
+                                child: Card(
+                                  child: ListTile(
+                                    title: Text(requestsReceived[index].name),
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ProfileScreen(
+                                                    user: requestsReceived[index],
+                                                  )));
 
-                          setState(() {
-                            User thisUser = UserDb
-                                .userMap[UserDb.emailMap[EmailDb.thisEmail]];
-                            List<User> newList = new List<User>();
-                            for (int i = 0;
-                                i < thisUser.requestReceivedList.length;
-                                i++) {
-                              User u = UserDb.userMap[
-                                  thisUser.requestReceivedList.elementAt(i)];
-                              newList.add(u);
-                            }
-                            requestsReceived = newList;
-                          });
-                        },
-                      ),
-                    ),
-                    onDismissed: (direction) {
-                      if (direction == DismissDirection.endToStart) {
-                        User thisUser =
-                            UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
-                        Set<int> newRequestRecievedList =
-                            thisUser.requestReceivedList;
-                        Set<int> newFriendList = thisUser.friendsUserIdList;
-                        newFriendList.add(requestsReceived[index].id);
-                        newRequestRecievedList
-                            .remove(requestsReceived[index].id);
-                        UserDb.updateData(thisUser.id,
-                            requestReceivedList: newRequestRecievedList,
-                            friendsUserIdList: newFriendList);
+                                      setState(() {
+                                        User thisUser = UserDb
+                                            .userMap[UserDb.emailMap[EmailDb
+                                            .thisEmail]];
+                                        List<User> newList = new List<User>();
+                                        for (int i = 0;
+                                        i < thisUser.requestReceivedList.length;
+                                        i++) {
+                                          User u = UserDb.userMap[
+                                          thisUser.requestReceivedList
+                                              .elementAt(i)];
+                                          newList.add(u);
+                                        }
+                                        requestsReceived = newList;
+                                      });
+                                    },
+                                  ),
+                                ),
+                                onDismissed: (direction) {
+                                  if (direction ==
+                                      DismissDirection.endToStart) {
+                                    User thisUser =
+                                    UserDb.userMap[UserDb.emailMap[EmailDb
+                                        .thisEmail]];
+                                    Set<int> newRequestRecievedList =
+                                        thisUser.requestReceivedList;
+                                    Set<int> newFriendList = thisUser
+                                        .friendsUserIdList;
+                                    newFriendList.add(
+                                        requestsReceived[index].id);
+                                    newRequestRecievedList
+                                        .remove(requestsReceived[index].id);
+                                    UserDb.updateData(thisUser.id,
+                                        requestReceivedList: newRequestRecievedList,
+                                        friendsUserIdList: newFriendList);
 
-                        Set<int> newRequestSentList =
-                            requestsReceived[index].requestSentList;
-                        Set<int> newFriendList2 =
-                            requestsReceived[index].friendsUserIdList;
-                        newRequestSentList.remove(thisUser.id);
-                        newFriendList2.add(thisUser.id);
-                        UserDb.updateData(requestsReceived[index].id,
-                            requestSentList: newRequestSentList,
-                            friendsUserIdList: newFriendList2);
+                                    Set<int> newRequestSentList =
+                                        requestsReceived[index].requestSentList;
+                                    Set<int> newFriendList2 =
+                                        requestsReceived[index]
+                                            .friendsUserIdList;
+                                    newRequestSentList.remove(thisUser.id);
+                                    newFriendList2.add(thisUser.id);
+                                    UserDb.updateData(
+                                        requestsReceived[index].id,
+                                        requestSentList: newRequestSentList,
+                                        friendsUserIdList: newFriendList2);
 
-                        setState(() {
-                          requestsReceived.removeAt(index);
-                        });
-                      } else if (direction == DismissDirection.startToEnd) {
-                        User thisUser =
-                            UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
-                        Set<int> newRequestRecievedList =
-                            thisUser.requestReceivedList;
-                        newRequestRecievedList
-                            .remove(requestsReceived[index].id);
-                        UserDb.updateData(thisUser.id,
-                            requestReceivedList: newRequestRecievedList);
+                                    setState(() {
+                                      requestsReceived.removeAt(index);
+                                    });
+                                  } else if (direction ==
+                                      DismissDirection.startToEnd) {
+                                    User thisUser =
+                                    UserDb.userMap[UserDb.emailMap[EmailDb
+                                        .thisEmail]];
+                                    Set<int> newRequestRecievedList =
+                                        thisUser.requestReceivedList;
+                                    newRequestRecievedList
+                                        .remove(requestsReceived[index].id);
+                                    UserDb.updateData(thisUser.id,
+                                        requestReceivedList: newRequestRecievedList);
 
-                        Set<int> newRequestSentList =
-                            requestsReceived[index].requestSentList;
-                        newRequestSentList.remove(thisUser.id);
-                        UserDb.updateData(requestsReceived[index].id,
-                            requestSentList: newRequestSentList);
+                                    Set<int> newRequestSentList =
+                                        requestsReceived[index].requestSentList;
+                                    newRequestSentList.remove(thisUser.id);
+                                    UserDb.updateData(
+                                        requestsReceived[index].id,
+                                        requestSentList: newRequestSentList);
 
-                        setState(() {
-                          requestsReceived.removeAt(index);
-                        });
-                      }
-                    },
-                    background: Container(
-                      color: Colors.red,
-                      child: Icon(Icons.remove),
-                    ),
-                    secondaryBackground: Container(
-                      color: Colors.green,
-                      child: Icon(Icons.add),
-                    ),
-                  );
-                })
-          ],
-        )),
-      )),
+                                    setState(() {
+                                      requestsReceived.removeAt(index);
+                                    });
+                                  }
+                                },
+                                background: Container(
+                                  color: Colors.red,
+                                  child: Icon(Icons.remove),
+                                ),
+                                secondaryBackground: Container(
+                                  color: Colors.green,
+                                  child: Icon(Icons.add),
+                                ),
+                              );
+                            }))
+                  ],
+                )),
+          )),
     );
   }
 }

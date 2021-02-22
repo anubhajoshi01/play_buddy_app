@@ -166,18 +166,27 @@ class PostDb {
     set.forEach((element) {
       s += " $element";
     });
-    s.trim();
+    s = s.substring(1);
     return s;
   }
 
   static Set<int> stringToSet(String set) {
-    if (set == null || set.isEmpty || set.length == 0) {
+    if (set == null || set.isEmpty || set.length == 0 || set == "" || set == "null") {
       return Set<int>();
     }
     List<String> list = set.split(" ");
+    print("length string to set ${list.length}");
     Set<int> intset = Set<int>();
     list.forEach((element) {
-      intset.add(int.parse(element));
+      int parsed;
+      try {
+         parsed = int.parse(element);
+      }catch(e){
+        print(e.toString());
+      }
+      if(parsed != null){
+        intset.add(parsed);
+      }
     });
     return intset;
   }
