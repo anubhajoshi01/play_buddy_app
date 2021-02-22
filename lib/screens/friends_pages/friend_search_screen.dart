@@ -26,7 +26,7 @@ class _FriendSearchScreen extends State<StatefulWidget>{
           GestureDetector(
             child: Icon(Icons.search),
             onTap: (){
-              showSearch(context: context, delegate: FriendSearch())
+              showSearch(context: context, delegate: FriendSearch());
             },
           ),
           GestureDetector(
