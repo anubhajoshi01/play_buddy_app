@@ -5,8 +5,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frc_challenge_app/components/bottomNavBar.dart';
 import 'package:frc_challenge_app/components/common_app_bar.dart';
+import 'package:frc_challenge_app/db_services/auth_service.dart';
+import 'package:frc_challenge_app/db_services/email_db.dart';
 import 'package:frc_challenge_app/db_services/post_db.dart';
 import 'package:frc_challenge_app/models/post.dart';
+import 'package:frc_challenge_app/screens/auth_pages/log_in_screen.dart';
+import 'package:frc_challenge_app/screens/post_search.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:toggle_switch/toggle_switch.dart';
@@ -45,24 +49,18 @@ class _PostMapScreen extends State<PostMapScreen> {
     super.initState();
     mapMode = true;
     toggle = ['Map', 'List'];
-  }
 
-  @override
-  Widget build(BuildContext context) {
-    print(mapMode);
+    print("postidlength ${PostDb.postIdList.length}");
     for (int i = 0; i < PostDb.postIdList.length; i++) {
       Post p = PostDb.localMap[PostDb.postIdList.elementAt(i)];
       DateTime now = DateTime.now();
-      if (p.eventDateTime.isAfter(now)) {
-        List<double> temp = List<double>();
-        temp.add(p.latitude);
-        temp.add(p.longitude);
+      if (p.eventDateTime.isAfter(now) && p.active) {
         sortedPos.add(p);
         markers.add(Marker(
             markerId: MarkerId("$i"),
             position: LatLng(p.latitude, p.longitude),
             icon:
-                BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+            BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
             onTap: () {
               Navigator.push(
                   context,
@@ -71,28 +69,52 @@ class _PostMapScreen extends State<PostMapScreen> {
             }));
       }
 
-      sortedPos.sort((a, b) {
-        double d1 = Geolocate.distancesM[a.id];
-        double d2 =  Geolocate.distancesM[b.id];
-        int num =  d1.compareTo(d2);
-        if(num==0){
-          bool isAfter=a.eventDateTime.isAfter(b.eventDateTime);
-          if(isAfter){
-            return 1;
-          }return -1;
-        }
-        return num;
-      });
-
     }
 
 
-    Widget widget = Container();
+    print("sortedposlength ${sortedPos.length}");
+    sortedPos.sort((a, b) {
+      double d1 = Geolocate.distancesM[a.id];
+      double d2 =  Geolocate.distancesM[b.id];
+      int num =  d1.compareTo(d2);
+      if(num==0){
+        bool isAfter=a.eventDateTime.isAfter(b.eventDateTime);
+        if(isAfter){
+          return 1;
+        }return -1;
+      }
+      return num;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print(mapMode);
 
     return Scaffold(
 
       //add colour
-      appBar: CommonAppBar.appBar("View Posts", context),
+      appBar: AppBar(
+        title: Text("View Events"),
+        backgroundColor: Colors.greenAccent,
+        actions: <Widget>[
+          GestureDetector(
+            child: Icon(Icons.search),
+            onTap: () {
+              showSearch(context: context, delegate: PostSearch());
+            },
+          ),
+          GestureDetector(
+            child: Icon(Icons.input),
+            onTap: () {
+              EmailDb.addBool(false);
+              AuthenticationService.signOutUser();
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => LogInScreen()));
+            },
+          )
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         backgroundColor: Colors.grey[400],
@@ -141,20 +163,19 @@ class _PostMapScreen extends State<PostMapScreen> {
                       shrinkWrap: true,
                       itemBuilder: (BuildContext context, int index) {
                         DateTime now = DateTime.now();
-                        Post atIndex = PostDb.localMap[sortedPos.elementAt(index)];
+                        Post atIndex = PostDb.localMap[sortedPos.elementAt(index).id];
+                        print("$atIndex index");
                         return (atIndex.eventDateTime.isAfter(now)) ? Container(
                           height: 50,
                           child: Card(
                             child: ListTile(
                               title: Text(
-                                  "${PostDb.localMap[sortedPos.elementAt(index)].eventDescription}"),
+                                  "${atIndex.eventDescription}"),
                               onTap: () {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => DisplayPostScreen(
-                                            PostDb.localMap[sortedPos
-                                                .elementAt(index)])));
+                                        builder: (context) => DisplayPostScreen(atIndex)));
                               },
                             ),
                           ),

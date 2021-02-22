@@ -9,10 +9,10 @@ import 'db_services/user_db.dart';
 
 void main() async {
   await Hive.initFlutter();
+  await Geolocate.getCurrentLocation();
   await UserDb.syncUserMap();
   await EmailDb.init();
   await PostDb.readDb();
-  await Geolocate.getCurrentLocation();
 
   runApp(MyApp());
 }

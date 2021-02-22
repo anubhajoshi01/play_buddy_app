@@ -3,6 +3,7 @@ import 'package:frc_challenge_app/components/bottomNavBar.dart';
 import 'package:frc_challenge_app/db_services/user_db.dart';
 import 'package:frc_challenge_app/models/post.dart';
 import 'package:frc_challenge_app/models/user.dart';
+import 'package:frc_challenge_app/screens/home_pages/profile_screen.dart';
 
 class SearchScreen extends StatefulWidget {
   //placeholders for the event posts
@@ -57,15 +58,25 @@ class FriendSearch extends SearchDelegate {
   @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
-      onPressed: () {},
+      onPressed: () {
+        Navigator.pop(context);
+      },
       icon: Icon(Icons.arrow_back),
     );
   }
 
   @override
   Widget buildResults(BuildContext context) {
-    // TODO: implement buildResults
-    return Text(query);
+
+    return ListView.builder(itemCount: UserDb.userIdList.length,itemBuilder: (context, index){
+      User atIndex = UserDb.userMap[UserDb.userIdList.elementAt(index)];
+      return ListTile(
+        title: Text(atIndex.name),
+        onTap: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen(user:atIndex)));
+        },
+      );
+    });
   }
 
   @override
@@ -76,15 +87,16 @@ class FriendSearch extends SearchDelegate {
       User u = UserDb.userMap[UserDb.userIdList.elementAt(i)];
       userList.add(u);
     }
-    if(query.isEmpty){
-      userList.clear();
-    }
+
     show = (query.isEmpty) ? userList : userList.where((element) => element.name.contains(query) || element.bio.contains(query)).toList();
     return ListView.builder(
         itemCount: show.length,
         itemBuilder: (context, index) {
           return ListTile(
             title: Text(show[index].name),
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen(user:show[index])));
+            },
           );
         });
   }

@@ -24,9 +24,10 @@ class _ViewSignedUpEvents extends State<ViewSignedUpEvents> {
   void initState() {
     super.initState();
     User thisUser = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
+    DateTime now = DateTime.now();
     for (int i = 0; i < thisUser.postsSignedUpFor.length; i++) {
       Post p = PostDb.localMap[thisUser.postsSignedUpFor.elementAt(i)];
-      if (p.active) {
+      if (p.active && p.eventDateTime.isAfter(now)) {
         signedUpEvents.add(p);
       }
     }

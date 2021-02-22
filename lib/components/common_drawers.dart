@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:frc_challenge_app/screens/friends_pages/friend_search_screen.dart';
 import 'package:frc_challenge_app/screens/friends_pages/friends_screen.dart';
 import 'package:frc_challenge_app/screens/friends_pages/requests_screen.dart';
 import 'package:frc_challenge_app/screens/home_pages/profile_screen.dart';
@@ -52,6 +53,12 @@ class CommonDrawers{
             decoration: BoxDecoration(
               color: Colors.greenAccent
             ),
+          ),
+          ListTile(
+            title: Text("Search Users"),
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => FriendSearchScreen()));
+            },
           ),
           ListTile(
             title: Text("My Friends"),
