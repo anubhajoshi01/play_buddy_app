@@ -90,6 +90,7 @@ class _SignInScreen extends State<StatefulWidget> {
                   color: Colors.white,
                   child: TextField(
                     keyboardType: TextInputType.text,
+
                     decoration: InputDecoration(
                         hintText: "   Password"
                     ),
@@ -108,6 +109,7 @@ class _SignInScreen extends State<StatefulWidget> {
                 ),
 
                 FlatButton(
+
                   padding: EdgeInsets.symmetric(vertical: 15),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18.0),
@@ -117,6 +119,10 @@ class _SignInScreen extends State<StatefulWidget> {
                   child: Text("Sign Up",
                     style: TextStyle(fontSize: 15, color: Color(0xffffffaa)),
                   ),
+
+                  // color: Colors.red,
+                  // child: Text("Sign up"),
+
                   onPressed: () async{
                     bool success = await AuthenticationService.signUpWithEmail(email, password);
                     print(success);

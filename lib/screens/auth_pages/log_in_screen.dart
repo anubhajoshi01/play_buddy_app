@@ -109,6 +109,7 @@ class _LogInScreen extends State<LogInScreen>{
                     color: Colors.white,
                     child: TextField(
                       keyboardType: TextInputType.text,
+
                       decoration: InputDecoration(
                           hintText: "   Password"
                       ),
@@ -124,6 +125,7 @@ class _LogInScreen extends State<LogInScreen>{
                       //   ),
                       //
                       // ),
+
                       obscureText: true,
                       onChanged: (input){
                         setState(() {
