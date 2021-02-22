@@ -1,5 +1,8 @@
 
 import 'package:flutter/material.dart';
+import 'package:frc_challenge_app/screens/friends_pages/friend_search_screen.dart';
+import 'package:frc_challenge_app/screens/friends_pages/friends_screen.dart';
+import 'package:frc_challenge_app/screens/friends_pages/requests_screen.dart';
 import 'package:frc_challenge_app/screens/home_pages/profile_screen.dart';
 import 'package:frc_challenge_app/screens/home_pages/view_my_events_screen.dart';
 import 'package:frc_challenge_app/screens/home_pages/view_signedup_events_screen.dart';
@@ -52,12 +55,22 @@ class CommonDrawers{
             ),
           ),
           ListTile(
+            title: Text("Search Users"),
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => FriendSearchScreen()));
+            },
+          ),
+          ListTile(
             title: Text("My Friends"),
-            onTap: (){},
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => FriendsScreen()));
+            },
           ),
           ListTile(
             title: Text("Requests"),
-            onTap: (){},
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => RequestsScreen()));
+            },
           )
         ],
       )

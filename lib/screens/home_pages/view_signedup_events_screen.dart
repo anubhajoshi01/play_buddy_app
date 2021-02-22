@@ -24,9 +24,10 @@ class _ViewSignedUpEvents extends State<ViewSignedUpEvents> {
   void initState() {
     super.initState();
     User thisUser = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
+    DateTime now = DateTime.now();
     for (int i = 0; i < thisUser.postsSignedUpFor.length; i++) {
       Post p = PostDb.localMap[thisUser.postsSignedUpFor.elementAt(i)];
-      if (p.active) {
+      if (p.active && p.eventDateTime.isAfter(now)) {
         signedUpEvents.add(p);
       }
     }
@@ -40,7 +41,11 @@ class _ViewSignedUpEvents extends State<ViewSignedUpEvents> {
       drawer: CommonDrawers.profileDrawer(context),
       body: Container(
         child: SingleChildScrollView(
-            child: ListView.builder(
+
+            child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height*0.6,
+                child:ListView.builder(
                 itemCount: signedUpEvents.length,
                 itemBuilder: (context, index) {
                   return Dismissible(
@@ -85,7 +90,7 @@ class _ViewSignedUpEvents extends State<ViewSignedUpEvents> {
                     },
                     background: Container(color: Colors.red),
                   );
-                })),
+                }))),
       ),
     );
   }
