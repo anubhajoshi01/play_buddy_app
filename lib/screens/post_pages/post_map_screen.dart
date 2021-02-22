@@ -13,7 +13,9 @@ import 'package:toggle_switch/toggle_switch.dart';
 import 'package:frc_challenge_app/services/geolocator.dart';
 
 import 'create_post_screen.dart';
+
 import 'display_post_screen.dart';
+
 
 class PostMapScreen extends StatefulWidget {
 
@@ -88,9 +90,12 @@ class _PostMapScreen extends State<PostMapScreen> {
     Widget widget = Container();
 
     return Scaffold(
+
+      //add colour
       appBar: CommonAppBar.appBar("View Posts", context),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
+        backgroundColor: Colors.grey[400],
         onPressed: () {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => CreatePostScreen()));
@@ -103,6 +108,8 @@ class _PostMapScreen extends State<PostMapScreen> {
           Padding(
             padding: EdgeInsets.symmetric(vertical: 20.0),
             child: ToggleSwitch(
+              activeBgColor: Colors.lightBlue[100],
+              inactiveBgColor: Colors.grey[400],
               minWidth: 50.0,
               minHeight: 50.0,
               labels: toggle,
@@ -120,7 +127,7 @@ class _PostMapScreen extends State<PostMapScreen> {
               ? SingleChildScrollView(
                   child: SizedBox(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.75,
+                      height: MediaQuery.of(context).size.height * 0.6,
                       child: GoogleMap(
                         markers: markers,
                         initialCameraPosition: CameraPosition(

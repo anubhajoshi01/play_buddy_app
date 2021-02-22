@@ -28,8 +28,13 @@ class _EditProfileScreen extends State<EditProfileScreen>{
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 20),
+              ),
               Text(
-                "Type your new name:"
+                "Type your new name:",
+                 style: TextStyle(fontSize: 15),
+
               ),
               TextField(
                 onChanged: (input){
@@ -38,8 +43,12 @@ class _EditProfileScreen extends State<EditProfileScreen>{
                   });
                 },
               ),
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 20),
+              ),
               Text(
-                "Type your new Bio"
+                "Type your new Bio",
+                style: TextStyle(fontSize: 15),
               ),
               TextField(
                 onChanged: (input){
@@ -48,8 +57,13 @@ class _EditProfileScreen extends State<EditProfileScreen>{
                   });
                 },
               ),
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 10),
+              ),
               FlatButton(
-                child: Text("Done"),
+                child: Text("Done",
+                  style: TextStyle(fontSize: 15),
+                ),
                 onPressed: () async{
                   await updateDb();
                   Navigator.pop(context, "$name $bio");

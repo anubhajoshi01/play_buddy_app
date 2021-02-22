@@ -24,15 +24,30 @@ class _SignInScreen extends State<StatefulWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Sign up"),
-          backgroundColor: Colors.greenAccent,
+          title: Text("Workout Buddy",
+            style: TextStyle(color: Color(0xffffffaa)),
+          ),
+          backgroundColor: Colors.lightBlue,
         ),
         body: SingleChildScrollView(
           child: Container(
             child: Column(
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: 40),
+                  // maybe add a logo here
+                  padding: EdgeInsets.symmetric(vertical: 35),
+                  child: Text("Sign Up",
+                      style: TextStyle(
+                        color: Colors.grey[900],
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold,
+                      )
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  margin: const EdgeInsets.only(left:15.0),
+                  padding: EdgeInsets.symmetric(vertical: 20),
                   child: Text("Enter your email",
                       style: TextStyle(
                         color: Colors.grey[900],
@@ -46,6 +61,9 @@ class _SignInScreen extends State<StatefulWidget> {
                   color: Colors.white,
                   child: TextField(
                     keyboardType: TextInputType.text,
+                    decoration: InputDecoration(
+                        hintText: "   Email"
+                    ),
                     onChanged: (input){
                       setState(() {
                         email = input;
@@ -54,6 +72,8 @@ class _SignInScreen extends State<StatefulWidget> {
                   ),
                 ),
                 Container(
+                  alignment: Alignment.centerLeft,
+                  margin: const EdgeInsets.only(left:15.0),
                   padding: EdgeInsets.symmetric(vertical: 40),
                   child: Text(
                     "Enter a password",
@@ -61,6 +81,7 @@ class _SignInScreen extends State<StatefulWidget> {
                       color: Colors.grey[900],
                       fontSize:20,
                       fontWeight: FontWeight.bold,
+
                     ),
                   ),
                 ),
@@ -69,7 +90,12 @@ class _SignInScreen extends State<StatefulWidget> {
                   color: Colors.white,
                   child: TextField(
                     keyboardType: TextInputType.text,
+
+                    decoration: InputDecoration(
+                        hintText: "   Password"
+                    ),
                     obscureText: true,
+
                     onChanged: (input){
                       setState(() {
                         password = input;
@@ -77,14 +103,31 @@ class _SignInScreen extends State<StatefulWidget> {
                     },
                   ),
                 ),
+
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 10),
+                ),
+
                 FlatButton(
-                  color: Colors.red,
-                  child: Text("sign up"),
+
+                  padding: EdgeInsets.symmetric(vertical: 15),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                      side: BorderSide(color: Colors.lightBlueAccent)
+                  ),
+                  color: Colors.lightBlueAccent,
+                  child: Text("Sign Up",
+                    style: TextStyle(fontSize: 15, color: Color(0xffffffaa)),
+                  ),
+
+                  // color: Colors.red,
+                  // child: Text("Sign up"),
+
                   onPressed: () async{
                     bool success = await AuthenticationService.signUpWithEmail(email, password);
                     print(success);
                     if(success != null && success){
-                      print("success");
+                      print("Success");
                       Navigator.push(context, MaterialPageRoute(builder: (context) => PostMapScreen()));
                     }
                     else{
@@ -94,8 +137,12 @@ class _SignInScreen extends State<StatefulWidget> {
                     }
                   },
                 ),
+
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 5),
+                ),
             InkWell(
-              child: Text("have an account? log in"),
+              child: Text("Have an account? Log in"),
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(
                     builder: (context) => LogInScreen()

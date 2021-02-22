@@ -13,6 +13,7 @@ class bottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 65,
+      color: Colors.lightBlue[100],
       padding: EdgeInsets.only(top: 3, bottom: 30),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

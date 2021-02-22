@@ -48,7 +48,7 @@ class _DisplayPostScreen extends State<DisplayPostScreen> {
         LatLng(this.widget.post.latitude, this.widget.post.longitude)));
     return Scaffold(
       appBar: CommonAppBar.appBar("View Post", context),
-      backgroundColor: Colors.greenAccent,
+      backgroundColor: Colors.grey[300],
       body: Container(
         child: SingleChildScrollView(
             child: Column(children: <Widget>[
@@ -71,13 +71,20 @@ class _DisplayPostScreen extends State<DisplayPostScreen> {
                     ),
                   )),
               Text("${this.widget.post.eventDescription}"),
+              Text("\n"),
               Text("${this.widget.post.eventDateTime.toString()}"),
+              Text("\n"),
               Text("${this.widget.post.address}"),
+              Text("\n"),
               Text("${this.widget.post.usersSignedUp.length} have signed up!"),
               (!signedUp) ?
+
+
               FlatButton(
-                color: Colors.red,
-                child: Text("sign up"),
+                color: Colors.lightBlue[100],
+                child: Text("Sign Up",
+                  style: TextStyle(color: Colors.black),
+                ),
                 onPressed: () {
                   Set<int> postsSignedUpFor = UserDb
                       .userMap[UserDb.emailMap[EmailDb.thisEmail]]
@@ -102,8 +109,10 @@ class _DisplayPostScreen extends State<DisplayPostScreen> {
                 },
               ) :
               FlatButton(
-                color: Colors.red,
-                child: Text("delete"),
+                color: Colors.lightBlue[100],
+                child: Text("Withdraw",
+                  style: TextStyle(color: Colors.black)
+                ),
                 onPressed: () {
                   Set<int> postsSignedUpFor = UserDb
                       .userMap[UserDb.emailMap[EmailDb.thisEmail]]
@@ -129,8 +138,8 @@ class _DisplayPostScreen extends State<DisplayPostScreen> {
                 padding: EdgeInsets.symmetric(vertical: 5.0),
               ),
               (owned) ? FlatButton(
-                color: Colors.red,
-                child: Text("Delete post"),
+                color: Colors.lightBlue[100],
+                child: Text("Delete Post"),
                 onPressed: () async{
                   await PostDb.deletePostFromDb(this.widget.post.id);
                   Navigator.pop(context);
