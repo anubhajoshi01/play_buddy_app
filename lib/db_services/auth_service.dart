@@ -36,6 +36,7 @@ class AuthenticationService{
     }
     catch(e){
       errMessage = e.message;
+
       return null;
     }
   }

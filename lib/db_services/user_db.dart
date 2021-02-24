@@ -113,18 +113,28 @@ class UserDb {
     set.forEach((element) {
       s += " $element";
     });
-    s.trim();
+    s = s.trim();
+    print("set to string s $s");
     return s;
   }
 
   static Set<int> stringToSet(String set) {
-    if (set == null || set.isEmpty|| set.length == 0 ) {
+    if (set == null || set.isEmpty|| set.length == 0 || set == "null" || set == "") {
       return Set<int>();
     }
     List<String> list = set.split(" ");
+    print("length set: ${list.length}");
     Set<int> intset = Set<int>();
     list.forEach((element) {
-      intset.add(int.parse(element));
+      int parsed;
+      try {
+        parsed = int.parse(element);
+      }catch(e){
+        print("error string to set user db ${e.toString()}");
+      }
+      if(parsed != null){
+        intset.add(parsed);
+      }
     });
     return intset;
   }
