@@ -159,6 +159,7 @@ class _LogInScreen extends State<LogInScreen>{
                       else{
                         setState(() {
                           print("fail");
+                          print(AuthenticationService.errMessage);
                           authError = true;
                         });
                       }
@@ -177,7 +178,8 @@ class _LogInScreen extends State<LogInScreen>{
                       ));
                     }
                   ),
-                  (authError) ? Text("Auth failed. try again") : Container()
+                  (authError) ? Text("${AuthenticationService.errMessage}") : Container()
+
                 ],
               )
           ),
