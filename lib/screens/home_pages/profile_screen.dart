@@ -65,24 +65,28 @@ class _ProfileScreen extends State<ProfileScreen> {
                 // alignment: Alignment.centerLeft,
 
               Container(
-                padding: EdgeInsets.symmetric(vertical: 10),
+                padding: EdgeInsets.symmetric(vertical: 25),
               ),
 
-              Text("Name: $name",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              Text("$name",
+                style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.left,
               ),
 
               Container(
-                padding: EdgeInsets.symmetric(vertical: 5),
-              ),
-
-              Text("Bio: $bio",
-                style: TextStyle(fontSize: 20),
+                padding: EdgeInsets.symmetric(vertical: 15),
               ),
 
               Container(
-                padding: EdgeInsets.symmetric(vertical: 20),
+                margin: const EdgeInsets.all(15.0),
+                child: Text("$bio",
+                  style: TextStyle(fontSize: 20),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 30),
               ),
 
               (this.widget.user == null)

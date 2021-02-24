@@ -22,7 +22,7 @@ class _FriendSearchScreen extends State<StatefulWidget> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Search User"),
-        backgroundColor: Colors.greenAccent,
+        backgroundColor: Colors.lightBlue[100],
         actions: <Widget>[
           GestureDetector(
             child: Icon(Icons.search),
