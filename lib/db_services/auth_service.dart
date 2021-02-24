@@ -8,14 +8,19 @@ import 'email_db.dart';
 class AuthenticationService{
 
   static final firebaseAuth = FirebaseAuth.instance;
+  static FirebaseUser user;
+
+  static String errMessage = "";
 
   static Future<bool> loginWithEmail(String email, String password) async{
     EmailDb.addEmail(email);
     EmailDb.addBool(true);
     try{
-      var user = await firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+      await firebaseAuth.signInWithEmailAndPassword(email:email, password:password);
       return user != null;
     } catch(e){
+      //print(e.code);
+      errMessage = e.code;
       return null;
     }
   }
@@ -30,6 +35,7 @@ class AuthenticationService{
       return authResult.user != null;
     }
     catch(e){
+      errMessage = e.message;
       return null;
     }
   }

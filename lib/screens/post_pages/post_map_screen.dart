@@ -8,7 +8,9 @@ import 'package:frc_challenge_app/components/common_app_bar.dart';
 import 'package:frc_challenge_app/db_services/auth_service.dart';
 import 'package:frc_challenge_app/db_services/email_db.dart';
 import 'package:frc_challenge_app/db_services/post_db.dart';
+import 'package:frc_challenge_app/db_services/user_db.dart';
 import 'package:frc_challenge_app/models/post.dart';
+import 'package:frc_challenge_app/models/user.dart';
 import 'package:frc_challenge_app/screens/auth_pages/log_in_screen.dart';
 import 'package:frc_challenge_app/screens/post_search.dart';
 import 'package:geolocator/geolocator.dart';
@@ -47,6 +49,7 @@ class _PostMapScreen extends State<PostMapScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    sortedPos.clear();
     mapMode = true;
     toggle = ['Map', 'List'];
 
@@ -54,7 +57,7 @@ class _PostMapScreen extends State<PostMapScreen> {
     for (int i = 0; i < PostDb.postIdList.length; i++) {
       Post p = PostDb.localMap[PostDb.postIdList.elementAt(i)];
       DateTime now = DateTime.now();
-      if (p.eventDateTime.isAfter(now) && p.active) {
+      if (checkStat(p, now)) {
         sortedPos.add(p);
         markers.add(Marker(
             markerId: MarkerId("$i"),
@@ -71,7 +74,6 @@ class _PostMapScreen extends State<PostMapScreen> {
 
     }
 
-
     print("sortedposlength ${sortedPos.length}");
     sortedPos.sort((a, b) {
       double d1 = Geolocate.distancesM[a.id];
@@ -87,6 +89,16 @@ class _PostMapScreen extends State<PostMapScreen> {
     });
   }
 
+
+  static bool checkStat(Post p, DateTime now){
+    User u  = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
+    if(p.postType==("public")||u.friendsUserIdList.contains(p.ownerUserId)){
+      if(p.eventDateTime.isAfter(now) && p.active) {
+        return true;
+      }
+    }
+    return false;
+  }
   @override
   Widget build(BuildContext context) {
     print(mapMode);

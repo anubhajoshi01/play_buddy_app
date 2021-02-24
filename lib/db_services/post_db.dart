@@ -75,9 +75,7 @@ class PostDb {
           bool active = data["active"] == "true";
           Post currentPost = new Post(id, ownerid, postType, timestamp, event,
               des, address, lat, long, stringToSet(usersSignedUpString), active);
-          if(checkStat(currentPost)){
             postIdList.add(id);
-          }
           localMap[id] = currentPost;
           List<double> latlong = new List<double>();
           latlong.add(lat);
@@ -90,13 +88,6 @@ class PostDb {
     }
   }
 
-  static bool checkStat(Post p){
-    User u  = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
-    if(p.postType==("public")||u.friendsUserIdList.contains(p.ownerUserId)){
-      return true;
-    }
-    return false;
-  }
 
   static DateTime toDateTime(String str) {
     List<String> split = str.split(" ");
