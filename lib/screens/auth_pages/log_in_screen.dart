@@ -23,9 +23,9 @@ class _LogInScreen extends State<LogInScreen>{
     return Scaffold(
       appBar: AppBar(
         title: Text("  Workout Buddy",
-            style: TextStyle(color: Color(0xffffffaa)),
+            style: TextStyle(color: Colors.black),
         ),
-        backgroundColor: Colors.lightBlue,
+        backgroundColor: Colors.lightBlue[100],
       ),
         body: SingleChildScrollView(
 
@@ -143,12 +143,12 @@ class _LogInScreen extends State<LogInScreen>{
                     padding: EdgeInsets.symmetric(vertical: 15),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(18.0),
-                        side: BorderSide(color: Colors.lightBlueAccent)
+                        side: BorderSide(color: Colors.lightBlue[100])
                     ),
-                    color: Colors.lightBlueAccent,
+                    color: Colors.lightBlue[100],
 
                     child: Text("Log In",
-                      style: TextStyle(fontSize: 15, color: Color(0xffffffaa)),
+                      style: TextStyle(fontSize: 15, color: Colors.black),
                     ),
                     onPressed: () async{
                       bool success = await AuthenticationService.loginWithEmail(email, password);

@@ -165,20 +165,23 @@ class PostDb {
   static String setToString(Set<int> set) {
     String s = "";
     set.forEach((element) {
-      s += " $element";
+      s += "$element ";
     });
     s = s.substring(1);
     return s;
   }
 
   static Set<int> stringToSet(String set) {
-    if (set == null || set.isEmpty || set.length == 0 || set == "" || set == "null") {
+
+    if (set == null || set.isEmpty || set.length == 0 || set == "null"|| set == "") {
+
       return Set<int>();
     }
     List<String> list = set.split(" ");
     print("length string to set ${list.length}");
     Set<int> intset = Set<int>();
     list.forEach((element) {
+
       int parsed;
       try {
          parsed = int.parse(element);
@@ -188,6 +191,7 @@ class PostDb {
       if(parsed != null){
         intset.add(parsed);
       }
+
     });
     return intset;
   }

@@ -15,9 +15,9 @@ class CommonDrawers{
         padding: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
         children: <Widget>[
           DrawerHeader(
-            child: Text("Navigate"),
+            child: Text("Profile"),
             decoration: BoxDecoration(
-              color: Colors.greenAccent
+              color: Colors.lightBlue[100]
             ),
           ),
           ListTile(

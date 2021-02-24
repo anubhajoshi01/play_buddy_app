@@ -108,7 +108,7 @@ class _PostMapScreen extends State<PostMapScreen> {
       //add colour
       appBar: AppBar(
         title: Text("View Events"),
-        backgroundColor: Colors.greenAccent,
+        backgroundColor: Colors.lightBlue[100],
         actions: <Widget>[
           GestureDetector(
             child: Icon(Icons.search),

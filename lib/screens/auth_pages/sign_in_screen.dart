@@ -25,9 +25,9 @@ class _SignInScreen extends State<StatefulWidget> {
     return Scaffold(
         appBar: AppBar(
           title: Text("Workout Buddy",
-            style: TextStyle(color: Color(0xffffffaa)),
+            style: TextStyle(color: Colors.black),
           ),
-          backgroundColor: Colors.lightBlue,
+          backgroundColor: Colors.lightBlue[100],
         ),
         body: SingleChildScrollView(
           child: Container(
@@ -115,9 +115,9 @@ class _SignInScreen extends State<StatefulWidget> {
                       borderRadius: BorderRadius.circular(18.0),
                       side: BorderSide(color: Colors.lightBlueAccent)
                   ),
-                  color: Colors.lightBlueAccent,
+                  color: Colors.lightBlue[100],
                   child: Text("Sign Up",
-                    style: TextStyle(fontSize: 15, color: Color(0xffffffaa)),
+                    style: TextStyle(fontSize: 15, color: Colors.black),
                   ),
 
                   // color: Colors.red,

@@ -36,6 +36,14 @@ class _DisplayPostScreen extends State<DisplayPostScreen> {
     signedUp = UserDb
         .userMap[UserDb.emailMap[EmailDb.thisEmail]].postsSignedUpFor
         .contains(this.widget.post.id);
+    try{
+      print("asdfasdfasdfasdf" + "$UserDb.emailMap[EmailDb.thisEmail]");
+    }
+
+    catch (Exception){
+      print("asdfasdfasdfasdfasdfasdfasdfasdfasdfasdf");
+    }
+
     int thisUser = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]].id;
     owned = this.widget.post.ownerUserId == thisUser;
   }
