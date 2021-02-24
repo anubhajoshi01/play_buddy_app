@@ -37,7 +37,7 @@ class _FriendsScreen extends State<FriendsScreen> {
       drawer: CommonDrawers.friendDrawer(context),
       body: Container(
 
-          padding: EdgeInsets.symmetric(vertical: 270),
+          // padding: EdgeInsets.symmetric(vertical: 270),
 
         child: SingleChildScrollView(
           child: SizedBox(
