@@ -72,7 +72,10 @@ class _EditProfileScreen extends State<EditProfileScreen>{
                 ),
                 onPressed: () async{
                   await updateDb();
-                  Navigator.pop(context, "$name $bio");
+                  List<String> results = new List<String>();
+                  results.add(name);
+                  results.add(bio);
+                  Navigator.pop(context, results);
                 },
               )
             ],

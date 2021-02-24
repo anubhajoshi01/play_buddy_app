@@ -36,11 +36,15 @@ class _FriendsScreen extends State<FriendsScreen> {
       appBar: CommonAppBar.appBar("My Friends", context),
       drawer: CommonDrawers.friendDrawer(context),
       body: Container(
+
+          padding: EdgeInsets.symmetric(vertical: 270),
+
         child: SingleChildScrollView(
           child: SizedBox(
             height: MediaQuery.of(context).size.height*0.6,
             width: MediaQuery.of(context).size.width,
-            child: ListView.builder(
+
+            child: (friendList.length == 0)? Text("You have not added any friends yet :(", style: TextStyle(fontSize:20), textAlign: TextAlign.center,): ListView.builder(
                 itemCount: friendList.length,
                 itemBuilder: (context, index) {
                   return Dismissible(

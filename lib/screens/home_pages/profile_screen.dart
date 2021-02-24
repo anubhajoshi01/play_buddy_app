@@ -65,7 +65,7 @@ class _ProfileScreen extends State<ProfileScreen> {
                 // alignment: Alignment.centerLeft,
 
               Container(
-                padding: EdgeInsets.symmetric(vertical: 25),
+                padding: EdgeInsets.symmetric(vertical: 80),
               ),
 
               Text("$name",
@@ -106,9 +106,9 @@ class _ProfileScreen extends State<ProfileScreen> {
                             MaterialPageRoute(
                                 builder: (context) => EditProfileScreen()));
                         setState(() {
-                          List<String> split = result.split(" ");
-                          name = split[0];
-                          bio = split[1];
+
+                          name = result[0];
+                          bio = result[1];
                         });
                       },
                     )
