@@ -59,9 +59,21 @@ class _ProfileScreen extends State<ProfileScreen> {
       body: Container(
         child: SingleChildScrollView(
           child: Column(
+
             children: <Widget>[
-              Text("Name: $name"),
-              Text("Bio: $bio"),
+
+              Container(
+              padding: EdgeInsets.symmetric(vertical: 10),
+            ),
+              Text("Name: $name",
+                style: TextStyle(fontSize: 20),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 5),
+              ),
+              Text("Bio: $bio",
+                style: TextStyle(fontSize: 20),
+              ),
               (this.widget.user == null)
                   ? FlatButton(
                       child: Text("Edit"),
