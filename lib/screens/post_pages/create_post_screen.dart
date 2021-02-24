@@ -20,11 +20,11 @@ class CreatePostScreen extends StatefulWidget {
 
 class _CreatePostScreen extends State<CreatePostScreen> {
 
-  static final List status = ["private", "public", "restricted"];
+  static final List status = ["private", "public"];
   static Map<String, int> mapStatus = {
     "private": 0,
     "public": 1,
-    "restricted": 2
+    //"restricted": 2
   };
 
   String descriptionStr = "";
