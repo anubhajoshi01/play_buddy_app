@@ -30,11 +30,11 @@ class _EditProfileScreen extends State<EditProfileScreen>{
           child: Column(
             children: <Widget>[
               Container(
-                padding: EdgeInsets.symmetric(vertical: 20),
+                padding: EdgeInsets.symmetric(vertical: 40),
               ),
               Text(
-                "Type your new name:",
-                 style: TextStyle(fontSize: 15),
+                "Type Your New Name:",
+                 style: TextStyle(fontSize: 20),
 
               ),
               TextField(
@@ -45,11 +45,11 @@ class _EditProfileScreen extends State<EditProfileScreen>{
                 },
               ),
               Container(
-                padding: EdgeInsets.symmetric(vertical: 20),
+                padding: EdgeInsets.symmetric(vertical: 50),
               ),
               Text(
-                "Type your new Bio",
-                style: TextStyle(fontSize: 15),
+                "Type Your New Bio:",
+                style: TextStyle(fontSize: 20),
               ),
               TextField(
                 onChanged: (input){
@@ -59,15 +59,23 @@ class _EditProfileScreen extends State<EditProfileScreen>{
                 },
               ),
               Container(
-                padding: EdgeInsets.symmetric(vertical: 10),
+                padding: EdgeInsets.symmetric(vertical: 40),
               ),
               FlatButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+                    side: BorderSide(color: Colors.lightBlue[100])
+                ),
+                color: Colors.lightBlue[100],
                 child: Text("Done",
-                  style: TextStyle(fontSize: 15),
+                  style: TextStyle(fontSize: 19),
                 ),
                 onPressed: () async{
                   await updateDb();
-                  Navigator.pop(context, "$name $bio");
+                  List<String> results = new List<String>();
+                  results.add(name);
+                  results.add(bio);
+                  Navigator.pop(context, results);
                 },
               )
             ],

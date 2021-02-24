@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:frc_challenge_app/components/bottomNavBar.dart';
 import 'package:frc_challenge_app/db_services/auth_service.dart';
 import 'package:frc_challenge_app/db_services/email_db.dart';
 import 'package:frc_challenge_app/db_services/user_db.dart';
@@ -21,7 +22,7 @@ class _FriendSearchScreen extends State<StatefulWidget> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Search User"),
-        backgroundColor: Colors.greenAccent,
+        backgroundColor: Colors.lightBlue[100],
         actions: <Widget>[
           GestureDetector(
             child: Icon(Icons.search),
@@ -67,6 +68,7 @@ class _FriendSearchScreen extends State<StatefulWidget> {
                   })),
         ),
       ),
+      bottomNavigationBar: bottomNavBar(),
     );
   }
 }

@@ -111,7 +111,7 @@ class UserDb {
   static String setToString(Set<int> set) {
     String s = "";
     set.forEach((element) {
-      s += " $element";
+      s += "$element ";
     });
     s = s.trim();
     print("set to string s $s");
@@ -119,13 +119,18 @@ class UserDb {
   }
 
   static Set<int> stringToSet(String set) {
-    if (set == null || set.isEmpty|| set.length == 0 || set == "null" || set == "") {
+
+    bool empty = (set =="");
+    print("asdfasdfasdfasdf" + "$empty"+ " $set");
+    if (set == null || set.isEmpty|| set.length == 0 || set == "" || set == "null") {
+
       return Set<int>();
     }
     List<String> list = set.split(" ");
     print("length set: ${list.length}");
     Set<int> intset = Set<int>();
     list.forEach((element) {
+
       int parsed;
       try {
         parsed = int.parse(element);
@@ -135,6 +140,10 @@ class UserDb {
       if(parsed != null){
         intset.add(parsed);
       }
+
+      // print("asdfsadfsadf" + "$element");
+
+
     });
     return intset;
   }

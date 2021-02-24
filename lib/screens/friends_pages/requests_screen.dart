@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:frc_challenge_app/components/bottomNavBar.dart';
 import 'package:frc_challenge_app/components/common_app_bar.dart';
 import 'package:frc_challenge_app/components/common_drawers.dart';
 import 'package:frc_challenge_app/models/user.dart';
@@ -54,7 +55,12 @@ class _RequestsScreen extends State<RequestsScreen> {
             child: SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
-                    Text("Your sent requests:"),
+                    Container(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                    ),
+                    Text("Your sent requests:",
+                      style: TextStyle(fontSize: 20),
+                    ),
                     SizedBox(
                         width: MediaQuery
                             .of(context)
@@ -139,7 +145,9 @@ class _RequestsScreen extends State<RequestsScreen> {
                                 ),
                               );
                             })),
-                    Text("Recieved Requests:"),
+                    Text("Received Requests:",
+                      style: TextStyle(fontSize: 20),
+                    ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height*0.4,
                         width: MediaQuery.of(context).size.width,
@@ -251,6 +259,7 @@ class _RequestsScreen extends State<RequestsScreen> {
                   ],
                 )),
           )),
+      bottomNavigationBar: bottomNavBar(),
     );
   }
 }
