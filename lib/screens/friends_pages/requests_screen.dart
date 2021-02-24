@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:frc_challenge_app/components/bottomNavBar.dart';
 import 'package:frc_challenge_app/components/common_app_bar.dart';
 import 'package:frc_challenge_app/components/common_drawers.dart';
 import 'package:frc_challenge_app/models/user.dart';
@@ -251,6 +252,7 @@ class _RequestsScreen extends State<RequestsScreen> {
                   ],
                 )),
           )),
+      bottomNavigationBar: bottomNavBar(),
     );
   }
 }

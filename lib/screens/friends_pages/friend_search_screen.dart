@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:frc_challenge_app/components/bottomNavBar.dart';
 import 'package:frc_challenge_app/db_services/auth_service.dart';
 import 'package:frc_challenge_app/db_services/email_db.dart';
 import 'package:frc_challenge_app/db_services/user_db.dart';
@@ -67,6 +68,7 @@ class _FriendSearchScreen extends State<StatefulWidget> {
                   })),
         ),
       ),
+      bottomNavigationBar: bottomNavBar(),
     );
   }
 }
