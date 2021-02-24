@@ -103,6 +103,8 @@ class _RequestsScreen extends State<RequestsScreen> {
                                   User thisUser = UserDb
                                       .userMap[UserDb.emailMap[EmailDb
                                       .thisEmail]];
+
+                                  User thatUser = UserDb.userMap[thisUser.requestSentList.elementAt(index)];
                                   Set<int> newRequestSentList =
                                       thisUser.requestSentList;
                                   newRequestSentList.remove(
@@ -112,10 +114,19 @@ class _RequestsScreen extends State<RequestsScreen> {
                                       requestSentList: newRequestSentList);
 
                                   Set<int> newRequestRecieved =
-                                      requestsSent[index].requestReceivedList;
-                                  newRequestSentList.remove(thisUser.id);
+                                      thatUser.requestReceivedList;
 
-                                  UserDb.updateData(requestsSent[index].id,
+                                  print("id: ............. ${thatUser.id}");
+
+                                  print("old  .............");
+                                  print(requestsReceived.toString());
+
+                                  newRequestRecieved.remove(thisUser.id);
+
+                                  print("new ......................");
+                                  print(requestsReceived.toString());
+
+                                  UserDb.updateData(thatUser.id,
                                       requestReceivedList: newRequestRecieved);
 
                                   setState(() {

@@ -35,7 +35,6 @@ class _ProfileScreen extends State<ProfileScreen> {
     super.initState();
     User u = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
     if (this.widget.user == null) {
-
       name = u.name;
       bio = u.bio;
       isFriend = false;
@@ -54,7 +53,9 @@ class _ProfileScreen extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CommonAppBar.appBar("My Profile", context),
-      drawer: (this.widget.user == null) ? CommonDrawers.profileDrawer(context) : null,
+      drawer: (this.widget.user == null)
+          ? CommonDrawers.profileDrawer(context)
+          : null,
       body: Container(
         child: SingleChildScrollView(
           child: Column(
@@ -76,130 +77,183 @@ class _ProfileScreen extends State<ProfileScreen> {
                         });
                       },
                     )
-                  : (isFriend) ? Container(
-                      child: Column(
-                        children: <Widget>[
-                          Text("Posted Events:"),
-                          FlatButton(
-                            child: Text("Remove Friend"),
-                            color: Colors.red,
-                            onPressed: () async {
-                              User thisUser = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
-                              Set<int> friendIdList = thisUser.friendsUserIdList;
-                              friendIdList.remove(this.widget.user.id);
-                              await UserDb.updateData(thisUser.id, friendsUserIdList: friendIdList);
+                  : (isFriend)
+                      ? Container(
+                          child: Column(
+                          children: <Widget>[
+                            Text("Posted Events:"),
+                            FlatButton(
+                              child: Text("Remove Friend"),
+                              color: Colors.red,
+                              onPressed: () async {
+                                User thisUser = UserDb.userMap[
+                                    UserDb.emailMap[EmailDb.thisEmail]];
+                                Set<int> friendIdList =
+                                    thisUser.friendsUserIdList;
+                                friendIdList.remove(this.widget.user.id);
+                                await UserDb.updateData(thisUser.id,
+                                    friendsUserIdList: friendIdList);
 
-                              Set<int> friendIdList2 = this.widget.user.friendsUserIdList;
-                              friendIdList2.remove(thisUser.id);
-                              await UserDb.updateData(this.widget.user.id, friendsUserIdList: friendIdList2);
+                                Set<int> friendIdList2 =
+                                    this.widget.user.friendsUserIdList;
+                                friendIdList2.remove(thisUser.id);
+                                await UserDb.updateData(this.widget.user.id,
+                                    friendsUserIdList: friendIdList2);
 
-                              setState(() {
-                                isFriend = false;
-                              });
-                            },
-                          ),
-                          ListView.builder(
-                          itemCount: this.widget.user.postIdList.length,
-                          itemBuilder: (context, index) {
-                            Post postAt = PostDb.localMap[this.widget.user.postIdList.elementAt(index)];
-                            return Card(
-                              child: ListTile(
-                                title: Text(postAt.eventDescription),
-                                onTap: (){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => DisplayPostScreen(postAt)));
-                                },
+                                setState(() {
+                                  isFriend = false;
+                                });
+                              },
+                            ),
+                            SingleChildScrollView(
+                                child: SizedBox(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.5,
+                                    child: ListView.builder(
+                                        itemCount:
+                                            this.widget.user.postIdList.length,
+                                        itemBuilder: (context, index) {
+                                          Post postAt = PostDb.localMap[this
+                                              .widget
+                                              .user
+                                              .postIdList
+                                              .elementAt(index)];
+                                          return Card(
+                                            child: ListTile(
+                                              title:
+                                                  Text(postAt.eventDescription),
+                                              onTap: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            DisplayPostScreen(
+                                                                postAt)));
+                                              },
+                                            ),
+                                          );
+                                        })))
+                          ],
+                        ))
+                      : (requestRecieved)
+                          ? Container(
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  FlatButton(
+                                    child: Text("Accept"),
+                                    color: Colors.red,
+                                    onPressed: () async {
+                                      User thisUser = UserDb.userMap[
+                                          UserDb.emailMap[EmailDb.thisEmail]];
+                                      Set<int> newRequestRecievedList =
+                                          thisUser.requestReceivedList;
+                                      Set<int> newFriendList =
+                                          thisUser.friendsUserIdList;
+                                      newFriendList.add(this.widget.user.id);
+                                      newRequestRecievedList
+                                          .remove(this.widget.user.id);
+                                      await UserDb.updateData(thisUser.id,
+                                          requestReceivedList:
+                                              newRequestRecievedList,
+                                          friendsUserIdList: newFriendList);
+
+                                      Set<int> newRequestSentList =
+                                          this.widget.user.requestSentList;
+                                      Set<int> newFriendList2 =
+                                          this.widget.user.friendsUserIdList;
+                                      newRequestSentList.remove(thisUser.id);
+                                      newFriendList2.add(thisUser.id);
+                                      await UserDb.updateData(
+                                          this.widget.user.id,
+                                          requestSentList: newRequestSentList,
+                                          friendsUserIdList: newFriendList2);
+
+                                      setState(() {
+                                        isFriend = true;
+                                      });
+                                    },
+                                  ),
+                                  FlatButton(
+                                    child: Text("Deny"),
+                                    color: Colors.red,
+                                    onPressed: () async {
+                                      User thisUser = UserDb.userMap[
+                                          UserDb.emailMap[EmailDb.thisEmail]];
+                                      Set<int> newRequestRecievedList =
+                                          thisUser.requestReceivedList;
+                                      newRequestRecievedList
+                                          .remove(this.widget.user.id);
+                                      await UserDb.updateData(thisUser.id,
+                                          requestReceivedList:
+                                              newRequestRecievedList);
+
+                                      Set<int> newRequestSentList =
+                                          this.widget.user.requestSentList;
+                                      newRequestSentList.remove(thisUser.id);
+                                      await UserDb.updateData(
+                                          this.widget.user.id,
+                                          requestSentList: newRequestSentList);
+
+                                      setState(() {
+                                        requestRecieved = false;
+                                      });
+                                    },
+                                  )
+                                ],
                               ),
-                            );
-                          })
-                        ],
-                      )
-                    ) :
-              (requestRecieved) ?
-                 Container(
-                   child: Row(
-                     crossAxisAlignment: CrossAxisAlignment.center,
-                     children: <Widget>[
-                       FlatButton(
-                         child: Text("Accept"),
-                         color: Colors.red,
-                         onPressed: () async{
-                           User thisUser = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
-                           Set<int> newRequestRecievedList = thisUser.requestReceivedList;
-                           Set<int> newFriendList = thisUser.friendsUserIdList;
-                           newFriendList.add(this.widget.user.id);
-                           newRequestRecievedList.remove(this.widget.user.id);
-                           await UserDb.updateData(thisUser.id, requestReceivedList: newRequestRecievedList, friendsUserIdList: newFriendList);
+                            )
+                          : (requested)
+                              ? FlatButton(
+                                  child: Text("Delete Request"),
+                                  color: Colors.red,
+                                  onPressed: () async {
+                                    User thisUser = UserDb.userMap[
+                                        UserDb.emailMap[EmailDb.thisEmail]];
+                                    Set<int> thisRequestsSent =
+                                        thisUser.requestSentList;
+                                    thisRequestsSent
+                                        .remove(this.widget.user.id);
+                                    await UserDb.updateData(thisUser.id,
+                                        requestSentList: thisRequestsSent);
 
-                           Set<int> newRequestSentList = this.widget.user.requestSentList;
-                           Set<int> newFriendList2 = this.widget.user.friendsUserIdList;
-                           newRequestSentList.remove(thisUser.id);
-                           newFriendList2.add(thisUser.id);
-                           await UserDb.updateData(this.widget.user.id, requestSentList: newRequestSentList, friendsUserIdList: newFriendList2);
+                                    Set<int> requestRecievedList =
+                                        this.widget.user.requestReceivedList;
+                                    requestRecievedList.remove(thisUser.id);
+                                    await UserDb.updateData(this.widget.user.id,
+                                        requestReceivedList:
+                                            requestRecievedList);
 
-                           setState(() {
-                             isFriend = true;
-                           });
-                         },
-                       ),
-                       FlatButton(
-                         child: Text("Deny"),
-                         color: Colors.red,
-                         onPressed: () async{
-                           User thisUser = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
-                           Set<int> newRequestRecievedList = thisUser.requestReceivedList;
-                           newRequestRecievedList.remove(this.widget.user.id);
-                           await UserDb.updateData(thisUser.id, requestReceivedList: newRequestRecievedList);
+                                    setState(() {
+                                      requested = false;
+                                    });
+                                  },
+                                )
+                              : FlatButton(
+                                  child: Text("Request As Friend"),
+                                  color: Colors.red,
+                                  onPressed: () async {
+                                    User thisUser = UserDb.userMap[
+                                        UserDb.emailMap[EmailDb.thisEmail]];
+                                    Set<int> thisRequestsSent =
+                                        thisUser.requestSentList;
+                                    thisRequestsSent.add(this.widget.user.id);
+                                    await UserDb.updateData(thisUser.id,
+                                        requestSentList: thisRequestsSent);
 
-                           Set<int> newRequestSentList = this.widget.user.requestSentList;
-                           newRequestSentList.remove(thisUser.id);
-                           await UserDb.updateData(this.widget.user.id, requestSentList: newRequestSentList);
+                                    Set<int> requestRecievedList =
+                                        this.widget.user.requestReceivedList;
+                                    requestRecievedList.add(thisUser.id);
+                                    await UserDb.updateData(this.widget.user.id,
+                                        requestReceivedList:
+                                            requestRecievedList);
 
-                           setState(() {
-                             requestRecieved = false;
-                           });
-                         },
-                       )
-                     ],
-                   ),
-                 ):
-              (requested) ?
-                  FlatButton(
-                    child: Text("Delete Request"),
-                    color: Colors.red,
-                    onPressed: () async{
-                      User thisUser = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
-                      Set<int> thisRequestsSent = thisUser.requestSentList;
-                      thisRequestsSent.remove(this.widget.user.id);
-                      await UserDb.updateData(thisUser.id, requestSentList: thisRequestsSent);
-
-                      Set<int> requestRecievedList = this.widget.user.requestReceivedList;
-                      requestRecievedList.remove(thisUser.id);
-                      await UserDb.updateData(this.widget.user.id, requestReceivedList: requestRecievedList);
-
-                      setState(() {
-                        requested = false;
-                      });
-
-                    },
-                  ):
-                  FlatButton(
-                    child: Text("Request As Friend"),
-                    color: Colors.red,
-                    onPressed: () async{
-                      User thisUser = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
-                      Set<int> thisRequestsSent = thisUser.requestSentList;
-                      thisRequestsSent.add(this.widget.user.id);
-                      await UserDb.updateData(thisUser.id, requestSentList: thisRequestsSent);
-
-                      Set<int> requestRecievedList = this.widget.user.requestReceivedList;
-                      requestRecievedList.add(thisUser.id);
-                      await UserDb.updateData(this.widget.user.id, requestReceivedList: requestRecievedList);
-
-                      setState(() {
-                        requested = true;
-                      });
-                    },
-                  )
+                                    setState(() {
+                                      requested = true;
+                                    });
+                                  },
+                                )
             ],
           ),
         ),
