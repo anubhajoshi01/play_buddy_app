@@ -113,7 +113,8 @@ class UserDb {
     set.forEach((element) {
       s += " $element";
     });
-    s = s.substring(1);
+    s = s.trim();
+    print("set to string s $s");
     return s;
   }
 
@@ -129,7 +130,7 @@ class UserDb {
       try {
         parsed = int.parse(element);
       }catch(e){
-        print(e.toString());
+        print("error string to set user db ${e.toString()}");
       }
       if(parsed != null){
         intset.add(parsed);
