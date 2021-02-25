@@ -28,24 +28,24 @@ class _ProfileScreen extends State<ProfileScreen> {
   bool isFriend;
   bool requested;
   bool requestRecieved;
-
+  User thisUser;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    User u = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
+    thisUser = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
     if (this.widget.user == null) {
-      name = u.name;
-      bio = u.bio;
+      name = thisUser.name;
+      bio = thisUser.bio;
       isFriend = false;
       requested = false;
       requestRecieved = false;
     } else {
       name = this.widget.user.name;
       bio = this.widget.user.bio;
-      isFriend = u.friendsUserIdList.contains(this.widget.user.id);
-      requested = u.requestSentList.contains(this.widget.user.id);
-      requestRecieved = u.requestReceivedList.contains(this.widget.user.id);
+      isFriend = thisUser.friendsUserIdList.contains(this.widget.user.id);
+      requested = thisUser.requestSentList.contains(this.widget.user.id);
+      requestRecieved = thisUser.requestReceivedList.contains(this.widget.user.id);
     }
   }
 
@@ -89,7 +89,10 @@ class _ProfileScreen extends State<ProfileScreen> {
                 padding: EdgeInsets.symmetric(vertical: 30),
               ),
 
-              (this.widget.user == null)
+              Text("Name: $name"),
+              Text("Bio: $bio"),
+              (this.widget.user == null || this.widget.user.id == this.thisUser.id)
+
                   ? FlatButton(
 
                       shape: RoundedRectangleBorder(
