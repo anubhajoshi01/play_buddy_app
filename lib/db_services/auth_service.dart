@@ -20,7 +20,8 @@ class AuthenticationService{
       return user != null;
     } catch(e){
       //print(e.code);
-      errMessage = e.code;
+      errMessage =  await e.message;
+      print(e.toString());
       return null;
     }
   }
@@ -35,8 +36,8 @@ class AuthenticationService{
       return authResult.user != null;
     }
     catch(e){
-      errMessage = e.message;
-
+      errMessage = await e.message;
+      print(e.toString());
       return null;
     }
   }

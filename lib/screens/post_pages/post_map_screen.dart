@@ -22,9 +22,7 @@ import 'create_post_screen.dart';
 
 import 'display_post_screen.dart';
 
-
 class PostMapScreen extends StatefulWidget {
-
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -33,17 +31,14 @@ class PostMapScreen extends StatefulWidget {
 }
 
 class _PostMapScreen extends State<PostMapScreen> {
-
   Set<Marker> markers = new HashSet<Marker>();
   bool mapMode;
   List<String> toggle = ['Map', 'List'];
   static Position temp = Geolocate.currLocation;
-  static  LatLng _center =  LatLng(temp.latitude, temp.longitude);
-  static List<double> compareV =[temp.latitude,temp.longitude];
+  static LatLng _center = LatLng(temp.latitude, temp.longitude);
+  static List<double> compareV = [temp.latitude, temp.longitude];
   static List<Post> sortedPos = new List<Post>();
   static List<List<double>> pos = new List<List<double>>();
-
-
 
   @override
   void initState() {
@@ -63,7 +58,7 @@ class _PostMapScreen extends State<PostMapScreen> {
             markerId: MarkerId("$i"),
             position: LatLng(p.latitude, p.longitude),
             icon:
-            BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+                BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
             onTap: () {
               Navigator.push(
                   context,
@@ -71,57 +66,57 @@ class _PostMapScreen extends State<PostMapScreen> {
                       builder: (context) => DisplayPostScreen(p)));
             }));
       }
-
     }
 
     print("sortedposlength ${sortedPos.length}");
     sortedPos.sort((a, b) {
       double d1 = Geolocate.distancesM[a.id];
-      double d2 =  Geolocate.distancesM[b.id];
-      int num =  d1.compareTo(d2);
-      if(num==0){
-        bool isAfter=a.eventDateTime.isAfter(b.eventDateTime);
-        if(isAfter){
+      double d2 = Geolocate.distancesM[b.id];
+      int num = d1.compareTo(d2);
+      if (num == 0) {
+        bool isAfter = a.eventDateTime.isAfter(b.eventDateTime);
+        if (isAfter) {
           return 1;
-        }return -1;
+        }
+        return -1;
       }
       return num;
     });
   }
 
+  static bool checkStat(Post p, DateTime now) {
+    User u = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
+    if (p.postType == ("public") ||
+        u.friendsUserIdList.contains(p.ownerUserId) || p.ownerUserId == u.id) {
+      if (p.eventDateTime.isAfter(now) && p.active) {
 
-  static bool checkStat(Post p, DateTime now){
-    User u  = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
-
-    // print("email email email ${UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]]}");
-
-    // print("mapmapamp map ampapmapapampa ${UserDb.emailMap[EmailDb.thisEmail]}");
-
-    if(p.postType==("public")||u.friendsUserIdList.contains(p.ownerUserId)){
-      if(p.eventDateTime.isAfter(now) && p.active) {
         return true;
       }
     }
     return false;
   }
+
   @override
   Widget build(BuildContext context) {
     print(mapMode);
 
     return Scaffold(
-
       //add colour
       appBar: AppBar(
         title: Text("View Events"),
         backgroundColor: Colors.lightBlue[100],
         actions: <Widget>[
-          GestureDetector(
+          Padding(
+            padding: EdgeInsets.only(right: 20),
+              child: GestureDetector(
             child: Icon(Icons.search),
             onTap: () {
               showSearch(context: context, delegate: PostSearch());
             },
-          ),
-          GestureDetector(
+          )),
+          Padding(
+            padding: EdgeInsets.only(right: 15),
+         child: GestureDetector(
             child: Icon(Icons.input),
             onTap: () {
               EmailDb.addBool(false);
@@ -129,7 +124,7 @@ class _PostMapScreen extends State<PostMapScreen> {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => LogInScreen()));
             },
-          )
+          ))
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -180,8 +175,10 @@ class _PostMapScreen extends State<PostMapScreen> {
                       shrinkWrap: true,
                       itemBuilder: (BuildContext context, int index) {
                         DateTime now = DateTime.now();
-                        Post atIndex = PostDb.localMap[sortedPos.elementAt(index).id];
+                        Post atIndex =
+                            PostDb.localMap[sortedPos.elementAt(index).id];
                         print("$atIndex index");
+
                         return (atIndex.eventDateTime.isAfter(now)) ? Container(
                           height: 50,
                           child: Card(
@@ -199,6 +196,7 @@ class _PostMapScreen extends State<PostMapScreen> {
                           ),
                         ) :
                         Container();
+
                       }))
         ],
       )),
