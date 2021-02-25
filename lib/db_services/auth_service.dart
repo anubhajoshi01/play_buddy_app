@@ -16,7 +16,7 @@ class AuthenticationService{
     EmailDb.addEmail(email);
     EmailDb.addBool(true);
     try{
-      await firebaseAuth.signInWithEmailAndPassword(email:email, password:password);
+      var user = await firebaseAuth.signInWithEmailAndPassword(email:email, password:password);
       return user != null;
     } catch(e){
       //print(e.code);

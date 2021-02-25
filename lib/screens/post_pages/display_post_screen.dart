@@ -84,13 +84,27 @@ class _DisplayPostScreen extends State<DisplayPostScreen> {
                       zoom: 12,
                     ),
                   )),
-              Text("${this.widget.post.eventDescription}"),
-              Text("\n"),
-              Text("$time"),
-              Text("\n"),
-              Text("${this.widget.post.address}"),
-              Text("\n"),
-              Text("${this.widget.post.usersSignedUp.length} have signed up!"),
+
+              // SingleChildScrollView(
+              // child: Container(
+              SingleChildScrollView(
+                child: Column(
+                  children: <Text>[
+                    Text("${this.widget.post.eventDescription}",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    Text("\n"),
+                    Text("$time"),
+                    Text("\n"),
+                    Text("${this.widget.post.address}"),
+                    Text("\n"),
+                    Text("${this.widget.post.usersSignedUp.length} have signed up!"),
+                  ],
+                ),
+              ),
+
+
+
               (!signedUp) ?
 
 
@@ -160,6 +174,10 @@ class _DisplayPostScreen extends State<DisplayPostScreen> {
                 },
               ) :
                   Container()
+
+
+
+
             ])),
       ),
     );

@@ -41,12 +41,14 @@ class _ViewSignedUpEvents extends State<ViewSignedUpEvents> {
       appBar: CommonAppBar.appBar("Events Signed-Up For", context),
       drawer: CommonDrawers.profileDrawer(context),
       body: Container(
+        padding: EdgeInsets.symmetric(vertical: 10),
+
         child: SingleChildScrollView(
 
             child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height*0.6,
-                child:ListView.builder(
+                child: (signedUpEvents.length == 0)? Text("You have not created any posts yet", style: TextStyle(fontSize:20), textAlign: TextAlign.center,):ListView.builder(
                 itemCount: signedUpEvents.length,
                 itemBuilder: (context, index) {
                   return Dismissible(
