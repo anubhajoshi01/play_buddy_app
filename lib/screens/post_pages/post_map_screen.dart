@@ -91,7 +91,8 @@ class _PostMapScreen extends State<PostMapScreen> {
 
 
   static bool checkStat(Post p, DateTime now){
-    User u  = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
+    User u  = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];      print("email email email ${UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]]}");
+
     if(p.postType==("public")||u.friendsUserIdList.contains(p.ownerUserId)){
       if(p.eventDateTime.isAfter(now) && p.active) {
         return true;
