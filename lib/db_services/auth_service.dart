@@ -44,6 +44,7 @@ class AuthenticationService{
   static void signOutUser(){
     firebaseAuth.signOut().then((value) =>
     {
+      EmailDb.addBool(false),
       print("sign out")
     });
   }
