@@ -179,6 +179,7 @@ class _PostMapScreen extends State<PostMapScreen> {
                             PostDb.localMap[sortedPos.elementAt(index).id];
                         print("$atIndex index");
 
+
                         return (atIndex.eventDateTime.isAfter(now)) ? Container(
                           height: 50,
                           child: Card(
