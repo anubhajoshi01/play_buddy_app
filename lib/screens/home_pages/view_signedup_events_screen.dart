@@ -28,7 +28,7 @@ class _ViewSignedUpEvents extends State<ViewSignedUpEvents> {
     DateTime now = DateTime.now();
     for (int i = 0; i < thisUser.postsSignedUpFor.length; i++) {
       Post p = PostDb.localMap[thisUser.postsSignedUpFor.elementAt(i)];
-      if (p.active && p.eventDateTime.isAfter(now)) {
+      if (p.active && p.eventDateTime.isAfter(now) && !thisUser.postIdList.contains(p.id)) {
         signedUpEvents.add(p);
       }
     }
@@ -80,18 +80,10 @@ class _ViewSignedUpEvents extends State<ViewSignedUpEvents> {
                           postsSignedUpFor: postsSignedUp);
 
                       setState(() {
-                        List<Post> newPostList = new List<Post>();
-                        for (int i = 0; i < thisUser.postIdList.length; i++) {
-                          Post p =
-                              PostDb.localMap[thisUser.postIdList.elementAt(i)];
-                          if (p.active) {
-                            newPostList.add(p);
-                          }
-                        }
-                        signedUpEvents = newPostList;
+                        signedUpEvents.removeAt(index);
                       });
                     },
-                    background: Container(color: Colors.red),
+                    background: Container(color: Colors.red, child: Icon(Icons.delete)),
                   );
                 }))),
       ),

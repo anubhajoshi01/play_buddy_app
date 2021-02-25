@@ -132,7 +132,7 @@ class _SignInScreen extends State<StatefulWidget> {
                     }
                     else{
                       setState(() {
-                        print("${AuthenticationService.errMessage}");
+                        print("auth failed. try again");
                         authError = true;
                       });
                     }
