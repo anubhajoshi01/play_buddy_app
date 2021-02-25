@@ -27,6 +27,9 @@ class _DisplayPostScreen extends State<DisplayPostScreen> {
   int numSignedUp;
   bool signedUp;
   bool owned;
+  DateTime t;
+  String time;
+
 
   @override
   void initState() {
@@ -38,6 +41,9 @@ class _DisplayPostScreen extends State<DisplayPostScreen> {
         .contains(this.widget.post.id);
     int thisUser = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]].id;
     owned = this.widget.post.ownerUserId == thisUser;
+    t = this.widget.post.eventDateTime;
+    time = "{${t.hour.toString()}-${t.minute.toString()}";
+    print("time is ${time}");
   }
 
   @override
@@ -72,7 +78,7 @@ class _DisplayPostScreen extends State<DisplayPostScreen> {
                   )),
               Text("${this.widget.post.eventDescription}"),
               Text("\n"),
-              Text("${this.widget.post.eventDateTime.toString()}"),
+              Text("$time"),
               Text("\n"),
               Text("${this.widget.post.address}"),
               Text("\n"),
