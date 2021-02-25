@@ -39,11 +39,13 @@ class _ViewMyEventsScreen extends State<ViewMyEventsScreen> {
       appBar: CommonAppBar.appBar("My Events", context),
       drawer: CommonDrawers.profileDrawer(context),
       body: Container(
+        padding: EdgeInsets.symmetric(vertical: 10),
+
         child: SingleChildScrollView(
             child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * 0.7,
-                child: ListView.builder(
+                child: (myPostsList.length == 0)? Text("You have not created any posts yet", style: TextStyle(fontSize:20), textAlign: TextAlign.center,):ListView.builder(
                     itemCount: myPostsList.length,
                     itemBuilder: (context, index) {
                       return Dismissible(
