@@ -159,7 +159,7 @@ class _LogInScreen extends State<LogInScreen>{
                       else{
                         setState(() {
                           print("fail");
-                          print(AuthenticationService.errMessage);
+                          print("162 162");
                           authError = true;
                         });
                       }

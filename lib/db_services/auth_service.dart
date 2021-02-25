@@ -16,11 +16,12 @@ class AuthenticationService{
     EmailDb.addEmail(email);
     EmailDb.addBool(true);
     try{
-      await firebaseAuth.signInWithEmailAndPassword(email:email, password:password);
+      var user = await firebaseAuth.signInWithEmailAndPassword(email:email, password:password);
       return user != null;
     } catch(e){
       //print(e.code);
-      errMessage = e.code;
+      errMessage =  await e.message;
+      print(e.toString());
       return null;
     }
   }
@@ -35,8 +36,8 @@ class AuthenticationService{
       return authResult.user != null;
     }
     catch(e){
-      errMessage = e.message;
-
+      errMessage = await e.message;
+      print(e.toString());
       return null;
     }
   }

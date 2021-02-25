@@ -167,7 +167,6 @@ class PostDb {
     set.forEach((element) {
       s += "$element ";
     });
-    s = s.substring(1);
     return s;
   }
 
