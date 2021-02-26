@@ -52,7 +52,7 @@ class _DisplayPostScreen extends State<DisplayPostScreen> {
     owned = this.widget.post.ownerUserId == thisUser;
     t = this.widget.post.eventDateTime;
     time = DateFormat('kk:mm').format(t);
-    print("time is ${time}");
+
   }
 
   @override

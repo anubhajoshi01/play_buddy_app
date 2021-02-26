@@ -19,6 +19,7 @@ class PostDb {
       DateTime event,
       String des,
       String address,
+      String sport,
       ) async {
     //Post currentPost = new Post(postIdList.length, ownerUserId, type, time,
         //event, des, address, lat, long, numsignedup);
@@ -44,10 +45,11 @@ class PostDb {
       'address': "$address",
       'usersSignedUp': setToString(usersSignedUp),
       'postType': type,
-      'active': "true"
+      'active': "true",
+      'catagory': sport,
     });
 
-    Post post = new Post(id, ownerUserId, type, time, event, des, address, lat, long, usersSignedUp, true);
+    Post post = new Post(id, ownerUserId, type, time, event, des, address, lat, long, usersSignedUp, true,sport);
     Set<int> postsSignedUpFor = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]].postsSignedUpFor;
     postsSignedUpFor.add(id);
     localMap[id] = post;
@@ -73,8 +75,9 @@ class PostDb {
           String postType = data["postType"];
           DateTime timestamp = toDateTime(data["timeStamp"]);
           bool active = data["active"] == "true";
+          String catagory = data["catagory"];
           Post currentPost = new Post(id, ownerid, postType, timestamp, event,
-              des, address, lat, long, stringToSet(usersSignedUpString), active);
+              des, address, lat, long, stringToSet(usersSignedUpString), active,catagory);
             postIdList.add(id);
           localMap[id] = currentPost;
           List<double> latlong = new List<double>();
@@ -105,6 +108,7 @@ class PostDb {
       DateTime event,
       String des,
       String address,
+      String catagory,
       Set<int> usersSignedUp
   }) async {if (type != null) {
       localMap[id].postType = type;
@@ -130,6 +134,10 @@ class PostDb {
     if (usersSignedUp != null) {
       localMap[id].usersSignedUp = usersSignedUp;
     }
+    if(catagory != null){
+      localMap[id].catagory = catagory;
+    }
+
     try {
       await firestoreInstance
           .collection("Posts")
@@ -143,6 +151,7 @@ class PostDb {
         "longitude": "${localMap[id].longitude}",
         "postType":localMap[id].postType,
         "timeStamp": dateTimeToString(localMap[id].timestamp),
+        "catagory": "${localMap[id].catagory}",
       });
     } catch (e) {
       print(e.toString());
