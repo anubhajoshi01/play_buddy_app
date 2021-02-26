@@ -27,6 +27,13 @@ class _CreatePostScreen extends State<CreatePostScreen> {
     //"restricted": 2
   };
 
+  static final List sports = ["ball games", "track and field"];
+  static Map<String, int> mapSports = {
+    "ball games": 0,
+    "track and field": 1,
+    //"restricted": 2
+  };
+
   String descriptionStr = "";
   String infoStr = "";
   String activity = "";
@@ -56,6 +63,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
   static DateTime selectedDate = DateTime.now();
   static TimeOfDay selectedTime = TimeOfDay.now();
   static String selectedStatus = "private";
+  static String selectedSport = "ball games";
 
 
   TimeOfDay _time = TimeOfDay.now();
@@ -223,7 +231,28 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                 ),
               ),
 
-              Container(
+                Container(
+                  child: DropdownButton(
+                    hint: Text('Sports'), // Not necessary for Option 1
+                    value: status[mapSports[selectedSport]],
+                    onChanged: (newValue) {
+                      setState(() {
+                        selectedSport = newValue;
+                        int index = mapSports[selectedSport];
+                        print(index);
+                      });
+                    },
+                    items: sports.map((st) {
+                      return DropdownMenuItem(
+                        child: new Text(st),
+                        value: st,
+                      );
+                    }).toList(),
+                  ),
+                ),
+
+
+                Container(
                 alignment: Alignment.centerLeft,
                 padding: EdgeInsets.symmetric(vertical: 40),
                 child: Text(
@@ -256,6 +285,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                   ),
                 ),
               ),
+
               Container(
                 padding: EdgeInsets.all(3),
                 color: Colors.white,
@@ -311,7 +341,9 @@ class _CreatePostScreen extends State<CreatePostScreen> {
         pos.longitude,
         time,
         descriptionStr,
-        address);
+        address,
+        selectedSport,
+    );
     Set<int> posts = thisUser.postIdList;
     posts.add(p.id);
     await UserDb.updateData(thisUser.id, postIdList: posts);

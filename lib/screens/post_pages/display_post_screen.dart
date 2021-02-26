@@ -9,6 +9,7 @@ import 'package:frc_challenge_app/db_services/post_db.dart';
 import 'package:frc_challenge_app/db_services/user_db.dart';
 import 'package:frc_challenge_app/models/post.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 
 class DisplayPostScreen extends StatefulWidget {
   final Post post;
@@ -50,8 +51,7 @@ class _DisplayPostScreen extends State<DisplayPostScreen> {
     int thisUser = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]].id;
     owned = this.widget.post.ownerUserId == thisUser;
     t = this.widget.post.eventDateTime;
-    time = "{${t.hour.toString()}-${t.minute.toString()}";
-    print("time is ${time}");
+    time = DateFormat('kk:mm').format(t);
   }
 
   @override
