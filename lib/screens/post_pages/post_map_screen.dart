@@ -42,6 +42,8 @@ class _PostMapScreen extends State<PostMapScreen> {
   static List<List<double>> pos = new List<List<double>>();
   DateTime t;
   String time;
+  int numSignedUp;
+
 
 
   @override
@@ -187,6 +189,8 @@ class _PostMapScreen extends State<PostMapScreen> {
 
                         t = sortedPos.elementAt(index).eventDateTime;
                         time = DateFormat('kk:mm').format(t);
+                        numSignedUp = sortedPos.elementAt(index).usersSignedUp.length;
+
 
                         return (atIndex.eventDateTime.isAfter(now)) ? Container(
                           height: 100,
@@ -196,14 +200,14 @@ class _PostMapScreen extends State<PostMapScreen> {
                             child: ListTile(
 
                               title: Text(
-                                  "${atIndex.eventDescription}",
+                                  "${atIndex.eventDescription}" + "\n",
                                 style: TextStyle(fontSize: 20),
 
                               ),
 
 
 
-                               subtitle: Text("$time"),
+                               subtitle: Text("$time" + " \n Signed Up: ${numSignedUp}", style: TextStyle(color: Colors.black, fontSize: 15)),
 
 
                               // children: FlatButton(),

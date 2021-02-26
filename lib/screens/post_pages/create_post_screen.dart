@@ -234,7 +234,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                 Container(
                   child: DropdownButton(
                     hint: Text('Sports'), // Not necessary for Option 1
-                    value: status[mapSports[selectedSport]],
+                    value: sports[mapSports[selectedSport]],
                     onChanged: (newValue) {
                       setState(() {
                         selectedSport = newValue;
