@@ -185,9 +185,12 @@ class _PostMapScreen extends State<PostMapScreen> {
                           margin: const EdgeInsets.all(15.0),
                           child: Card(
 
-                            child: ListTile( 
+                            child: ListTile(
                               title: Text(
-                                  "${atIndex.eventDescription}"),
+                                  "${atIndex.eventDescription}",
+                                  style: TextStyle(fontSize: 20),
+
+                              ),
                               // child: Container(
                               //
                               //
