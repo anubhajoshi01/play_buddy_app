@@ -52,6 +52,7 @@ class _DisplayPostScreen extends State<DisplayPostScreen> {
     owned = this.widget.post.ownerUserId == thisUser;
     t = this.widget.post.eventDateTime;
     time = DateFormat('kk:mm').format(t);
+
   }
 
   @override
@@ -135,7 +136,7 @@ class _DisplayPostScreen extends State<DisplayPostScreen> {
                     signedUp = true;
                   });
                 },
-              ) :
+              ) : (!owned) ?
               FlatButton(
                 color: Colors.lightBlue[100],
                 child: Text("Withdraw",
@@ -161,7 +162,7 @@ class _DisplayPostScreen extends State<DisplayPostScreen> {
                     signedUp = false;
                   });
                 },
-              ),
+              ) : Container(),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 5.0),
               ),

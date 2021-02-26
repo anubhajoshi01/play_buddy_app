@@ -24,13 +24,17 @@ class _FriendSearchScreen extends State<StatefulWidget> {
         title: Text("Search User"),
         backgroundColor: Colors.lightBlue[100],
         actions: <Widget>[
-          GestureDetector(
+          Padding(
+              padding: EdgeInsets.only(right: 20.0),
+         child: GestureDetector(
             child: Icon(Icons.search),
             onTap: () {
               showSearch(context: context, delegate: FriendSearch());
             },
-          ),
-          GestureDetector(
+          )),
+          Padding(
+            padding: EdgeInsets.only(right: 15.0),
+          child: GestureDetector(
             child: Icon(Icons.input),
             onTap: () {
               EmailDb.addBool(false);
@@ -38,7 +42,7 @@ class _FriendSearchScreen extends State<StatefulWidget> {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => LogInScreen()));
             },
-          )
+          ))
         ],
       ),
       body: Container(
