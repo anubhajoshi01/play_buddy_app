@@ -178,7 +178,10 @@ class _LogInScreen extends State<LogInScreen>{
                       ));
                     }
                   ),
-                  (authError) ? Text("${AuthenticationService.errMessage}") : Container()
+                  Container(
+                    padding: EdgeInsets.symmetric(vertical: 5),
+                  ),
+                  (authError) ? Text("${AuthenticationService.errMessage}", style: TextStyle(color: Colors.red),) : Container()
 
                 ],
               )

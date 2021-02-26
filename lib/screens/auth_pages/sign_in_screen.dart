@@ -150,7 +150,10 @@ class _SignInScreen extends State<StatefulWidget> {
                 ));
               }
               ),
-                (authError) ? Text("${AuthenticationService.errMessage}") : Container()
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 5),
+                ),
+                (authError) ? Text("${AuthenticationService.errMessage}", style: TextStyle(color: Colors.red),) : Container()
               ],
             )
           ),
