@@ -20,7 +20,7 @@ class Post {
   double longitude;
   Set<int> usersSignedUp;
   bool active;
-  String catagory;
+  String category;
   
   Post(
       this.id,
@@ -34,7 +34,7 @@ class Post {
       this.longitude,
       this.usersSignedUp,
       this.active,
-      this.catagory);
+      this.category);
   }
 
 
