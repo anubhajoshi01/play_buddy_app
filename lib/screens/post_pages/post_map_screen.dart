@@ -17,12 +17,13 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:frc_challenge_app/services/geolocator.dart';
-
+import 'package:intl/intl.dart';
 import 'create_post_screen.dart';
 
 import 'display_post_screen.dart';
 
 class PostMapScreen extends StatefulWidget {
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -39,6 +40,11 @@ class _PostMapScreen extends State<PostMapScreen> {
   static List<double> compareV = [temp.latitude, temp.longitude];
   static List<Post> sortedPos = new List<Post>();
   static List<List<double>> pos = new List<List<double>>();
+  DateTime t;
+  String time;
+  int numSignedUp;
+
+
 
   @override
   void initState() {
@@ -47,6 +53,8 @@ class _PostMapScreen extends State<PostMapScreen> {
     sortedPos.clear();
     mapMode = true;
     toggle = ['Map', 'List'];
+
+
 
     print("postidlength ${PostDb.postIdList.length}");
     for (int i = 0; i < PostDb.postIdList.length; i++) {
@@ -179,15 +187,39 @@ class _PostMapScreen extends State<PostMapScreen> {
                             PostDb.localMap[sortedPos.elementAt(index).id];
                         print("$atIndex index");
 
+                        t = sortedPos.elementAt(index).eventDateTime;
+                        time = DateFormat('kk:mm').format(t);
+                        numSignedUp = sortedPos.elementAt(index).usersSignedUp.length;
+
 
                         return (atIndex.eventDateTime.isAfter(now)) ? Container(
                           height: 100,
                           margin: const EdgeInsets.all(15.0),
                           child: Card(
 
-                            child: ListTile( 
+                            child: ListTile(
+
                               title: Text(
-                                  "${atIndex.eventDescription}"),
+                                  "${atIndex.eventDescription}" + "\n",
+                                style: TextStyle(fontSize: 20),
+
+                              ),
+
+
+
+                               subtitle: Text("$time" + " \n Signed Up: ${numSignedUp}", style: TextStyle(color: Colors.black, fontSize: 15)),
+
+
+                              // children: FlatButton(),
+
+                              // children: <Widget>[
+                              //   FlatButton(
+                              //
+                              //
+                              //   ),
+                              // ],
+
+
                               // child: Container(
                               //
                               //

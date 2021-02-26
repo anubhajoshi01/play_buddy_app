@@ -18,22 +18,34 @@ class bottomNavBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
+
+
           IconButton(
             icon: Icon(Icons.home, size: 44.0),
             onPressed: () {
-              Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) => ProfileScreen()));
+              Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) => PostMapScreen()));
             },
           ),
+
+          //category screen
           IconButton(
             icon: Icon(Icons.search, size: 44.0),
             onPressed: () {
               Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) => PostMapScreen()));
             },
           ),
+
+          IconButton(
+            icon: Icon(Icons.people, size: 44.0),
+            onPressed: () {
+              Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) => FriendsScreen()));
+            },
+          ),
+
           IconButton(
             icon: Icon(Icons.person, size: 44.0),
             onPressed: () {
-              Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) => FriendsScreen()));
+              Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) =>  ProfileScreen()));
             },
           ),
         ],
