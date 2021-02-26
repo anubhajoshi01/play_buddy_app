@@ -46,7 +46,7 @@ class PostDb {
       'usersSignedUp': setToString(usersSignedUp),
       'postType': type,
       'active': "true",
-      'catagory': sport,
+      'category': sport,
     });
 
     Post post = new Post(id, ownerUserId, type, time, event, des, address, lat, long, usersSignedUp, true,sport);
@@ -75,9 +75,9 @@ class PostDb {
           String postType = data["postType"];
           DateTime timestamp = toDateTime(data["timeStamp"]);
           bool active = data["active"] == "true";
-          String catagory = data["catagory"];
+          String category = data["category"];
           Post currentPost = new Post(id, ownerid, postType, timestamp, event,
-              des, address, lat, long, stringToSet(usersSignedUpString), active,catagory);
+              des, address, lat, long, stringToSet(usersSignedUpString), active,category);
             postIdList.add(id);
           localMap[id] = currentPost;
           List<double> latlong = new List<double>();
@@ -108,7 +108,7 @@ class PostDb {
       DateTime event,
       String des,
       String address,
-      String catagory,
+      String category,
       Set<int> usersSignedUp
   }) async {if (type != null) {
       localMap[id].postType = type;
@@ -134,8 +134,8 @@ class PostDb {
     if (usersSignedUp != null) {
       localMap[id].usersSignedUp = usersSignedUp;
     }
-    if(catagory != null){
-      localMap[id].catagory = catagory;
+    if(category != null){
+      localMap[id].category = category;
     }
 
     try {
@@ -151,7 +151,7 @@ class PostDb {
         "longitude": "${localMap[id].longitude}",
         "postType":localMap[id].postType,
         "timeStamp": dateTimeToString(localMap[id].timestamp),
-        "catagory": "${localMap[id].catagory}",
+        "category": "${localMap[id].category}",
       });
     } catch (e) {
       print(e.toString());
