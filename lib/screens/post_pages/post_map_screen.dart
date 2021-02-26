@@ -193,7 +193,10 @@ class _PostMapScreen extends State<PostMapScreen> {
                               //
                               // ),
 
-                              // child: FlatButton(),
+                              // children <Widget>[
+                              //
+                              //
+                              // ],
 
                               onTap: () {
                                 Navigator.push(

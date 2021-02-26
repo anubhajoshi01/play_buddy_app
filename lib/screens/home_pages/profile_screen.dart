@@ -89,8 +89,8 @@ class _ProfileScreen extends State<ProfileScreen> {
                 padding: EdgeInsets.symmetric(vertical: 30),
               ),
 
-              Text("Name: $name"),
-              Text("Bio: $bio"),
+              // Text("Name: $name"),
+              // Text("Bio: $bio"),
               (this.widget.user == null || this.widget.user.id == this.thisUser.id)
 
                   ? FlatButton(
