@@ -120,7 +120,7 @@ class _ProfileScreen extends State<ProfileScreen> {
                       ? Container(
                           child: Column(
                           children: <Widget>[
-                            Text("Posted Events:"),
+
                             FlatButton(
                               child: Text("Remove Friend"),
                               color: Colors.red,
@@ -144,6 +144,13 @@ class _ProfileScreen extends State<ProfileScreen> {
                                 });
                               },
                             ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 10),
+                            ),
+                            Text("Posted Events:", style: TextStyle(fontWeight: FontWeight.bold)),
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 10),
+                            ),
                             SingleChildScrollView(
                                 child: SizedBox(
                                     width: MediaQuery.of(context).size.width,
@@ -163,12 +170,13 @@ class _ProfileScreen extends State<ProfileScreen> {
                                               title:
                                                   Text(postAt.eventDescription),
                                               onTap: () {
-                                                Navigator.push(
+                                                var result = Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
                                                         builder: (context) =>
                                                             DisplayPostScreen(
                                                                 postAt)));
+
                                               },
                                             ),
                                           );
@@ -179,6 +187,7 @@ class _ProfileScreen extends State<ProfileScreen> {
                           ? Container(
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
                                   FlatButton(
                                     child: Text("Accept"),
@@ -214,6 +223,9 @@ class _ProfileScreen extends State<ProfileScreen> {
                                       });
                                     },
                                   ),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: 20),
+                                  ),
                                   FlatButton(
                                     child: Text("Deny"),
                                     color: Colors.red,
@@ -228,12 +240,14 @@ class _ProfileScreen extends State<ProfileScreen> {
                                           requestReceivedList:
                                               newRequestRecievedList);
 
-                                      Set<int> newRequestSentList =
-                                          this.widget.user.requestSentList;
+                                      Set<int> newRequestSentList = this.widget.user.requestSentList;
                                       newRequestSentList.remove(thisUser.id);
                                       await UserDb.updateData(
                                           this.widget.user.id,
                                           requestSentList: newRequestSentList);
+
+                                      print("line 249 profile screen : ${thisUser.requestReceivedList.length}");
+                                      print("line 250 profile screen : ${newRequestRecievedList.length}");
 
                                       setState(() {
                                         requestRecieved = false;

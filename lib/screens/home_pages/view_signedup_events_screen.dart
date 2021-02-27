@@ -56,12 +56,20 @@ class _ViewSignedUpEvents extends State<ViewSignedUpEvents> {
                     child: Card(
                       child: ListTile(
                         title: Text("${signedUpEvents[index].address}"),
-                        onTap: () {
-                          Navigator.push(
+                        onTap: () async{
+                         await Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => DisplayPostScreen(
                                       signedUpEvents[index])));
+                          setState(() {
+                            signedUpEvents.clear();
+                            User thisUser = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
+                            for(int i = 0; i < thisUser.postsSignedUpFor.length; i++){
+                              Post p = PostDb.localMap[thisUser.postsSignedUpFor.elementAt(i)];
+                              signedUpEvents.add(p);
+                            }
+                          });
                         },
                       ),
                     ),
