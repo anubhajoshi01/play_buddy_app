@@ -77,12 +77,20 @@ class _ViewMyEventsScreen extends State<ViewMyEventsScreen> {
                         child: Card(
                           child: ListTile(
                             title: Text("${myPostsList[index].address}"),
-                            onTap: () {
-                              Navigator.push(
+                            onTap: () async{
+                              var result = await Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => DisplayPostScreen(
                                           myPostsList[index])));
+                              setState(() {
+                                myPostsList.clear();
+                                User thisUser = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
+                                for(int i = 0; i < thisUser.postIdList.length; i++){
+                                  Post p = PostDb.localMap[thisUser.postIdList.elementAt(i)];
+                                  myPostsList.add(p);
+                                }
+                              });
                             },
                           ),
                         ),
