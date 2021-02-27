@@ -23,7 +23,6 @@ import 'create_post_screen.dart';
 import 'display_post_screen.dart';
 
 class PostMapScreen extends StatefulWidget {
-
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -44,8 +43,6 @@ class _PostMapScreen extends State<PostMapScreen> {
   String time;
   int numSignedUp;
 
-
-
   @override
   void initState() {
     // TODO: implement initState
@@ -53,8 +50,6 @@ class _PostMapScreen extends State<PostMapScreen> {
     sortedPos.clear();
     mapMode = true;
     toggle = ['Map', 'List'];
-
-
 
     print("postidlength ${PostDb.postIdList.length}");
     for (int i = 0; i < PostDb.postIdList.length; i++) {
@@ -95,9 +90,9 @@ class _PostMapScreen extends State<PostMapScreen> {
   static bool checkStat(Post p, DateTime now) {
     User u = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
     if (p.postType == ("public") ||
-        u.friendsUserIdList.contains(p.ownerUserId) || p.ownerUserId == u.id) {
+        u.friendsUserIdList.contains(p.ownerUserId) ||
+        p.ownerUserId == u.id) {
       if (p.eventDateTime.isAfter(now) && p.active) {
-
         return true;
       }
     }
@@ -115,24 +110,24 @@ class _PostMapScreen extends State<PostMapScreen> {
         backgroundColor: Colors.lightBlue[100],
         actions: <Widget>[
           Padding(
-            padding: EdgeInsets.only(right: 20),
+              padding: EdgeInsets.only(right: 20),
               child: GestureDetector(
-            child: Icon(Icons.search),
-            onTap: () {
-              showSearch(context: context, delegate: PostSearch());
-            },
-          )),
+                child: Icon(Icons.search),
+                onTap: () {
+                  showSearch(context: context, delegate: PostSearch());
+                },
+              )),
           Padding(
-            padding: EdgeInsets.only(right: 15),
-         child: GestureDetector(
-            child: Icon(Icons.input),
-            onTap: () {
-              EmailDb.addBool(false);
-              AuthenticationService.signOutUser();
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => LogInScreen()));
-            },
-          ))
+              padding: EdgeInsets.only(right: 15),
+              child: GestureDetector(
+                child: Icon(Icons.input),
+                onTap: () {
+                  EmailDb.addBool(false);
+                  AuthenticationService.signOutUser();
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LogInScreen()));
+                },
+              ))
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -189,58 +184,58 @@ class _PostMapScreen extends State<PostMapScreen> {
 
                         t = sortedPos.elementAt(index).eventDateTime;
                         time = DateFormat('kk:mm').format(t);
-                        numSignedUp = sortedPos.elementAt(index).usersSignedUp.length;
+                        numSignedUp =
+                            sortedPos.elementAt(index).usersSignedUp.length;
 
+                        return (atIndex.eventDateTime.isAfter(now))
+                            ? Container(
+                                height: 100,
+                                margin: const EdgeInsets.all(15.0),
+                                child: Card(
+                                  child: ListTile(
 
-                        return (atIndex.eventDateTime.isAfter(now)) ? Container(
-                          height: 100,
-                          margin: const EdgeInsets.all(15.0),
-                          child: Card(
+                                    title: Text(
+                                      "${atIndex.eventDescription}" + "\n",
+                                      style: TextStyle(fontSize: 20),
+                                    ),
 
-                            child: ListTile(
+                                    subtitle: Text(
+                                        "$time" +
+                                            " \n Signed Up: ${numSignedUp}" +
+                                            "\n distance: ${Geolocate.distancesM[atIndex.id]}",
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 15)),
 
-                              title: Text(
-                                  "${atIndex.eventDescription}" + "\n",
-                                style: TextStyle(fontSize: 20),
+                                    // children: FlatButton(),
 
-                              ),
+                                    // children: <Widget>[
+                                    //   FlatButton(
+                                    //
+                                    //
+                                    //   ),
+                                    // ],
 
+                                    // child: Container(
+                                    //
+                                    //
+                                    // ),
 
+                                    // children <Widget>[
+                                    //
+                                    //
+                                    // ],
 
-                               subtitle: Text("$time" + " \n Signed Up: ${numSignedUp}", style: TextStyle(color: Colors.black, fontSize: 15)),
-
-
-                              // children: FlatButton(),
-
-                              // children: <Widget>[
-                              //   FlatButton(
-                              //
-                              //
-                              //   ),
-                              // ],
-
-
-                              // child: Container(
-                              //
-                              //
-                              // ),
-
-                              // children <Widget>[
-                              //
-                              //
-                              // ],
-
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => DisplayPostScreen(atIndex)));
-                              },
-                            ),
-                          ),
-                        ) :
-                        Container();
-
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  DisplayPostScreen(atIndex)));
+                                    },
+                                  ),
+                                ),
+                              )
+                            : Container();
                       }))
         ],
       )),
