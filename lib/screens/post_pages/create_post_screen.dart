@@ -27,11 +27,11 @@ class _CreatePostScreen extends State<CreatePostScreen> {
     //"restricted": 2
   };
 
-  static final List sports = ["ball games", "track and field"];
+  static final List sports = ["ball games", "track and field","miscellaneous"];
   static Map<String, int> mapSports = {
     "ball games": 0,
     "track and field": 1,
-    //"restricted": 2
+    "miscellaneous":2,
   };
 
   String descriptionStr = "";

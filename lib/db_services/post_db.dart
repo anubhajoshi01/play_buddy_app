@@ -22,6 +22,7 @@ class PostDb {
       String des,
       String address,
       String sport,
+      int cap,
       ) async {
     //Post currentPost = new Post(postIdList.length, ownerUserId, type, time,
         //event, des, address, lat, long, numsignedup);
@@ -49,9 +50,10 @@ class PostDb {
       'postType': type,
       'active': "true",
       'category': sport,
+      "cap": "$cap",
     });
 
-    Post post = new Post(id, ownerUserId, type, time, event, des, address, lat, long, usersSignedUp, true,sport);
+    Post post = new Post(id, ownerUserId, type, time, event, des, address, lat, long, usersSignedUp, true,sport,cap);
     Set<int> postsSignedUpFor = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]].postsSignedUpFor;
     postsSignedUpFor.add(id);
     localMap[id] = post;
@@ -86,8 +88,9 @@ class PostDb {
           DateTime timestamp = toDateTime(data["timeStamp"]);
           bool active = data["active"] == "true";
           String category = data["category"];
+          int cap = int.parse(data["cap"]);
           Post currentPost = new Post(id, ownerid, postType, timestamp, event,
-              des, address, lat, long, stringToSet(usersSignedUpString), active,category);
+              des, address, lat, long, stringToSet(usersSignedUpString), active,category,cap);
             postIdList.add(id);
           localMap[id] = currentPost;
           List<double> latlong = new List<double>();
@@ -125,6 +128,7 @@ class PostDb {
       String des,
       String address,
       String category,
+      int cap,
       Set<int> usersSignedUp
   }) async {if (type != null) {
       localMap[id].postType = type;
@@ -160,6 +164,9 @@ class PostDb {
       categoryMap[category].add(id);
       localMap[id].category = category;
     }
+  if (cap != null) {
+    localMap[id].cap = cap;
+  }
 
     try {
       await firestoreInstance
@@ -175,6 +182,7 @@ class PostDb {
         "postType":localMap[id].postType,
         "timeStamp": dateTimeToString(localMap[id].timestamp),
         "category": "${localMap[id].category}",
+        "cap": "${localMap[id].cap}",
       });
     } catch (e) {
       print(e.toString());
