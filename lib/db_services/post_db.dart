@@ -11,6 +11,7 @@ class PostDb {
   static Map<String, Set<int>> categoryMap = new Map();
   static Set<String> categoryList = new Set();
   static final firestoreInstance = Firestore.instance;
+  static String errMessage;
   
   static Future<Post> createPost(
       int ownerUserId,
@@ -22,6 +23,7 @@ class PostDb {
       String des,
       String address,
       String sport,
+      int cap,
       ) async {
     //Post currentPost = new Post(postIdList.length, ownerUserId, type, time,
         //event, des, address, lat, long, numsignedup);
@@ -49,9 +51,10 @@ class PostDb {
       'postType': type,
       'active': "true",
       'category': sport,
+      "cap": "$cap",
     });
 
-    Post post = new Post(id, ownerUserId, type, time, event, des, address, lat, long, usersSignedUp, true,sport);
+    Post post = new Post(id, ownerUserId, type, time, event, des, address, lat, long, usersSignedUp, true,sport,cap);
     Set<int> postsSignedUpFor = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]].postsSignedUpFor;
     postsSignedUpFor.add(id);
     localMap[id] = post;
@@ -86,8 +89,9 @@ class PostDb {
           DateTime timestamp = toDateTime(data["timeStamp"]);
           bool active = data["active"] == "true";
           String category = data["category"];
+          int cap = int.parse(data["cap"]);
           Post currentPost = new Post(id, ownerid, postType, timestamp, event,
-              des, address, lat, long, stringToSet(usersSignedUpString), active,category);
+              des, address, lat, long, stringToSet(usersSignedUpString), active,category,cap);
             postIdList.add(id);
           localMap[id] = currentPost;
           List<double> latlong = new List<double>();
@@ -125,6 +129,7 @@ class PostDb {
       String des,
       String address,
       String category,
+      int cap,
       Set<int> usersSignedUp
   }) async {if (type != null) {
       localMap[id].postType = type;
@@ -147,7 +152,7 @@ class PostDb {
     if (address != null) {
       localMap[id].address = address;
     } 
-    if (usersSignedUp != null) {
+    if (usersSignedUp != null && checkCap(cap, usersSignedUp)=="") {
       localMap[id].usersSignedUp = usersSignedUp;
     }
     if(category != null){
@@ -160,6 +165,9 @@ class PostDb {
       categoryMap[category].add(id);
       localMap[id].category = category;
     }
+  if (cap != null) {
+    localMap[id].cap = cap;
+  }
 
     try {
       await firestoreInstance
@@ -175,6 +183,7 @@ class PostDb {
         "postType":localMap[id].postType,
         "timeStamp": dateTimeToString(localMap[id].timestamp),
         "category": "${localMap[id].category}",
+        "cap": "${localMap[id].cap}",
       });
     } catch (e) {
       print(e.toString());
@@ -227,4 +236,15 @@ class PostDb {
     });
     return intset;
   }
+
+  static String checkCap (int cap, Set<int> u){
+    String str;
+    if(u.length < cap){
+      str = "";
+    }else{
+      str = "This event already has enough sign up";
+    }
+    return str;
+  }
+
 }

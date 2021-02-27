@@ -21,6 +21,7 @@ class Post {
   Set<int> usersSignedUp;
   bool active;
   String category;
+  int cap;
   
   Post(
       this.id,
@@ -34,7 +35,8 @@ class Post {
       this.longitude,
       this.usersSignedUp,
       this.active,
-      this.category);
+      this.category,
+      this.cap,);
   }
 
 
