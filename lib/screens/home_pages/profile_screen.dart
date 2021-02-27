@@ -188,8 +188,7 @@ class _ProfileScreen extends State<ProfileScreen> {
                                                     ),
                                                     subtitle: Text(
                                                         "$time" +
-                                                            " \n Signed Up: ${postAt.usersSignedUp.length}" +
-                                                            "\n distance: ${Geolocate.distancesM[postAt.id]}",
+                                                            " \n Signed Up: ${postAt.usersSignedUp.length}" ,
                                                         style: TextStyle(
                                                             color: Colors.black,
                                                             fontSize: 15)),

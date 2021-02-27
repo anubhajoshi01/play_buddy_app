@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:frc_challenge_app/db_services/category_db.dart';
 import 'package:frc_challenge_app/db_services/email_db.dart';
 import 'package:frc_challenge_app/db_services/user_db.dart';
 import 'package:frc_challenge_app/models/post.dart';
@@ -8,8 +9,8 @@ import 'package:frc_challenge_app/services/geolocator.dart';
 class PostDb {
   static Map<int, Post> localMap = new Map<int, Post>();
   static Set<int> postIdList = new Set<int>();
-  static Map<String, Set<int>> categoryMap = new Map();
-  static Set<String> categoryList = new Set();
+ // static Map<String, Set<int>> categoryMap = new Map();
+  //static Set<String> categoryList = new Set();
   static final firestoreInstance = Firestore.instance;
   static String errMessage;
   
@@ -58,13 +59,8 @@ class PostDb {
     Set<int> postsSignedUpFor = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]].postsSignedUpFor;
     postsSignedUpFor.add(id);
     localMap[id] = post;
-    bool newAdded = categoryList.add(sport);
-    print("new category: $sport");
-    if(newAdded){
-      print("new added : $sport");
-      categoryMap[sport] = new Set<int>();
-    }
-    categoryMap[sport].add(id);
+
+    CategoryDb.categoryMap[sport].add(id);
 
     await UserDb.updateData(UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]].id, postsSignedUpFor: postsSignedUpFor);
     await readDb();
@@ -73,6 +69,7 @@ class PostDb {
   }
 
   static Future<void> readDb() async {
+    await CategoryDb.readDb();
     try {
       await firestoreInstance.collection("Posts").getDocuments().then((value) {
         value.documents.forEach((element) async {
@@ -97,12 +94,7 @@ class PostDb {
           List<double> latlong = new List<double>();
           latlong.add(lat);
           latlong.add(long);
-          bool newList = categoryList.add(category);
-          if(newList){
-            print("new added : $category..");
-            categoryMap[category] = new Set<int>();
-          }
-          categoryMap[category].add(id);
+          CategoryDb.categoryMap[category].add(id);
           await Geolocate.getDistance(id,latlong);
         });
       });
@@ -157,12 +149,9 @@ class PostDb {
     }
     if(category != null){
       String prev = localMap[id].category;
-      categoryMap[prev].remove(id);
-      bool newAdded = categoryList.add(category);
-      if(newAdded){
-        categoryMap[category] = new Set<int>();
-      }
-      categoryMap[category].add(id);
+      CategoryDb.categoryMap[prev].remove(id);
+
+      CategoryDb.categoryMap[category].add(id);
       localMap[id].category = category;
     }
   if (cap != null) {
@@ -195,7 +184,7 @@ class PostDb {
   static Future<void> deletePostFromDb(int postId) async{
     localMap[postId].active = false;
     String prevCategory = localMap[postId].category;
-    categoryMap[prevCategory].remove(postId);
+    CategoryDb.categoryMap[prevCategory].remove(postId);
     await firestoreInstance.collection("Posts").document("$postId").updateData({"active":"false"});
     await readDb();
   }

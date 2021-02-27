@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frc_challenge_app/components/bottomNavBar.dart';
 import 'package:frc_challenge_app/db_services/auth_service.dart';
+import 'package:frc_challenge_app/db_services/category_db.dart';
 import 'package:frc_challenge_app/db_services/email_db.dart';
 import 'package:frc_challenge_app/db_services/post_db.dart';
 import 'package:frc_challenge_app/db_services/user_db.dart';
@@ -51,12 +52,12 @@ class ViewCategoryEventsScreen extends StatelessWidget {
         child: SizedBox(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height * 0.7,
-          child: SingleChildScrollView(
+
             child: ListView.builder(
-                itemCount: PostDb.categoryMap[category].length,
+                itemCount: CategoryDb.categoryMap[category].length,
                 itemBuilder: (context, index) {
                   Post at = PostDb
-                      .localMap[PostDb.categoryMap[category].elementAt(index)];
+                      .localMap[CategoryDb.categoryMap[category].elementAt(index)];
                   User postOwner = UserDb.userMap[at.ownerUserId];
                   User thisUser =
                       UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
@@ -74,8 +75,7 @@ class ViewCategoryEventsScreen extends StatelessWidget {
                             ),
                             subtitle: Text(
                                 "$time" +
-                                    " \n Signed Up: ${at.usersSignedUp.length}" +
-                                    "\n distance: ${Geolocate.distancesM[at.id]}",
+                                    " \n Signed Up: ${at.usersSignedUp.length}",
                                 style: TextStyle(
                                     color: Colors.black, fontSize: 15)),
                             onTap: () {
@@ -89,7 +89,7 @@ class ViewCategoryEventsScreen extends StatelessWidget {
                         )
                       : Container();
                 }),
-          ),
+
         ),
       ),
     );

@@ -201,8 +201,7 @@ class _PostMapScreen extends State<PostMapScreen> {
 
                                     subtitle: Text(
                                         "$time" +
-                                            " \n Signed Up: ${numSignedUp}" +
-                                            "\n distance: ${Geolocate.distancesM[atIndex.id]}",
+                                            " \n Signed Up: ${numSignedUp}" ,
                                         style: TextStyle(
                                             color: Colors.black, fontSize: 15)),
 
