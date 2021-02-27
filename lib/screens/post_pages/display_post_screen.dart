@@ -114,6 +114,7 @@ class _DisplayPostScreen extends State<DisplayPostScreen> {
                 child: Text("Sign Up",
                   style: TextStyle(color: Colors.black),
                 ),
+                
                 onPressed: () {
                   Set<int> postsSignedUpFor = UserDb
                       .userMap[UserDb.emailMap[EmailDb.thisEmail]]

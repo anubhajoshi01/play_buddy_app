@@ -64,6 +64,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
   static TimeOfDay selectedTime = TimeOfDay.now();
   static String selectedStatus = "private";
   static String selectedSport = "ball games";
+  static int cap;
 
 
   TimeOfDay _time = TimeOfDay.now();
@@ -167,6 +168,31 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                   },
                 ),
               ),
+
+                Container(
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.symmetric(vertical: 40),
+                  child: Text(
+                    "  Enter number of people:  ",
+                    style: TextStyle(
+                      color: Colors.grey[900],
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.all(3),
+                  color: Colors.white,
+                  child: TextField(
+                    keyboardType: TextInputType.number,
+                    onChanged: (input) {
+                      setState(() {
+                        cap = int.parse(input);
+                      });
+                    },
+                  ),
+                ),
               Container(
 
                 padding: EdgeInsets.symmetric(vertical: 20),
@@ -343,6 +369,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
         descriptionStr,
         address,
         selectedSport,
+        cap,
     );
     Set<int> posts = thisUser.postIdList;
     posts.add(p.id);

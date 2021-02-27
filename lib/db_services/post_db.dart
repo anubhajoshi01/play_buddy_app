@@ -11,6 +11,7 @@ class PostDb {
   static Map<String, Set<int>> categoryMap = new Map();
   static Set<String> categoryList = new Set();
   static final firestoreInstance = Firestore.instance;
+  static String errMessage;
   
   static Future<Post> createPost(
       int ownerUserId,
@@ -151,7 +152,7 @@ class PostDb {
     if (address != null) {
       localMap[id].address = address;
     } 
-    if (usersSignedUp != null) {
+    if (usersSignedUp != null && checkCap(cap, usersSignedUp)=="") {
       localMap[id].usersSignedUp = usersSignedUp;
     }
     if(category != null){
@@ -235,4 +236,15 @@ class PostDb {
     });
     return intset;
   }
+
+  static String checkCap (int cap, Set<int> u){
+    String str;
+    if(u.length < cap){
+      str = "";
+    }else{
+      str = "This event already has enough sign up";
+    }
+    return str;
+  }
+
 }
