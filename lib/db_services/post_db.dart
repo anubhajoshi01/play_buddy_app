@@ -8,6 +8,8 @@ import 'package:frc_challenge_app/services/geolocator.dart';
 class PostDb {
   static Map<int, Post> localMap = new Map<int, Post>();
   static Set<int> postIdList = new Set<int>();
+  static Map<String, Set<int>> categoryMap = new Map();
+  static Set<String> categoryList = new Set();
   static final firestoreInstance = Firestore.instance;
   
   static Future<Post> createPost(
@@ -53,6 +55,14 @@ class PostDb {
     Set<int> postsSignedUpFor = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]].postsSignedUpFor;
     postsSignedUpFor.add(id);
     localMap[id] = post;
+    bool newAdded = categoryList.add(sport);
+    print("new category: $sport");
+    if(newAdded){
+      print("new added : $sport");
+      categoryMap[sport] = new Set<int>();
+    }
+    categoryMap[sport].add(id);
+
     await UserDb.updateData(UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]].id, postsSignedUpFor: postsSignedUpFor);
     await readDb();
     print("done post create");
@@ -83,6 +93,12 @@ class PostDb {
           List<double> latlong = new List<double>();
           latlong.add(lat);
           latlong.add(long);
+          bool newList = categoryList.add(category);
+          if(newList){
+            print("new added : $category..");
+            categoryMap[category] = new Set<int>();
+          }
+          categoryMap[category].add(id);
           await Geolocate.getDistance(id,latlong);
         });
       });
@@ -135,6 +151,13 @@ class PostDb {
       localMap[id].usersSignedUp = usersSignedUp;
     }
     if(category != null){
+      String prev = localMap[id].category;
+      categoryMap[prev].remove(id);
+      bool newAdded = categoryList.add(category);
+      if(newAdded){
+        categoryMap[category] = new Set<int>();
+      }
+      categoryMap[category].add(id);
       localMap[id].category = category;
     }
 
@@ -162,7 +185,8 @@ class PostDb {
 
   static Future<void> deletePostFromDb(int postId) async{
     localMap[postId].active = false;
-
+    String prevCategory = localMap[postId].category;
+    categoryMap[prevCategory].remove(postId);
     await firestoreInstance.collection("Posts").document("$postId").updateData({"active":"false"});
     await readDb();
   }

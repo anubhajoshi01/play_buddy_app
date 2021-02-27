@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frc_challenge_app/screens/category_screens/view_category_screen.dart';
 import 'package:frc_challenge_app/screens/friends_pages/friends_screen.dart';
 
 import 'package:frc_challenge_app/screens/auth_pages/sign_in_screen.dart';
@@ -31,7 +32,7 @@ class bottomNavBar extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.search, size: 44.0),
             onPressed: () {
-              Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) => PostMapScreen()));
+              Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) => ViewCategoryScreen()));
             },
           ),
 
