@@ -104,17 +104,13 @@ class _DisplayPostScreen extends State<DisplayPostScreen> {
                 ),
               ),
 
-
-
-              (!signedUp) ?
-
-
+              (!signedUp && PostDb.checkCap(this.widget.post.cap,this.widget.post.usersSignedUp)=="")?
               FlatButton(
                 color: Colors.lightBlue[100],
                 child: Text("Sign Up",
                   style: TextStyle(color: Colors.black),
                 ),
-                
+
                 onPressed: () {
                   Set<int> postsSignedUpFor = UserDb
                       .userMap[UserDb.emailMap[EmailDb.thisEmail]]
@@ -175,11 +171,19 @@ class _DisplayPostScreen extends State<DisplayPostScreen> {
                   Navigator.pop(context);
                 },
               ) :
-                  Container()
-
-
-
-
+                Container(),
+              Container(
+                alignment: Alignment.centerLeft,
+                padding: EdgeInsets.symmetric(vertical: 35),
+                child: Text(
+                  "${PostDb.checkCap(this.widget.post.cap,this.widget.post.usersSignedUp)==""}",
+                  style: TextStyle(
+                    color: Colors.grey[900],
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              )
             ])),
       ),
     );
