@@ -61,9 +61,11 @@ class _ViewSignedUpEvents extends State<ViewSignedUpEvents> {
                         title: Row(
                           children: [
 
+
                             Text(
                               "${postAt.eventDescription}",
                               style: TextStyle(fontSize: 20),
+
                             ),
                             Padding(
                               padding: EdgeInsets.only(right: 5, left: 20),

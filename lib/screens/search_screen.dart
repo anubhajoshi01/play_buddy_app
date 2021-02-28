@@ -88,7 +88,7 @@ class FriendSearch extends SearchDelegate {
       userList.add(u);
     }
 
-    show = (query.isEmpty) ? userList : userList.where((element) => element.name.contains(query) || element.bio.contains(query)).toList();
+    show = (query.isEmpty) ? userList : userList.where((element) => (element.name.contains(query) || element.bio.contains(query))).toList();
     return ListView.builder(
         itemCount: show.length,
         itemBuilder: (context, index) {
