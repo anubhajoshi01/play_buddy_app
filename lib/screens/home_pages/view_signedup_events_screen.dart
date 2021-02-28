@@ -45,13 +45,12 @@ class _ViewSignedUpEvents extends State<ViewSignedUpEvents> {
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 10),
 
-        child: SingleChildScrollView(
-
             child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height*0.6,
                 child: (signedUpEvents.length == 0)? Text("You have not signed up for any external posts yet", style: TextStyle(fontSize:20), textAlign: TextAlign.center,):ListView.builder(
-                itemCount: signedUpEvents.length,
+                    scrollDirection: Axis.vertical,
+                    itemCount: signedUpEvents.length,
                 itemBuilder: (context, index) {
                   Post postAt = PostDb.localMap[signedUpEvents.elementAt(index)];
                   String time = DateFormat('kk:mm').format(postAt.eventDateTime);
@@ -116,7 +115,7 @@ class _ViewSignedUpEvents extends State<ViewSignedUpEvents> {
                     },
                     background: Container(color: Colors.red, child: Icon(Icons.delete)),
                   );
-                }))),
+                })),
       ),
       bottomNavigationBar: bottomNavBar(),
     );
