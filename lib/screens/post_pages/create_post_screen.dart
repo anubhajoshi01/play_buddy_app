@@ -42,6 +42,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
   String dropdownYear = "";
   String dropdownDay = "";
   String address = '';
+  bool invalidcaps = false;
 
 /*
   static final List hoursList = [
@@ -170,7 +171,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
           alignment: Alignment.centerLeft,
           padding: EdgeInsets.symmetric(vertical: 40),
           child: Text(
-            "  Enter number of people:  ",
+            "  Enter max number of people:  ",
             style: TextStyle(
               color: Colors.grey[900],
               fontSize: 22,
@@ -330,10 +331,26 @@ class _CreatePostScreen extends State<CreatePostScreen> {
             child: Text("Post",
                 style: TextStyle(fontSize: 20, color: Colors.white)),
             onPressed: () async {
-              await saveToDb();
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => PostMapScreen()));
+              if (cap < 2) {
+                setState(() {
+                  invalidcaps = true;
+                });
+              } else {
+                await saveToDb();
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => PostMapScreen()));
+              }
             }),
+        (invalidcaps)
+            ? Container(
+                child: Center(
+                  child: Text(
+                    "Max number of people allowed has to be greater than 1",
+                    style: TextStyle(color: Colors.red),
+                  ),
+                ),
+              )
+            : Container()
       ]))),
     );
   }

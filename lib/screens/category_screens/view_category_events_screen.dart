@@ -52,44 +52,54 @@ class ViewCategoryEventsScreen extends StatelessWidget {
         child: SizedBox(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height * 0.7,
-
-            child: ListView.builder(
-                itemCount: CategoryDb.categoryMap[category].length,
-                itemBuilder: (context, index) {
-                  Post at = PostDb
-                      .localMap[CategoryDb.categoryMap[category].elementAt(index)];
-                  User postOwner = UserDb.userMap[at.ownerUserId];
-                  User thisUser =
-                      UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
-                  String time = DateFormat('kk:mm').format(at.eventDateTime);
-                  return (at.active &&
-                          at.eventDateTime.isAfter(DateTime.now()) &&
-                          (at.postType == "public" ||
-                              postOwner.friendsUserIdList
-                                  .contains(thisUser.id)))
-                      ? Card(
-                          child: ListTile(
-                            title: Text(
-                              "${at.eventDescription}" + "\n",
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            subtitle: Text(
-                                "$time" +
-                                    " \n Signed Up: ${at.usersSignedUp.length}",
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 15)),
-                            onTap: () {
-                              var result = Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          DisplayPostScreen(at)));
-                            },
+          child: ListView.builder(
+              itemCount: CategoryDb.categoryMap[category].length,
+              itemBuilder: (context, index) {
+                Post at = PostDb.localMap[
+                    CategoryDb.categoryMap[category].elementAt(index)];
+                User postOwner = UserDb.userMap[at.ownerUserId];
+                User thisUser =
+                    UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
+                String time = DateFormat('kk:mm').format(at.eventDateTime);
+                return (at.active &&
+                        at.eventDateTime.isAfter(DateTime.now()) &&
+                        (at.postType == "public" ||
+                            postOwner.friendsUserIdList.contains(thisUser.id)))
+                    ? Card(
+                        child: ListTile(
+                          title: Row(
+                            children: [
+                              Text(
+                                "${at.eventDescription}",
+                                style: TextStyle(fontSize: 20),
+                              ),
+                            
+                              Padding(
+                                padding: EdgeInsets.only(right: 5, left: 20),
+                                child: Icon(Icons.person_outline),
+                              ),
+                              Padding(
+                                  padding: EdgeInsets.only(right: 40),
+                                  child: Text(
+                                      "${at.usersSignedUp.length}/${at.cap}"))
+                            ],
                           ),
-                        )
-                      : Container();
-                }),
-
+                          subtitle: Text(
+                              " \n $time" +
+                                  " \n Address:: ${at.address}",
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 15)),
+                          onTap: () {
+                            var result = Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        DisplayPostScreen(at)));
+                          },
+                        ),
+                      )
+                    : Container();
+              }),
         ),
       ),
     );

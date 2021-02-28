@@ -94,6 +94,7 @@ class PostDb {
           List<double> latlong = new List<double>();
           latlong.add(lat);
           latlong.add(long);
+          print(">>>>>>>>>>>>>>>>>> categpry $category at id $id");
           CategoryDb.categoryMap[category].add(id);
           await Geolocate.getDistance(id,latlong);
         });
