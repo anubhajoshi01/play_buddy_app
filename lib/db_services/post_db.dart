@@ -11,8 +11,7 @@ class PostDb {
   static Map<String, Set<int>> categoryMap = new Map();
   static Set<String> categoryList = new Set();
   static final firestoreInstance = Firestore.instance;
-  static String errMessage;
-  
+
   static Future<Post> createPost(
       int ownerUserId,
       String type,
