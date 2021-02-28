@@ -172,23 +172,20 @@ class _PostMapScreen extends State<PostMapScreen> {
                           zoom: 12,
                         ),
                       )))
-              : Container(
-                  // physics:ScrollPhysics(),
-                  child: Column(
-                  // shrinkWrap: true,
-                  // scrollDirection: Axis.vertical,
-                  children: <Widget>[
-
-                      ListView.builder(
+              :
+              SizedBox(
+                height: MediaQuery.of(context).size.height*0.8,
+                      width: MediaQuery.of(context).size.width,
+                      child: ListView.builder(
                         scrollDirection: Axis.vertical,
                       itemCount: sortedPos.length,
-                      shrinkWrap: true,
+
                       itemBuilder: (BuildContext context, int index) {
                         DateTime now = DateTime.now();
                         Post atIndex =
                             PostDb.localMap[sortedPos.elementAt(index).id];
                         print("$atIndex index");
-
+                        print("length >>>>>>>>>>>>>>>>>>>>> ${sortedPos.length}");
                         t = sortedPos.elementAt(index).eventDateTime;
                         time = DateFormat('kk:mm').format(t);
                         numSignedUp =
@@ -234,7 +231,7 @@ class _PostMapScreen extends State<PostMapScreen> {
                               )
                             : Container();
 
-                      })]))
+                      }))
         ],
       )),
       bottomNavigationBar: bottomNavBar(),
