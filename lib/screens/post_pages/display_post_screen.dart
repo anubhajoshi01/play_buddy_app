@@ -133,7 +133,7 @@ class _DisplayPostScreen extends State<DisplayPostScreen> {
                     signedUp = true;
                   });
                 },
-              ) : (!owned && !signedUp) ?
+              ) : (!owned && signedUp) ?
               FlatButton(
                 color: Colors.lightBlue[100],
                 child: Text("Withdraw",
