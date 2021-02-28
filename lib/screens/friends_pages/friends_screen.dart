@@ -53,8 +53,8 @@ class _FriendsScreen extends State<FriendsScreen> {
                     child: Card(
                       child: ListTile(
                         title: Text("${friendList[index].name}"),
-                        onTap: () {
-                          Navigator.push(
+                        onTap: () async{
+                         await Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>

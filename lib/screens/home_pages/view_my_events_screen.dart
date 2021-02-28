@@ -9,6 +9,7 @@ import 'package:frc_challenge_app/db_services/user_db.dart';
 import 'package:frc_challenge_app/models/post.dart';
 import 'package:frc_challenge_app/models/user.dart';
 import 'package:frc_challenge_app/screens/post_pages/display_post_screen.dart';
+import 'package:frc_challenge_app/screens/post_pages/post_map_screen.dart';
 import 'package:intl/intl.dart';
 
 
@@ -65,17 +66,7 @@ class _ViewMyEventsScreen extends State<ViewMyEventsScreen> {
 
                           PostDb.deletePostFromDb(myPostsList[index].id);
                           setState(() {
-                            List<Post> newPostList = new List<Post>();
-                            for (int i = 0;
-                                i < thisUser.postIdList.length;
-                                i++) {
-                              Post p = PostDb
-                                  .localMap[thisUser.postIdList.elementAt(i)];
-                              if (p.active) {
-                                newPostList.add(p);
-                              }
-                            }
-                            myPostsList = newPostList;
+                            myPostsList.removeAt(index);
                           });
                         },
                         child: Card(
@@ -114,7 +105,9 @@ class _ViewMyEventsScreen extends State<ViewMyEventsScreen> {
                                 User thisUser = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
                                 for(int i = 0; i < thisUser.postIdList.length; i++){
                                   Post p = PostDb.localMap[thisUser.postIdList.elementAt(i)];
-                                  myPostsList.add(p);
+                                  if(checkStat(p, DateTime.now())) {
+                                    myPostsList.add(p);
+                                  }
                                 }
                               });
                             },
@@ -129,5 +122,17 @@ class _ViewMyEventsScreen extends State<ViewMyEventsScreen> {
       ),
       bottomNavigationBar: bottomNavBar(),
     );
+  }
+
+  static bool checkStat(Post p, DateTime now) {
+    User u = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
+    if (p.postType == ("public") ||
+        u.friendsUserIdList.contains(p.ownerUserId) ||
+        p.ownerUserId == u.id) {
+      if (p.eventDateTime.isAfter(now) && p.active) {
+        return true;
+      }
+    }
+    return false;
   }
 }

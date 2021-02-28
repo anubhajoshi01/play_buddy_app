@@ -69,8 +69,8 @@ class _RequestsScreen extends State<RequestsScreen> {
                         child: Card(
                           child: ListTile(
                             title: Text("${requestsSent[index].name}"),
-                            onTap: () {
-                              Navigator.push(
+                            onTap: () async{
+                              await Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => ProfileScreen(
@@ -188,7 +188,7 @@ class _RequestsScreen extends State<RequestsScreen> {
                           ),
                         ),
                         onDismissed: (direction) {
-                          if (direction == DismissDirection.endToStart) {
+                          if (direction == DismissDirection.startToEnd) {
                             User thisUser = UserDb
                                 .userMap[UserDb.emailMap[EmailDb.thisEmail]];
                             Set<int> newRequestRecievedList =
@@ -214,7 +214,7 @@ class _RequestsScreen extends State<RequestsScreen> {
                             setState(() {
                               requestsReceived.removeAt(index);
                             });
-                          } else if (direction == DismissDirection.startToEnd) {
+                          } else if (direction == DismissDirection.endToStart) {
                             User thisUser = UserDb
                                 .userMap[UserDb.emailMap[EmailDb.thisEmail]];
                             Set<int> newRequestRecievedList =
@@ -236,12 +236,12 @@ class _RequestsScreen extends State<RequestsScreen> {
                           }
                         },
                         background: Container(
-                          color: Colors.red,
-                          child: Icon(Icons.remove),
-                        ),
-                        secondaryBackground: Container(
                           color: Colors.green,
                           child: Icon(Icons.add),
+                        ),
+                        secondaryBackground: Container(
+                          color: Colors.red,
+                          child: Icon(Icons.remove),
                         ),
                       );
                     }))
