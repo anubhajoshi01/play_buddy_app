@@ -138,7 +138,7 @@ class _PostMapScreen extends State<PostMapScreen> {
               MaterialPageRoute(builder: (context) => CreatePostScreen()));
         },
       ),
-      body: Container(
+      body: SingleChildScrollView(
           child: Flex(
         direction: Axis.vertical,
         children: <Widget>[
@@ -172,16 +172,21 @@ class _PostMapScreen extends State<PostMapScreen> {
                           zoom: 12,
                         ),
                       )))
-              : SingleChildScrollView(
-                  child: ListView.builder(
+              :
+              SizedBox(
+                height: MediaQuery.of(context).size.height*0.8,
+                      width: MediaQuery.of(context).size.width,
+                      child: ListView.builder(
+                        scrollDirection: Axis.vertical,
+
                       itemCount: sortedPos.length,
-                      shrinkWrap: true,
+
                       itemBuilder: (BuildContext context, int index) {
                         DateTime now = DateTime.now();
                         Post atIndex =
                             PostDb.localMap[sortedPos.elementAt(index).id];
                         print("$atIndex index");
-
+                        print("length >>>>>>>>>>>>>>>>>>>>> ${sortedPos.length}");
                         t = sortedPos.elementAt(index).eventDateTime;
                         time = DateFormat('kk:mm').format(t);
                         numSignedUp =
@@ -189,41 +194,31 @@ class _PostMapScreen extends State<PostMapScreen> {
 
                         return (atIndex.eventDateTime.isAfter(now))
                             ? Container(
-                                height: 100,
+                                height: 115,
                                 margin: const EdgeInsets.all(15.0),
                                 child: Card(
                                   child: ListTile(
-
-                                    title: Text(
-                                      "${atIndex.eventDescription}" + "\n",
-                                      style: TextStyle(fontSize: 20),
+                                    title: Row(
+                                      children: [
+                                        Text(
+                                          "${atIndex.eventDescription}",
+                                          style: TextStyle(fontSize: 20),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(right: 5, left: 20),
+                                          child: Icon(Icons.person_outline),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(right: 40),
+                                          child: Text("${atIndex.usersSignedUp.length}/${atIndex.cap}"),
+                                        )
+                                      ],
                                     ),
-
                                     subtitle: Text(
-                                        "$time" +
-                                            " \n Signed Up: ${numSignedUp}" +
-                                            "\n distance: ${Geolocate.distancesM[atIndex.id]}",
+                                        "\n $time" +
+                                            " \n Address: ${atIndex.address}",
                                         style: TextStyle(
                                             color: Colors.black, fontSize: 15)),
-
-                                    // children: FlatButton(),
-
-                                    // children: <Widget>[
-                                    //   FlatButton(
-                                    //
-                                    //
-                                    //   ),
-                                    // ],
-
-                                    // child: Container(
-                                    //
-                                    //
-                                    // ),
-
-                                    // children <Widget>[
-                                    //
-                                    //
-                                    // ],
 
                                     onTap: () {
                                       Navigator.push(
@@ -236,6 +231,7 @@ class _PostMapScreen extends State<PostMapScreen> {
                                 ),
                               )
                             : Container();
+
                       }))
         ],
       )),

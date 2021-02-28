@@ -57,7 +57,7 @@ class _DisplayPostScreen extends State<DisplayPostScreen> {
 
   @override
   Widget build(BuildContext context) {
-    markers.add(new Marker(
+     markers.add(new Marker(
         markerId: MarkerId("${this.widget.post.id}"),
         position:
         LatLng(this.widget.post.latitude, this.widget.post.longitude)));
@@ -65,7 +65,18 @@ class _DisplayPostScreen extends State<DisplayPostScreen> {
       appBar: CommonAppBar.appBar("View Post", context),
       backgroundColor: Colors.grey[300],
       body: Container(
-        child: SingleChildScrollView(
+
+        child: (!this.widget.post.active)
+            ? Align (
+                alignment: Alignment.center,
+                child: Text("This event does not exist anymore.",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.red, fontSize: 30, fontWeight: FontWeight.bold)
+                )
+
+            )
+
+              : SingleChildScrollView(
             child: Column(children: <Widget>[
               SizedBox(
                   width: MediaQuery
@@ -137,7 +148,7 @@ class _DisplayPostScreen extends State<DisplayPostScreen> {
                     signedUp = true;
                   });
                 },
-              ) : (!owned) ?
+              ) : (!owned && signedUp) ?
               FlatButton(
                 color: Colors.lightBlue[100],
                 child: Text("Withdraw",
@@ -176,18 +187,19 @@ class _DisplayPostScreen extends State<DisplayPostScreen> {
                 },
               ) :
                 Container(),
+              (PostDb.checkCap(this.widget.post.cap,this.widget.post.usersSignedUp)!="") ?
               Container(
                 alignment: Alignment.centerLeft,
                 padding: EdgeInsets.symmetric(vertical: 35),
-                child: Text(
-                  "${PostDb.checkCap(this.widget.post.cap,this.widget.post.usersSignedUp)==""}",
+                child: Center(child: Text(
+                  "Event Limit has been met",
                   style: TextStyle(
-                    color: Colors.grey[900],
+                    color: Colors.red,
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-              )
+              )) : Container()
             ])),
       ),
     );
