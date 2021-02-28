@@ -43,6 +43,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
   String dropdownDay = "";
   String address = '';
   bool invalidcaps = false;
+  bool invalidDate = false;
 
 /*
   static final List hoursList = [
@@ -331,15 +332,26 @@ class _CreatePostScreen extends State<CreatePostScreen> {
             child: Text("Post",
                 style: TextStyle(fontSize: 20, color: Colors.white)),
             onPressed: () async {
+
+              DateTime time = DateTime(selectedDate.year, selectedDate.month,
+                  selectedDate.day, selectedTime.hour, selectedDate.minute);
+
               if (cap < 2) {
                 setState(() {
                   invalidcaps = true;
                 });
-              } else {
+                return;
+              }
+              if(!time.isAfter(DateTime.now())){
+                setState(() {
+                  invalidDate = false;
+                });
+                return;
+              }
                 await saveToDb();
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => PostMapScreen()));
-              }
+
             }),
         (invalidcaps)
             ? Container(
@@ -350,7 +362,13 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                   ),
                 ),
               )
-            : Container()
+            : (invalidDate) ? (Container(
+          child: Center(
+            child: Text(
+              "Set a date after the current date and time", style: TextStyle(color: Colors.red),
+            ),
+          ),
+        )) : Container()
       ]))),
     );
   }
