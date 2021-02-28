@@ -44,6 +44,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
   String address = '';
   bool invalidcaps = false;
   bool invalidDate = false;
+  bool invalidAddress = false;
 
 /*
   static final List hoursList = [
@@ -331,7 +332,8 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                   ),
                 ),
               )
-            : (invalidDate)
+            : Container(),
+                (invalidDate)
                 ? (Container(
                     child: Center(
                       child: Text(
@@ -341,6 +343,11 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                     ),
                   ))
                 : Container(),
+                (invalidAddress) ? Container(
+                  child: Center(
+                    child: Text("Invalid Address", style: TextStyle(color: Colors.red),),
+                  ),
+                ) : Container(),
 
         FlatButton(
             shape: RoundedRectangleBorder(
@@ -354,22 +361,31 @@ class _CreatePostScreen extends State<CreatePostScreen> {
             onPressed: () async {
               DateTime time = DateTime(selectedDate.year, selectedDate.month,
                   selectedDate.day, selectedTime.hour, selectedDate.minute);
-
+              Position p = await Geolocate.getLatLong(address);
+              bool error = false;
               if (cap < 2) {
                 setState(() {
                   invalidcaps = true;
                 });
-                return;
+                error = true;
               }
               if (!time.isAfter(DateTime.now())) {
                 setState(() {
                   invalidDate = true;
                 });
-                return;
+                error = true;
               }
-              await saveToDb();
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => PostMapScreen()));
+              if(p == null){
+                error = true;
+                setState(() {
+                  invalidAddress = true;
+                });
+              }
+                if(!error) {
+                  await saveToDb();
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => PostMapScreen()));
+                }
             }),
       ]))),
     );
