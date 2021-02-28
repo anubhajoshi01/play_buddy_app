@@ -245,6 +245,7 @@ class _PostMapScreen extends State<PostMapScreen> {
                                 ),
                               )
                             : Container();
+
                       }))
         ],
       )),
