@@ -51,7 +51,7 @@ class _DisplayPostScreen extends State<DisplayPostScreen> {
     int thisUser = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]].id;
     owned = this.widget.post.ownerUserId == thisUser;
     t = this.widget.post.eventDateTime;
-    time = DateFormat('kk:mm').format(t);
+    time = DateFormat('yyyy-MM-dd – kk:mm').format(t);
 
   }
 
@@ -94,10 +94,12 @@ class _DisplayPostScreen extends State<DisplayPostScreen> {
                     Text("${this.widget.post.eventDescription}",
                       style: TextStyle(fontSize: 20),
                     ),
+                    Text("${this.widget.post.ownerUserId}"),
                     Text("\n"),
                     Text("$time"),
                     Text("\n"),
                     Text("${this.widget.post.address}"),
+                    Text("Sign up: ${this.widget.post.usersSignedUp.length}/${this.widget.post.cap}"),
                     Text("\n"),
                     Text("${this.widget.post.usersSignedUp.length} have signed up!"),
                   ],
