@@ -63,7 +63,7 @@ class _DisplayPostScreen extends State<DisplayPostScreen> {
         LatLng(this.widget.post.latitude, this.widget.post.longitude)));
     return Scaffold(
       appBar: CommonAppBar.appBar("View Post", context),
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Colors.white,
       body: Container(
 
         child: (!this.widget.post.active)
@@ -102,19 +102,25 @@ class _DisplayPostScreen extends State<DisplayPostScreen> {
               SingleChildScrollView(
                 child: Column(
                   children: <Text>[
+                    Text("\n",
+                      style:TextStyle(fontSize:5),
+                    ),
                     Text("${this.widget.post.eventDescription}",
                       style: TextStyle(fontSize: 20),
                     ),
+                    Text("\n",
+                      style:TextStyle(fontSize:5),
+                    ),
+                    Text("Owner: ${UserDb.userMap[this.widget.post.ownerUserId].name}"),
+                    Text("\n", style:TextStyle(fontSize:5),),
+                    Text("Date - Time: $time"),
+                    Text("\n", style:TextStyle(fontSize:5),),
+                    Text("${this.widget.post.address}",
+                      style: TextStyle(fontSize: 17),
+                    ),
+
                     Text("\n"),
-                    Text("${UserDb.userMap[this.widget.post.ownerUserId].name}"),
-                    Text("\n"),
-                    Text("$time"),
-                    Text("\n"),
-                    Text("${this.widget.post.address}"),
-                    Text("\n"),
-                    Text("Signed up: ${this.widget.post.usersSignedUp.length}/${this.widget.post.cap}"),
-                    Text("\n"),
-                    Text("${this.widget.post.usersSignedUp.length} have signed up!"),
+                    Text("${this.widget.post.usersSignedUp.length}/${this.widget.post.cap} have signed up!"),
                   ],
                 ),
               ),
