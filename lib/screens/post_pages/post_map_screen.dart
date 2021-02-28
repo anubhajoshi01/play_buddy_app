@@ -189,7 +189,7 @@ class _PostMapScreen extends State<PostMapScreen> {
 
                         return (atIndex.eventDateTime.isAfter(now))
                             ? Container(
-                                height: 100,
+                                height: 115,
                                 margin: const EdgeInsets.all(15.0),
                                 child: Card(
                                   child: ListTile(
