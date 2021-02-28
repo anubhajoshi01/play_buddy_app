@@ -138,7 +138,7 @@ class _PostMapScreen extends State<PostMapScreen> {
               MaterialPageRoute(builder: (context) => CreatePostScreen()));
         },
       ),
-      body: Container(
+      body: SingleChildScrollView(
           child: Flex(
         direction: Axis.vertical,
         children: <Widget>[
@@ -172,10 +172,15 @@ class _PostMapScreen extends State<PostMapScreen> {
                           zoom: 12,
                         ),
                       )))
-              : SingleChildScrollView(
+              : Container(
+                  // physics:ScrollPhysics(),
+                  child: Column(
                   // shrinkWrap: true,
                   // scrollDirection: Axis.vertical,
-                  child: ListView.builder(
+                  children: <Widget>[
+
+                      ListView.builder(
+                        scrollDirection: Axis.vertical,
                       itemCount: sortedPos.length,
                       shrinkWrap: true,
                       itemBuilder: (BuildContext context, int index) {
@@ -229,7 +234,7 @@ class _PostMapScreen extends State<PostMapScreen> {
                               )
                             : Container();
 
-                      }))
+                      })]))
         ],
       )),
       bottomNavigationBar: bottomNavBar(),
