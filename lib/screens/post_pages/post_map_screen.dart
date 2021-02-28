@@ -173,6 +173,8 @@ class _PostMapScreen extends State<PostMapScreen> {
                         ),
                       )))
               : SingleChildScrollView(
+                  // shrinkWrap: true,
+                  // scrollDirection: Axis.vertical,
                   child: ListView.builder(
                       itemCount: sortedPos.length,
                       shrinkWrap: true,
@@ -214,25 +216,6 @@ class _PostMapScreen extends State<PostMapScreen> {
                                             " \n Address: ${atIndex.address}",
                                         style: TextStyle(
                                             color: Colors.black, fontSize: 15)),
-
-                                    // children: FlatButton(),
-
-                                    // children: <Widget>[
-                                    //   FlatButton(
-                                    //
-                                    //
-                                    //   ),
-                                    // ],
-
-                                    // child: Container(
-                                    //
-                                    //
-                                    // ),
-
-                                    // children <Widget>[
-                                    //
-                                    //
-                                    // ],
 
                                     onTap: () {
                                       Navigator.push(
