@@ -1,4 +1,4 @@
-class User {
+${this.widget.post.usersSignedUp.length} / ),class User {
   int id;
   String email;
   Set<int> friendsUserIdList;
