@@ -322,6 +322,26 @@ class _CreatePostScreen extends State<CreatePostScreen> {
           padding: EdgeInsets.symmetric(vertical: 6),
         ),
 
+        (invalidcaps)
+            ? Container(
+                child: Center(
+                  child: Text(
+                    "Max number of people allowed has to be greater than 1",
+                    style: TextStyle(color: Colors.red),
+                  ),
+                ),
+              )
+            : (invalidDate)
+                ? (Container(
+                    child: Center(
+                      child: Text(
+                        "Set a date after the current date and time.",
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    ),
+                  ))
+                : Container(),
+
         FlatButton(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(24.0),
@@ -332,7 +352,6 @@ class _CreatePostScreen extends State<CreatePostScreen> {
             child: Text("Post",
                 style: TextStyle(fontSize: 20, color: Colors.white)),
             onPressed: () async {
-
               DateTime time = DateTime(selectedDate.year, selectedDate.month,
                   selectedDate.day, selectedTime.hour, selectedDate.minute);
 
@@ -342,33 +361,16 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                 });
                 return;
               }
-              if(!time.isAfter(DateTime.now())){
+              if (!time.isAfter(DateTime.now())) {
                 setState(() {
-                  invalidDate = false;
+                  invalidDate = true;
                 });
                 return;
               }
-                await saveToDb();
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => PostMapScreen()));
-
+              await saveToDb();
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => PostMapScreen()));
             }),
-        (invalidcaps)
-            ? Container(
-                child: Center(
-                  child: Text(
-                    "Max number of people allowed has to be greater than 1",
-                    style: TextStyle(color: Colors.red),
-                  ),
-                ),
-              )
-            : (invalidDate) ? (Container(
-          child: Center(
-            child: Text(
-              "Set a date after the current date and time", style: TextStyle(color: Colors.red),
-            ),
-          ),
-        )) : Container()
       ]))),
     );
   }

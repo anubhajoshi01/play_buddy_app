@@ -173,6 +173,8 @@ class _PostMapScreen extends State<PostMapScreen> {
                         ),
                       )))
               : SingleChildScrollView(
+                  // shrinkWrap: true,
+                  // scrollDirection: Axis.vertical,
                   child: ListView.builder(
                       itemCount: sortedPos.length,
                       shrinkWrap: true,
@@ -189,7 +191,7 @@ class _PostMapScreen extends State<PostMapScreen> {
 
                         return (atIndex.eventDateTime.isAfter(now))
                             ? Container(
-                                height: 100,
+                                height: 115,
                                 margin: const EdgeInsets.all(15.0),
                                 child: Card(
                                   child: ListTile(
@@ -215,25 +217,6 @@ class _PostMapScreen extends State<PostMapScreen> {
                                         style: TextStyle(
                                             color: Colors.black, fontSize: 15)),
 
-                                    // children: FlatButton(),
-
-                                    // children: <Widget>[
-                                    //   FlatButton(
-                                    //
-                                    //
-                                    //   ),
-                                    // ],
-
-                                    // child: Container(
-                                    //
-                                    //
-                                    // ),
-
-                                    // children <Widget>[
-                                    //
-                                    //
-                                    // ],
-
                                     onTap: () {
                                       Navigator.push(
                                           context,
@@ -245,6 +228,7 @@ class _PostMapScreen extends State<PostMapScreen> {
                                 ),
                               )
                             : Container();
+
                       }))
         ],
       )),
