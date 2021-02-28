@@ -57,7 +57,7 @@ class _DisplayPostScreen extends State<DisplayPostScreen> {
 
   @override
   Widget build(BuildContext context) {
-    markers.add(new Marker(
+     markers.add(new Marker(
         markerId: MarkerId("${this.widget.post.id}"),
         position:
         LatLng(this.widget.post.latitude, this.widget.post.longitude)));
@@ -65,7 +65,18 @@ class _DisplayPostScreen extends State<DisplayPostScreen> {
       appBar: CommonAppBar.appBar("View Post", context),
       backgroundColor: Colors.grey[300],
       body: Container(
-        child: SingleChildScrollView(
+
+        child: (!this.widget.post.active)
+            ? Align (
+                alignment: Alignment.center,
+                child: Text("This event does not exist anymore.",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.red, fontSize: 30, fontWeight: FontWeight.bold)
+                )
+
+            )
+
+              : SingleChildScrollView(
             child: Column(children: <Widget>[
               SizedBox(
                   width: MediaQuery
