@@ -361,8 +361,19 @@ class _CreatePostScreen extends State<CreatePostScreen> {
             onPressed: () async {
               DateTime time = DateTime(selectedDate.year, selectedDate.month,
                   selectedDate.day, selectedTime.hour, selectedDate.minute);
-              Position p = await Geolocate.getLatLong(address);
               bool error = false;
+
+              try {
+                Position p = await Geolocate.getLatLong(address);
+              }
+
+              catch(e){
+                error = true;
+                setState(() {
+                  invalidAddress = true;
+                });
+
+              }
               if (cap < 2) {
                 setState(() {
                   invalidcaps = true;
@@ -375,13 +386,9 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                 });
                 error = true;
               }
-              if(p == null){
-                error = true;
-                setState(() {
-                  invalidAddress = true;
-                });
-              }
+
                 if(!error) {
+                  print('asdfasdfadsfasdfasdfadsf 385');
                   await saveToDb();
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => PostMapScreen()));
