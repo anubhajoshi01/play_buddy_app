@@ -45,15 +45,14 @@ class _ViewSignedUpEvents extends State<ViewSignedUpEvents> {
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 10),
 
-        child: SingleChildScrollView(
-
             child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height*0.6,
-                child: (signedUpEvents.length == 0)? Text("You have not signed up for any external posts yet", style: TextStyle(fontSize:20), textAlign: TextAlign.center,):ListView.builder(
-                itemCount: signedUpEvents.length,
+                child: (signedUpEvents.length == 0)? Text("You have not signed up for any external posts yet.", style: TextStyle(fontSize:20), textAlign: TextAlign.center,):ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    itemCount: signedUpEvents.length,
                 itemBuilder: (context, index) {
-                  Post postAt = PostDb.localMap[signedUpEvents.elementAt(index)];
+                  Post postAt = PostDb.localMap[signedUpEvents.elementAt(index).id];
                   String time = DateFormat('kk:mm').format(postAt.eventDateTime);
                   return Dismissible(
                     key: Key("$index"),
@@ -61,11 +60,7 @@ class _ViewSignedUpEvents extends State<ViewSignedUpEvents> {
                       child: ListTile(
                         title: Row(
                           children: [
-                            Text(
-                              "${postAt.eventDescription}",
-                              style: TextStyle(
-                                  fontSize: 20),
-                            ),
+
                             Text(
                               "${postAt.eventDescription}",
                               style: TextStyle(fontSize: 20),
@@ -77,8 +72,19 @@ class _ViewSignedUpEvents extends State<ViewSignedUpEvents> {
                             Padding(
                                 padding: EdgeInsets.only(right: 40),
                                 child: Text("${postAt.usersSignedUp.length}/${postAt.cap}")),
+
+
                           ],
                         ),
+
+                        subtitle: Text(
+                            "\n $time" +
+                                " \n Address: ${postAt.address}",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 15)),
+
+
                         onTap: () async{
                          await Navigator.push(
                               context,
@@ -116,7 +122,7 @@ class _ViewSignedUpEvents extends State<ViewSignedUpEvents> {
                     },
                     background: Container(color: Colors.red, child: Icon(Icons.delete)),
                   );
-                }))),
+                })),
       ),
       bottomNavigationBar: bottomNavBar(),
     );

@@ -154,12 +154,13 @@ class _ProfileScreen extends State<ProfileScreen> {
                                 Center(
                                   child: Text("No posts yet"),
                                 ) :
-                            SingleChildScrollView(
-                                child: SizedBox(
+
+                            SizedBox(
                                     width: MediaQuery.of(context).size.width,
                                     height: MediaQuery.of(context).size.height *
                                         0.5,
                                     child: ListView.builder(
+                                      scrollDirection: Axis.vertical,
                                         itemCount:
                                             this.widget.user.postIdList.length,
                                         itemBuilder: (context, index) {
@@ -186,11 +187,7 @@ class _ProfileScreen extends State<ProfileScreen> {
                                                   child: ListTile(
                                                     title: Row(
                                                       children: [
-                                                        Text(
-                                                          "${postAt.eventDescription}",
-                                                          style: TextStyle(
-                                                              fontSize: 20),
-                                                        ),
+
                                                     Text(
                                                       "${postAt.eventDescription}",
                                                       style: TextStyle(fontSize: 20),
@@ -221,7 +218,7 @@ class _ProfileScreen extends State<ProfileScreen> {
                                                   ),
                                                 )
                                               : Container();
-                                        })))
+                                        }))
                           ],
                         ))
                       : (requestRecieved)

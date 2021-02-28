@@ -39,12 +39,13 @@ class _FriendsScreen extends State<FriendsScreen> {
 
           padding: EdgeInsets.symmetric(vertical: 10),
 
-        child: SingleChildScrollView(
+
           child: SizedBox(
             height: MediaQuery.of(context).size.height*0.6,
             width: MediaQuery.of(context).size.width,
 
             child: (friendList.length == 0)? Text("You have not added any friends yet :(", style: TextStyle(fontSize:20), textAlign: TextAlign.center,): ListView.builder(
+                scrollDirection: Axis.vertical,
                 itemCount: friendList.length,
                 itemBuilder: (context, index) {
                   return Dismissible(
@@ -93,7 +94,7 @@ class _FriendsScreen extends State<FriendsScreen> {
                     background:
                         Container(color: Colors.red, child: Icon(Icons.remove)),
                   );
-                }))),
+                })),
       ),
         bottomNavigationBar: bottomNavBar(),
     );

@@ -178,6 +178,7 @@ class _PostMapScreen extends State<PostMapScreen> {
                       width: MediaQuery.of(context).size.width,
                       child: ListView.builder(
                         scrollDirection: Axis.vertical,
+
                       itemCount: sortedPos.length,
 
                       itemBuilder: (BuildContext context, int index) {
