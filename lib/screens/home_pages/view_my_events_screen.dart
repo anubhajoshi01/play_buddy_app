@@ -9,6 +9,8 @@ import 'package:frc_challenge_app/db_services/user_db.dart';
 import 'package:frc_challenge_app/models/post.dart';
 import 'package:frc_challenge_app/models/user.dart';
 import 'package:frc_challenge_app/screens/post_pages/display_post_screen.dart';
+import 'package:intl/intl.dart';
+
 
 class ViewMyEventsScreen extends StatefulWidget {
   @override
@@ -49,6 +51,8 @@ class _ViewMyEventsScreen extends State<ViewMyEventsScreen> {
                 child: (myPostsList.length == 0)? Text("You have not created any posts yet", style: TextStyle(fontSize:20), textAlign: TextAlign.center,):ListView.builder(
                     itemCount: myPostsList.length,
                     itemBuilder: (context, index) {
+                      Post postAt = PostDb.localMap[myPostsList.elementAt(index).id];
+                      String time = DateFormat('kk:mm').format(postAt.eventDateTime);
                       return Dismissible(
                         key: Key("$index"),
                         onDismissed: (direction) {
@@ -76,7 +80,29 @@ class _ViewMyEventsScreen extends State<ViewMyEventsScreen> {
                         },
                         child: Card(
                           child: ListTile(
-                            title: Text("${myPostsList[index].address}"),
+                            title: Row(
+                              children: [
+                                Text(
+                                  "${postAt.eventDescription}",
+                                  style: TextStyle(
+                                      fontSize: 20),
+                                ),
+
+                                Padding(
+                                  padding: EdgeInsets.only(right: 5, left: 20),
+                                  child: Icon(Icons.person_outline),
+                                ),
+                                Padding(
+                                    padding: EdgeInsets.only(right: 40),
+                                    child: Text("${postAt.usersSignedUp.length}/${postAt.cap}")),
+                              ],
+                            ),
+                            subtitle: Text(
+                                "\n $time" +
+                                    " \n Address: ${postAt.address}",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 15)),
                             onTap: () async{
                               var result = await Navigator.push(
                                   context,

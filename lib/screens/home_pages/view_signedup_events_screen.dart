@@ -9,6 +9,8 @@ import 'package:frc_challenge_app/db_services/user_db.dart';
 import 'package:frc_challenge_app/models/post.dart';
 import 'package:frc_challenge_app/models/user.dart';
 import 'package:frc_challenge_app/screens/post_pages/display_post_screen.dart';
+import 'package:intl/intl.dart';
+
 
 class ViewSignedUpEvents extends StatefulWidget {
   @override
@@ -48,14 +50,35 @@ class _ViewSignedUpEvents extends State<ViewSignedUpEvents> {
             child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height*0.6,
-                child: (signedUpEvents.length == 0)? Text("You have not created any posts yet", style: TextStyle(fontSize:20), textAlign: TextAlign.center,):ListView.builder(
+                child: (signedUpEvents.length == 0)? Text("You have not signed up for any external posts yet", style: TextStyle(fontSize:20), textAlign: TextAlign.center,):ListView.builder(
                 itemCount: signedUpEvents.length,
                 itemBuilder: (context, index) {
+                  Post postAt = PostDb.localMap[signedUpEvents.elementAt(index)];
+                  String time = DateFormat('kk:mm').format(postAt.eventDateTime);
                   return Dismissible(
                     key: Key("$index"),
                     child: Card(
                       child: ListTile(
-                        title: Text("${signedUpEvents[index].address}"),
+                        title: Row(
+                          children: [
+                            Text(
+                              "${postAt.eventDescription}",
+                              style: TextStyle(
+                                  fontSize: 20),
+                            ),
+                            Text(
+                              "${postAt.eventDescription}",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(right: 5, left: 20),
+                              child: Icon(Icons.person_outline),
+                            ),
+                            Padding(
+                                padding: EdgeInsets.only(right: 40),
+                                child: Text("${postAt.usersSignedUp.length}/${postAt.cap}")),
+                          ],
+                        ),
                         onTap: () async{
                          await Navigator.push(
                               context,

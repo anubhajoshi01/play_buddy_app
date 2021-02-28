@@ -133,7 +133,7 @@ class _DisplayPostScreen extends State<DisplayPostScreen> {
                     signedUp = true;
                   });
                 },
-              ) : (!owned) ?
+              ) : (!owned && !signedUp) ?
               FlatButton(
                 color: Colors.lightBlue[100],
                 child: Text("Withdraw",
@@ -172,18 +172,19 @@ class _DisplayPostScreen extends State<DisplayPostScreen> {
                 },
               ) :
                 Container(),
+              (PostDb.checkCap(this.widget.post.cap,this.widget.post.usersSignedUp)!="") ?
               Container(
                 alignment: Alignment.centerLeft,
                 padding: EdgeInsets.symmetric(vertical: 35),
-                child: Text(
-                  "${PostDb.checkCap(this.widget.post.cap,this.widget.post.usersSignedUp)==""}",
+                child: Center(child: Text(
+                  "Event Limit has been met",
                   style: TextStyle(
-                    color: Colors.grey[900],
+                    color: Colors.red,
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-              )
+              )) : Container()
             ])),
       ),
     );

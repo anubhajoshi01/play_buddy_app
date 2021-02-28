@@ -193,16 +193,25 @@ class _PostMapScreen extends State<PostMapScreen> {
                                 margin: const EdgeInsets.all(15.0),
                                 child: Card(
                                   child: ListTile(
-
-                                    title: Text(
-                                      "${atIndex.eventDescription}" + "\n",
-                                      style: TextStyle(fontSize: 20),
+                                    title: Row(
+                                      children: [
+                                        Text(
+                                          "${atIndex.eventDescription}",
+                                          style: TextStyle(fontSize: 20),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(right: 5, left: 20),
+                                          child: Icon(Icons.person_outline),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(right: 40),
+                                          child: Text("${atIndex.usersSignedUp.length}/${atIndex.cap}"),
+                                        )
+                                      ],
                                     ),
-
                                     subtitle: Text(
-                                        "$time" +
-                                            " \n Signed Up: ${numSignedUp}" +
-                                            "\n distance: ${Geolocate.distancesM[atIndex.id]}",
+                                        "\n $time" +
+                                            " \n Address: ${atIndex.address}",
                                         style: TextStyle(
                                             color: Colors.black, fontSize: 15)),
 

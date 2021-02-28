@@ -150,6 +150,10 @@ class _ProfileScreen extends State<ProfileScreen> {
                             Padding(
                               padding: EdgeInsets.symmetric(vertical: 10),
                             ),
+                            (this.widget.user.getUsableEvents().length == 0) ?
+                                Center(
+                                  child: Text("No posts yet"),
+                                ) :
                             SingleChildScrollView(
                                 child: SizedBox(
                                     width: MediaQuery.of(context).size.width,
@@ -180,16 +184,29 @@ class _ProfileScreen extends State<ProfileScreen> {
                                                               thisUser.id)))
                                               ? Card(
                                                   child: ListTile(
-                                                    title: Text(
-                                                      "${postAt.eventDescription}" +
-                                                          "\n",
-                                                      style: TextStyle(
-                                                          fontSize: 20),
+                                                    title: Row(
+                                                      children: [
+                                                        Text(
+                                                          "${postAt.eventDescription}",
+                                                          style: TextStyle(
+                                                              fontSize: 20),
+                                                        ),
+                                                    Text(
+                                                      "${postAt.eventDescription}",
+                                                      style: TextStyle(fontSize: 20),
+                                                    ),
+                                                    Padding(
+                                                      padding: EdgeInsets.only(right: 5, left: 20),
+                                                      child: Icon(Icons.person_outline),
+                                                    ),
+                                                    Padding(
+                                                      padding: EdgeInsets.only(right: 40),
+                                                      child: Text("${postAt.usersSignedUp.length}/${postAt.cap}")),
+                                                      ],
                                                     ),
                                                     subtitle: Text(
-                                                        "$time" +
-                                                            " \n Signed Up: ${postAt.usersSignedUp.length}" +
-                                                            "\n distance: ${Geolocate.distancesM[postAt.id]}",
+                                                        "\n $time" +
+                                                            " \n Address: ${postAt.address}",
                                                         style: TextStyle(
                                                             color: Colors.black,
                                                             fontSize: 15)),
