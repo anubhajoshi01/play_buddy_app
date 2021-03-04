@@ -40,7 +40,7 @@ class UserDb {
     }
   }
 
-  static Future<void> writeToDb(String email) async {
+  static Future<void> writeToDb(String email, String name) async {
     await syncUserMap();
     int id = userIdList.length;
     print(id);
@@ -52,7 +52,7 @@ class UserDb {
       "requestSentList": "",
       "requestReceivedList": "",
       "postsSignedUpFor" : "",
-      "name": "",
+      "name": name,
       "bio": ""
     });
     await syncUserMap();

@@ -9,7 +9,7 @@ import 'package:frc_challenge_app/screens/home_pages/view_signedup_events_screen
 
 class CommonDrawers{
 
-  static Drawer profileDrawer(BuildContext context){
+  static Drawer profileDrawer(BuildContext context, String title){
     return Drawer(
       child: ListView(
         padding: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
@@ -21,21 +21,21 @@ class CommonDrawers{
             ),
           ),
           ListTile(
-            title: Text("My Profile"),
+            title: Text("My Profile", style: TextStyle(color: (title == "My Profile") ? Colors.red : Colors.black),),
             onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen()));
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ProfileScreen()));
             },
           ),
           ListTile(
-            title: Text("My Posts"),
+            title: Text("My Posts", style: TextStyle(color: (title == "My Posts") ? Colors.red : Colors.black)),
             onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => ViewMyEventsScreen()));
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ViewMyEventsScreen()));
             },
           ),
           ListTile(
-            title: Text("Signed-Up Events"),
+            title: Text("Signed-Up Events", style: TextStyle(color: (title == "Signed-Up Events") ? Colors.red : Colors.black)),
             onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => ViewSignedUpEvents()));
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ViewSignedUpEvents()));
             },
           )
         ],
@@ -43,7 +43,7 @@ class CommonDrawers{
     );
   }
 
-  static Drawer friendDrawer(BuildContext context){
+  static Drawer friendDrawer(BuildContext context, String title){
     return Drawer(
       child: ListView(
         padding: EdgeInsets.symmetric(vertical: 5),
@@ -55,21 +55,21 @@ class CommonDrawers{
             ),
           ),
           ListTile(
-            title: Text("Search Users"),
+            title:  Text("Search Users", style: TextStyle(color: (title == "Search Users") ? Colors.red : Colors.black)),
             onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => FriendSearchScreen()));
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => FriendSearchScreen()));
             },
           ),
           ListTile(
-            title: Text("My Friends"),
+            title: Text("My Friends", style: TextStyle(color: (title == "My Friends") ? Colors.red : Colors.black)),
             onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => FriendsScreen()));
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => FriendsScreen()));
             },
           ),
           ListTile(
-            title: Text("Requests"),
+            title: Text("Requests", style: TextStyle(color: (title == "Requests") ? Colors.red : Colors.black)),
             onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => RequestsScreen()));
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => RequestsScreen()));
             },
           )
         ],

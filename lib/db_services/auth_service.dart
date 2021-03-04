@@ -26,12 +26,12 @@ class AuthenticationService{
     }
   }
 
-  static Future<bool> signUpWithEmail(String email, String password) async{
+  static Future<bool> signUpWithEmail(String email, String password, String name) async{
     EmailDb.addBool(true);
     EmailDb.addEmail(email);
     try{
       var authResult = await firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
-      await UserDb.writeToDb(email);
+      await UserDb.writeToDb(email, name);
       print("at ${authResult.user != null}");
       return authResult.user != null;
     }

@@ -37,7 +37,7 @@ class _SearchScreen extends State<SearchScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: bottomNavBar(),
+
     );
   }
 }

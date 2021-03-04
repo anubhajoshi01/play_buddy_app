@@ -58,7 +58,7 @@ class _ProfileScreen extends State<ProfileScreen> {
     return Scaffold(
       appBar: CommonAppBar.appBar("My Profile", context),
       drawer: (this.widget.user == null)
-          ? CommonDrawers.profileDrawer(context)
+          ? CommonDrawers.profileDrawer(context, "My Profile")
           : null,
       body: Container(
         child: SingleChildScrollView(
@@ -528,7 +528,7 @@ class _ProfileScreen extends State<ProfileScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: bottomNavBar(),
+      bottomNavigationBar: bottomNavBar(Divisions.PROFILE),
     );
   }
 }

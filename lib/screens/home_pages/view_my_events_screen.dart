@@ -40,8 +40,8 @@ class _ViewMyEventsScreen extends State<ViewMyEventsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CommonAppBar.appBar("My Events", context),
-      drawer: CommonDrawers.profileDrawer(context),
+      appBar: CommonAppBar.appBar("My Posts", context),
+      drawer: CommonDrawers.profileDrawer(context, "My Posts"),
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 10),
 
@@ -120,7 +120,7 @@ class _ViewMyEventsScreen extends State<ViewMyEventsScreen> {
                       );
                     })),
       ),
-      bottomNavigationBar: bottomNavBar(),
+      bottomNavigationBar: bottomNavBar(Divisions.PROFILE),
     );
   }
 

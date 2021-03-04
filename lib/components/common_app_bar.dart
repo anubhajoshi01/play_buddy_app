@@ -16,7 +16,7 @@ class CommonAppBar {
             onTap: () {
               EmailDb.addBool(false);
               AuthenticationService.signOutUser();
-              Navigator.push(context, MaterialPageRoute(builder: (context) => LogInScreen()));
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LogInScreen()));
             },
             child: Icon(
               Icons.input,

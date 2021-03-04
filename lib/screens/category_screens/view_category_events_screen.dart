@@ -41,13 +41,13 @@ class ViewCategoryEventsScreen extends StatelessWidget {
                 onTap: () {
                   EmailDb.addBool(false);
                   AuthenticationService.signOutUser();
-                  Navigator.push(context,
+                  Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => LogInScreen()));
                 },
               ))
         ],
       ),
-      bottomNavigationBar: bottomNavBar(),
+      bottomNavigationBar: bottomNavBar(Divisions.SEARCH),
       body: Container(
         child: SizedBox(
           width: MediaQuery.of(context).size.width,

@@ -41,7 +41,7 @@ class _RequestsScreen extends State<RequestsScreen> {
     // TODO: implement build
     return Scaffold(
       appBar: CommonAppBar.appBar("Requests", context),
-      drawer: CommonDrawers.friendDrawer(context),
+      drawer: CommonDrawers.friendDrawer(context, "Requests"),
       body: Container(
           child: SizedBox(
         height: MediaQuery.of(context).size.height * 0.7,
@@ -248,7 +248,7 @@ class _RequestsScreen extends State<RequestsScreen> {
           ],
         )),
       )),
-      bottomNavigationBar: bottomNavBar(),
+      bottomNavigationBar: bottomNavBar(Divisions.FRIENDS),
     );
   }
 }
