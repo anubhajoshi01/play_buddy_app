@@ -27,7 +27,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
     //"restricted": 2
   };
 
-  static final List categories = CategoryDb.categoryList;
+  static final List categories = CategoryDb.categoryList.toList();
 
   /*static Map<String, int> mapSports = {
     "ball games": 0,
@@ -390,7 +390,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                 if(!error) {
                   print('asdfasdfadsfasdfasdfadsf 385');
                   await saveToDb();
-                  Navigator.push(context,
+                  Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => PostMapScreen()));
                 }
             }),

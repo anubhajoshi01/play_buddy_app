@@ -2,21 +2,49 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frc_challenge_app/components/bottomNavBar.dart';
 import 'package:frc_challenge_app/components/common_app_bar.dart';
+import 'package:frc_challenge_app/db_services/auth_service.dart';
 import 'package:frc_challenge_app/db_services/category_db.dart';
 import 'package:frc_challenge_app/db_services/email_db.dart';
 import 'package:frc_challenge_app/db_services/post_db.dart';
 import 'package:frc_challenge_app/db_services/user_db.dart';
 import 'package:frc_challenge_app/models/post.dart';
 import 'package:frc_challenge_app/models/user.dart';
+import 'package:frc_challenge_app/screens/auth_pages/log_in_screen.dart';
 import 'package:frc_challenge_app/screens/category_screens/view_category_events_screen.dart';
+
+import '../post_search.dart';
 
 class ViewCategoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print("view category : ${CategoryDb.categoryList.length}");
     return Scaffold(
-      appBar: CommonAppBar.appBar("View Categories", context),
-      bottomNavigationBar: bottomNavBar(),
+      appBar: AppBar(
+        title: Text("View Categories"),
+        backgroundColor: Colors.lightBlue[100],
+        actions: <Widget>[
+          Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                child: Icon(Icons.search),
+                onTap: () {
+                  showSearch(context: context, delegate: PostSearch());
+                },
+              )),
+          Padding(
+              padding: EdgeInsets.only(right: 15.0),
+              child: GestureDetector(
+                child: Icon(Icons.input),
+                onTap: () {
+                  EmailDb.addBool(false);
+                  AuthenticationService.signOutUser();
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => LogInScreen()));
+                },
+              ))
+        ],
+      ),
+      bottomNavigationBar: bottomNavBar(Divisions.SEARCH),
       body: Container(
         child: SizedBox(
           width: MediaQuery.of(context).size.width,

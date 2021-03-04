@@ -154,7 +154,7 @@ class _LogInScreen extends State<LogInScreen>{
                       bool success = await AuthenticationService.loginWithEmail(email, password);
                       if(success != null && success){
                         print(success);
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => PostMapScreen()));
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PostMapScreen()));
                       }
                       else{
                         setState(() {
@@ -173,7 +173,7 @@ class _LogInScreen extends State<LogInScreen>{
                   InkWell(
                     child: Text("Don't have an account? Sign up!"),
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(
+                      Navigator.pushReplacement(context, MaterialPageRoute(
                       builder: (context) => SignInScreen()
                       ));
                     }

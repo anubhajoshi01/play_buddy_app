@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frc_challenge_app/components/bottomNavBar.dart';
+import 'package:frc_challenge_app/components/common_drawers.dart';
 import 'package:frc_challenge_app/db_services/auth_service.dart';
 import 'package:frc_challenge_app/db_services/email_db.dart';
 import 'package:frc_challenge_app/db_services/user_db.dart';
@@ -20,8 +21,9 @@ class _FriendSearchScreen extends State<StatefulWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: CommonDrawers.friendDrawer(context, "Search Users"),
       appBar: AppBar(
-        title: Text("Search User"),
+        title: Text("Search Users"),
         backgroundColor: Colors.lightBlue[100],
         actions: <Widget>[
           Padding(
@@ -39,7 +41,7 @@ class _FriendSearchScreen extends State<StatefulWidget> {
             onTap: () {
               EmailDb.addBool(false);
               AuthenticationService.signOutUser();
-              Navigator.push(context,
+              Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (context) => LogInScreen()));
             },
           ))
@@ -72,7 +74,7 @@ class _FriendSearchScreen extends State<StatefulWidget> {
                   })),
         ),
       ),
-      bottomNavigationBar: bottomNavBar(),
+      bottomNavigationBar: bottomNavBar(Divisions.FRIENDS),
     );
   }
 }

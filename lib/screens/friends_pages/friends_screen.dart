@@ -34,7 +34,7 @@ class _FriendsScreen extends State<FriendsScreen> {
     // TODO: implement build
     return Scaffold(
       appBar: CommonAppBar.appBar("My Friends", context),
-      drawer: CommonDrawers.friendDrawer(context),
+      drawer: CommonDrawers.friendDrawer(context, "My Friends"),
       body: Container(
 
           padding: EdgeInsets.symmetric(vertical: 10),
@@ -96,7 +96,7 @@ class _FriendsScreen extends State<FriendsScreen> {
                   );
                 })),
       ),
-        bottomNavigationBar: bottomNavBar(),
+        bottomNavigationBar: bottomNavBar(Divisions.FRIENDS),
     );
   }
 }

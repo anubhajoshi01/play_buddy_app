@@ -40,8 +40,8 @@ class _ViewSignedUpEvents extends State<ViewSignedUpEvents> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: CommonAppBar.appBar("Events Signed-Up For", context),
-      drawer: CommonDrawers.profileDrawer(context),
+      appBar: CommonAppBar.appBar("Signed-Up Events", context),
+      drawer: CommonDrawers.profileDrawer(context, "Signed-Up Events"),
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 10),
 
@@ -126,7 +126,7 @@ class _ViewSignedUpEvents extends State<ViewSignedUpEvents> {
                   );
                 })),
       ),
-      bottomNavigationBar: bottomNavBar(),
+      bottomNavigationBar: bottomNavBar(Divisions.PROFILE),
     );
   }
 }
