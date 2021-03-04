@@ -49,59 +49,85 @@ class ViewCategoryEventsScreen extends StatelessWidget {
       ),
       bottomNavigationBar: bottomNavBar(Divisions.SEARCH),
       body: Container(
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height * 0.7,
-          child: ListView.builder(
-              itemCount: CategoryDb.categoryMap[category].length,
-              itemBuilder: (context, index) {
-                Post at = PostDb.localMap[
-                    CategoryDb.categoryMap[category].elementAt(index)];
-                User postOwner = UserDb.userMap[at.ownerUserId];
-                User thisUser =
-                    UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
-                String time = DateFormat('kk:mm').format(at.eventDateTime);
-                return (at.active &&
-                        at.eventDateTime.isAfter(DateTime.now()) &&
-                        (at.postType == "public" ||
-                            postOwner.friendsUserIdList.contains(thisUser.id)))
-                    ? Card(
-                        child: ListTile(
-                          title: Row(
-                            children: [
-                              Text(
-                                "${at.eventDescription}",
-                                style: TextStyle(fontSize: 20),
+        child: Column(children: [
+          _getImage(context, category),
+          SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.6,
+              child: ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  itemCount: CategoryDb.categoryMap[category].length,
+                  itemBuilder: (context, index) {
+                    Post at = PostDb.localMap[
+                        CategoryDb.categoryMap[category].elementAt(index)];
+                    User postOwner = UserDb.userMap[at.ownerUserId];
+                    User thisUser =
+                        UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
+                    String time = DateFormat('kk:mm').format(at.eventDateTime);
+                    return (at.active &&
+                            at.eventDateTime.isAfter(DateTime.now()) &&
+                            (at.postType == "public" ||
+                                postOwner.friendsUserIdList
+                                    .contains(thisUser.id)))
+                        ? Card(
+                            child: ListTile(
+                              title: Row(
+                                children: [
+                                  Text(
+                                    "${at.eventDescription}",
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.only(right: 5, left: 20),
+                                    child: Icon(Icons.person_outline),
+                                  ),
+                                  Padding(
+                                      padding: EdgeInsets.only(right: 40),
+                                      child: Text(
+                                          "${at.usersSignedUp.length}/${at.cap}"))
+                                ],
                               ),
-                            
-                              Padding(
-                                padding: EdgeInsets.only(right: 5, left: 20),
-                                child: Icon(Icons.person_outline),
-                              ),
-                              Padding(
-                                  padding: EdgeInsets.only(right: 40),
-                                  child: Text(
-                                      "${at.usersSignedUp.length}/${at.cap}"))
-                            ],
-                          ),
-                          subtitle: Text(
-                              " \n $time" +
-                                  " \n Address:: ${at.address}",
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 15)),
-                          onTap: () {
-                            var result = Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        DisplayPostScreen(at)));
-                          },
-                        ),
-                      )
-                    : Container();
-              }),
-        ),
+                              subtitle: Text(
+                                  " \n $time" + " \n Address:: ${at.address}",
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 15)),
+                              onTap: () {
+                                var result = Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            DisplayPostScreen(at)));
+                              },
+                            ),
+                          )
+                        : Container();
+                  }))
+        ]),
       ),
     );
+  }
+
+  Widget _getImage(BuildContext context, String category) {
+    double height = (MediaQuery.of(context).size.height * 0.2);
+    String url = CategoryDb.imageUrl[category];
+    return ClipRRect(
+        child: Card(
+            borderOnForeground: true,
+            child: Stack(children: [
+              Container(
+                constraints: BoxConstraints.tightFor(
+                  height: height,
+                  width: MediaQuery.of(context).size.width,
+                ),
+                child: Image.network(url, fit: BoxFit.fill),
+              ),
+              Column(children: [
+                Text(
+                  "   $category",
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                ),
+              ]),
+            ])));
   }
 }

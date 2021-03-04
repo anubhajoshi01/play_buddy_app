@@ -49,68 +49,87 @@ class ViewCategoryScreen extends StatelessWidget {
         child: SizedBox(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height * 0.95,
-          child: ListView.builder(
-              itemCount: CategoryDb.categoryList.length,
-              itemBuilder: (context, index) {
-                int itemCount = 0;
-
-                String category = CategoryDb.categoryList.elementAt(index);
-
-                User thisUser =
-                    UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
-                for (int i = 0;
-                    i < CategoryDb.categoryMap[category].length;
-                    i++) {
-                  Post at = PostDb
-                      .localMap[CategoryDb.categoryMap[category].elementAt(i)];
-                  User postOwner = UserDb.userMap[at.ownerUserId];
-                  if ((at.active &&
-                      at.eventDateTime.isAfter(DateTime.now()) &&
-                      (at.postType == "public" ||
-                          postOwner.friendsUserIdList.contains(thisUser.id)))) {
-                    itemCount += 1;
-                  }
-                }
-                return SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.29,
-                  child: Card(
-                      child: _getImage(CategoryDb.imageUrl[category], context,
-                          category, itemCount)),
-                );
-              }),
+          child: _categoryColumn(context),
         ),
       ),
     );
   }
 
-  Widget _getImage(
-      String url, BuildContext context, String category, int itemCount) {
-    double height = (MediaQuery.of(context).size.height*0.3);
-    return Stack(children: [
-      Container(
-        constraints: BoxConstraints.tightFor(
-            height: height, width: MediaQuery.of(context).size.width),
-        child: GestureDetector(
-          child: Image.network(url, fit: BoxFit.fitWidth),
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => ViewCategoryEventsScreen(category)));
-          },
-        ),
-      ),
-      Column(children: [
-        Text(
-          category,
-          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-        ),
-        Text(
-          "items: $itemCount",
-          style: TextStyle(fontSize: 15),
-        )
-      ]),
-    ]);
+  int _getItemCount(String category) {
+    int itemCount = 0;
+    User thisUser = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
+    for (int i = 0; i < CategoryDb.categoryMap[category].length; i++) {
+      Post at = PostDb.localMap[CategoryDb.categoryMap[category].elementAt(i)];
+      User postOwner = UserDb.userMap[at.ownerUserId];
+      if ((at.active &&
+          at.eventDateTime.isAfter(DateTime.now()) &&
+          (at.postType == "public" ||
+              postOwner.friendsUserIdList.contains(thisUser.id)))) {
+        itemCount += 1;
+      }
+    }
+    return itemCount;
+  }
+
+  Widget _categoryColumn(BuildContext context) {
+    List<Widget> forColumn = new List();
+    for (int i = 0; i < CategoryDb.categoryList.length; i += 2) {
+      String category1 = CategoryDb.categoryList.elementAt(i);
+      String category2 = CategoryDb.categoryList.elementAt(i + 1);
+      Widget row = _categoryDualRow(context, category1, category2);
+      forColumn.add(row);
+    }
+    return SingleChildScrollView(
+        child: Column(
+      children: forColumn,
+    ));
+  }
+
+  Widget _categoryDualRow(
+      BuildContext context, String category1, String category2) {
+    List<Widget> forRow = new List();
+    forRow.add(_getImage(context, category1));
+    forRow.add(_getImage(context, category2));
+    return Row(
+      children: forRow,
+    );
+  }
+
+  Widget _getImage(BuildContext context, String category) {
+    double height = (MediaQuery.of(context).size.height * 0.3);
+    int itemCount = _getItemCount(category);
+    String url = CategoryDb.imageUrl[category];
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(50),
+        child: Card(
+            borderOnForeground: true,
+            child: Stack(children: [
+              Container(
+                constraints: BoxConstraints.tightFor(
+                  height: height,
+                  width: MediaQuery.of(context).size.width * 0.48,
+                ),
+                child: GestureDetector(
+                  child: Image.network(url, fit: BoxFit.fill),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                ViewCategoryEventsScreen(category)));
+                  },
+                ),
+              ),
+              Column(children: [
+                Text(
+                  "   $category",
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  "items: $itemCount",
+                  style: TextStyle(fontSize: 15),
+                )
+              ]),
+            ])));
   }
 }
