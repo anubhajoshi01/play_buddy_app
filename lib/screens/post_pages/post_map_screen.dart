@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frc_challenge_app/components/bottomNavBar.dart';
 import 'package:frc_challenge_app/components/common_app_bar.dart';
+import 'package:frc_challenge_app/components/event_card_regular.dart';
 import 'package:frc_challenge_app/db_services/auth_service.dart';
 import 'package:frc_challenge_app/db_services/email_db.dart';
 import 'package:frc_challenge_app/db_services/post_db.dart';
@@ -193,43 +194,37 @@ class _PostMapScreen extends State<PostMapScreen> {
                             sortedPos.elementAt(index).usersSignedUp.length;
 
                         return (atIndex.eventDateTime.isAfter(now))
-                            ? Container(
-                                height: 115,
-                                margin: const EdgeInsets.all(15.0),
-                                child: Card(
-                                  child: ListTile(
-                                    title: Row(
-                                      children: [
-                                        Text(
-                                          "${atIndex.eventDescription}",
-                                          style: TextStyle(fontSize: 20),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.only(right: 5, left: 20),
-                                          child: Icon(Icons.person_outline),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.only(right: 40),
-                                          child: Text("${atIndex.usersSignedUp.length}/${atIndex.cap}"),
-                                        )
-                                      ],
-                                    ),
-                                    subtitle: Text(
-                                        "\n $time" +
-                                            " \n Address: ${atIndex.address}",
-                                        style: TextStyle(
-                                            color: Colors.black, fontSize: 15)),
+                            ? EventCardRegular(atIndex, onTapFunction: () async{
+                              await Navigator.push(context, MaterialPageRoute(builder: (context) => DisplayPostScreen(atIndex)));
+                              setState(() {
+                                sortedPos.clear();
 
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  DisplayPostScreen(atIndex)));
-                                    },
-                                  ),
-                                ),
-                              )
+
+                                print("postidlength ${PostDb.postIdList.length}");
+                                for (int i = 0; i < PostDb.postIdList.length; i++) {
+                                  Post p = PostDb.localMap[PostDb.postIdList.elementAt(i)];
+                                  DateTime now = DateTime.now();
+                                  if (checkStat(p, now)) {
+                                    sortedPos.add(p);
+                                  }
+                                }
+
+                                print("sortedposlength ${sortedPos.length}");
+                                sortedPos.sort((a, b) {
+                                  double d1 = Geolocate.distancesM[a.id];
+                                  double d2 = Geolocate.distancesM[b.id];
+                                  int num = d1.compareTo(d2);
+                                  if (num == 0) {
+                                    bool isAfter = a.eventDateTime.isAfter(b.eventDateTime);
+                                    if (isAfter) {
+                                      return 1;
+                                    }
+                                    return -1;
+                                  }
+                                  return num;
+                                });
+                              });
+                        })
                             : Container();
 
                       }))

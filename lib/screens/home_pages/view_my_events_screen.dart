@@ -1,8 +1,10 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frc_challenge_app/components/bottomNavBar.dart';
 import 'package:frc_challenge_app/components/common_app_bar.dart';
 import 'package:frc_challenge_app/components/common_drawers.dart';
+import 'package:frc_challenge_app/components/event_card_regular.dart';
 import 'package:frc_challenge_app/db_services/email_db.dart';
 import 'package:frc_challenge_app/db_services/post_db.dart';
 import 'package:frc_challenge_app/db_services/user_db.dart';
@@ -69,50 +71,7 @@ class _ViewMyEventsScreen extends State<ViewMyEventsScreen> {
                             myPostsList.removeAt(index);
                           });
                         },
-                        child: Card(
-                          child: ListTile(
-                            title: Row(
-                              children: [
-                                Text(
-                                  "${postAt.eventDescription}",
-                                  style: TextStyle(
-                                      fontSize: 20),
-                                ),
-
-                                Padding(
-                                  padding: EdgeInsets.only(right: 5, left: 20),
-                                  child: Icon(Icons.person_outline),
-                                ),
-                                Padding(
-                                    padding: EdgeInsets.only(right: 40),
-                                    child: Text("${postAt.usersSignedUp.length}/${postAt.cap}")),
-                              ],
-                            ),
-                            subtitle: Text(
-                                "\n $time" +
-                                    " \n Address: ${postAt.address}",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 15)),
-                            onTap: () async{
-                              var result = await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => DisplayPostScreen(
-                                          myPostsList[index])));
-                              setState(() {
-                                myPostsList.clear();
-                                User thisUser = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
-                                for(int i = 0; i < thisUser.postIdList.length; i++){
-                                  Post p = PostDb.localMap[thisUser.postIdList.elementAt(i)];
-                                  if(checkStat(p, DateTime.now())) {
-                                    myPostsList.add(p);
-                                  }
-                                }
-                              });
-                            },
-                          ),
-                        ),
+                        child: EventCardRegular(postAt),
                         background: Container(
                           color: Colors.red,
                           child: Icon(Icons.delete)

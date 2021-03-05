@@ -14,10 +14,28 @@ import 'package:frc_challenge_app/screens/post_search.dart';
 import 'package:frc_challenge_app/services/geolocator.dart';
 import 'package:intl/intl.dart';
 
-class ViewCategoryEventsScreen extends StatelessWidget {
+class ViewCategoryEventsScreen extends StatefulWidget{
+
   final String category;
 
   ViewCategoryEventsScreen(this.category);
+
+  @override
+  State<StatefulWidget> createState() {
+    return _ViewCategoryEventsScreen();
+  }
+}
+
+class _ViewCategoryEventsScreen extends State<ViewCategoryEventsScreen> {
+
+  Set<int> postList;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    postList = CategoryDb.categoryMap[this.widget.category];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,16 +68,16 @@ class ViewCategoryEventsScreen extends StatelessWidget {
       bottomNavigationBar: bottomNavBar(Divisions.SEARCH),
       body: Container(
         child: Column(children: [
-          _getImage(context, category),
+          _getImage(context, this.widget.category),
           SizedBox(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.6,
               child: ListView.builder(
                   scrollDirection: Axis.vertical,
-                  itemCount: CategoryDb.categoryMap[category].length,
+                  itemCount: this.postList.length,
                   itemBuilder: (context, index) {
                     Post at = PostDb.localMap[
-                        CategoryDb.categoryMap[category].elementAt(index)];
+                        postList.elementAt(index)];
                     User postOwner = UserDb.userMap[at.ownerUserId];
                     User thisUser =
                         UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
@@ -92,12 +110,15 @@ class ViewCategoryEventsScreen extends StatelessWidget {
                                   " \n $time" + " \n Address:: ${at.address}",
                                   style: TextStyle(
                                       color: Colors.black, fontSize: 15)),
-                              onTap: () {
-                                var result = Navigator.push(
+                              onTap: () async{
+                                var result = await Navigator.push(
                                     context,
-                                    MaterialPageRoute(
+                                     MaterialPageRoute(
                                         builder: (context) =>
                                             DisplayPostScreen(at)));
+                                setState(() {
+                                  postList = CategoryDb.categoryMap[this.widget.category];
+                                });
                               },
                             ),
                           )
