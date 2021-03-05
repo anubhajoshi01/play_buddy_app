@@ -104,10 +104,10 @@ class ViewCategoryScreen extends StatelessWidget {
       borderRadius: BorderRadius.circular(50),
         child: Card(
         borderOnForeground: true,
-        shape: RoundedRectangleBorder(
+       /* shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(35),
           side: BorderSide(width: 4, color: Colors.black)
-        ),
+        ), */
         child: Stack(children: [
           Container(
             constraints: BoxConstraints.tightFor(
@@ -122,6 +122,7 @@ class ViewCategoryScreen extends StatelessWidget {
                     MaterialPageRoute(
                         builder: (context) =>
                             ViewCategoryEventsScreen(category)));
+
               },
             ),
           ),
