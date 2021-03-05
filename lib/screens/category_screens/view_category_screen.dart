@@ -96,40 +96,48 @@ class ViewCategoryScreen extends StatelessWidget {
   }
 
   Widget _getImage(BuildContext context, String category) {
-    double height = (MediaQuery.of(context).size.height * 0.3);
+    double height = (MediaQuery.of(context).size.height * 0.28);
     int itemCount = _getItemCount(category);
     String url = CategoryDb.imageUrl[category];
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(50),
         child: Card(
-            borderOnForeground: true,
-            child: Stack(children: [
-              Container(
-                constraints: BoxConstraints.tightFor(
-                  height: height,
-                  width: MediaQuery.of(context).size.width * 0.48,
-                ),
-                child: GestureDetector(
-                  child: Image.network(url, fit: BoxFit.fill),
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                ViewCategoryEventsScreen(category)));
-                  },
-                ),
-              ),
-              Column(children: [
-                Text(
-                  "   $category",
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  "items: $itemCount",
-                  style: TextStyle(fontSize: 15),
-                )
-              ]),
-            ])));
+        borderOnForeground: true,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(35),
+          side: BorderSide(width: 4, color: Colors.black)
+        ),
+        child: Stack(children: [
+          Container(
+            constraints: BoxConstraints.tightFor(
+              height: height,
+              width: MediaQuery.of(context).size.width * 0.48,
+            ),
+            child: GestureDetector(
+              child: Image.network(url, fit: BoxFit.fill),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            ViewCategoryEventsScreen(category)));
+              },
+            ),
+          ),
+          Column(children: [
+            Padding(
+              padding: EdgeInsets.only(top: 10),
+            ),
+            Text(
+              "  $category",
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+            ),
+            Text(
+              "items: $itemCount",
+              style: TextStyle(fontSize: 15),
+            )
+          ]),
+        ])));
   }
 }
