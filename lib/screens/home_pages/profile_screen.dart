@@ -75,7 +75,6 @@ class _ProfileScreen extends State<ProfileScreen> {
 
                 padding: EdgeInsets.symmetric(vertical: 24),
 
-
                   margin: const EdgeInsets.all(50.0),
                   width: 150.0,
                   height: 150.0,
