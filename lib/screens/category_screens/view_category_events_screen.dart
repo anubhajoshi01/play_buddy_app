@@ -129,6 +129,22 @@ class _ViewCategoryEventsScreen extends State<ViewCategoryEventsScreen> {
     );
   }
 
+  int _getItemCount() {
+    int itemCount = 0;
+    User thisUser = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
+    for (int i = 0; i < CategoryDb.categoryMap[this.widget.category].length; i++) {
+      Post at = PostDb.localMap[CategoryDb.categoryMap[this.widget.category].elementAt(i)];
+      User postOwner = UserDb.userMap[at.ownerUserId];
+      if ((at.active &&
+          at.eventDateTime.isAfter(DateTime.now()) &&
+          (at.postType == "public" ||
+              postOwner.friendsUserIdList.contains(thisUser.id)))) {
+        itemCount += 1;
+      }
+    }
+    return itemCount;
+  }
+
   Widget _getImage(BuildContext context, String category) {
     double height = (MediaQuery.of(context).size.height * 0.2);
     String url = CategoryDb.imageUrl[category];
