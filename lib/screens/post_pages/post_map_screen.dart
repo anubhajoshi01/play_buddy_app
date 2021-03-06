@@ -175,7 +175,7 @@ class _PostMapScreen extends State<PostMapScreen> {
                       )))
               :
               SizedBox(
-                height: MediaQuery.of(context).size.height*0.8,
+                height: MediaQuery.of(context).size.height*0.73,
                       width: MediaQuery.of(context).size.width,
                       child: ListView.builder(
                         scrollDirection: Axis.vertical,

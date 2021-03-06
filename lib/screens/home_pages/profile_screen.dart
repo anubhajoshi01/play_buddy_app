@@ -12,6 +12,7 @@ import 'package:frc_challenge_app/screens/home_pages/edit_profile_screen.dart';
 import 'package:frc_challenge_app/screens/post_pages/display_post_screen.dart';
 import 'package:frc_challenge_app/services/geolocator.dart';
 import 'package:intl/intl.dart';
+import 'package:frc_challenge_app/screens/friends_pages/friends_screen.dart' as friends;
 
 class ProfileScreen extends StatefulWidget {
   final User user;
@@ -27,6 +28,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreen extends State<ProfileScreen> {
   String name;
   String bio;
+  String friendListLength;
   bool isFriend;
   bool requested;
   bool requestRecieved;
@@ -37,6 +39,8 @@ class _ProfileScreen extends State<ProfileScreen> {
     // TODO: implement initState
     super.initState();
     thisUser = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
+    friendListLength = thisUser.friendsUserIdList.length.toString();
+
     if (this.widget.user == null) {
       name = thisUser.name;
       bio = thisUser.bio;
@@ -68,7 +72,24 @@ class _ProfileScreen extends State<ProfileScreen> {
               // alignment: Alignment.centerLeft,
 
               Container(
-                padding: EdgeInsets.symmetric(vertical: 80),
+
+                padding: EdgeInsets.symmetric(vertical: 24),
+
+                  margin: const EdgeInsets.all(50.0),
+                  width: 150.0,
+                  height: 150.0,
+                  decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      shape: BoxShape.circle,
+
+                  ),
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: Icon(Icons.person,
+                  size: 115,
+                  color: Colors.lightBlue[100],
+                ),
+                ),
               ),
 
               Text(
@@ -76,6 +97,22 @@ class _ProfileScreen extends State<ProfileScreen> {
                 style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.left,
               ),
+
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    width: 2.0
+                  ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(5.0),
+                  )
+                ),
+                child: Text(" Friends: $friendListLength ",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+
+                ),
+              ),
+
 
               Container(
                 padding: EdgeInsets.symmetric(vertical: 15),
