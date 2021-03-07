@@ -177,7 +177,7 @@ class _PostMapScreen extends State<PostMapScreen> {
               SizedBox(
                 height: MediaQuery.of(context).size.height*0.73,
                       width: MediaQuery.of(context).size.width,
-                      child: ListView.builder(
+                      child: (sortedPos.length == 0)? Text("There are no events posted", style: TextStyle(fontSize:20), textAlign: TextAlign.center,): ListView.builder(
                         scrollDirection: Axis.vertical,
 
                       itemCount: sortedPos.length,

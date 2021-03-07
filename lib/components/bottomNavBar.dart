@@ -34,7 +34,7 @@ class bottomNavBar extends StatelessWidget {
 
 
           IconButton(
-            icon: Icon(Icons.home, size: 44.0, color: (division == Divisions.HOME) ? Colors.white : Colors.black,),
+            icon: Icon(Icons.home, size: 44.0, color: (division == Divisions.HOME) ? Colors.black: Colors.white,),
             onPressed: () {
               Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) => PostMapScreen()));
             },
@@ -42,21 +42,21 @@ class bottomNavBar extends StatelessWidget {
 
           //category screen
           IconButton(
-            icon: Icon(Icons.search, size: 44.0, color: (division == Divisions.SEARCH) ? Colors.white : Colors.black,),
+            icon: Icon(Icons.search, size: 44.0, color: (division == Divisions.SEARCH) ? Colors.black : Colors.white,),
             onPressed: () {
               Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) => ViewCategoryScreen()));
             },
           ),
 
           IconButton(
-            icon: Icon(Icons.people, size: 44.0, color: (division == Divisions.FRIENDS) ? Colors.white: Colors.black,),
+            icon: Icon(Icons.people, size: 44.0, color: (division == Divisions.FRIENDS) ? Colors.black: Colors.white,),
             onPressed: () {
               Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) => FriendsScreen()));
             },
           ),
 
           IconButton(
-            icon: Icon(Icons.person, size: 44.0, color: (division == Divisions.PROFILE) ? Colors.white : Colors.black,),
+            icon: Icon(Icons.person, size: 44.0, color: (division == Divisions.PROFILE) ? Colors.black : Colors.white,),
             onPressed: () {
               Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) =>  ProfileScreen()));
             },
