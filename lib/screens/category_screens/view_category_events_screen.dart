@@ -72,7 +72,7 @@ class _ViewCategoryEventsScreen extends State<ViewCategoryEventsScreen> {
           SizedBox(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.6,
-              child: ListView.builder(
+              child: (this.postList.length == 0)? Text("There are no posts in this category", style: TextStyle(fontSize:20), textAlign: TextAlign.center,): ListView.builder(
                   scrollDirection: Axis.vertical,
                   itemCount: this.postList.length,
                   itemBuilder: (context, index) {
