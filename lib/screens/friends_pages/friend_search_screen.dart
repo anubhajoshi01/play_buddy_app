@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frc_challenge_app/components/bottomNavBar.dart';
 import 'package:frc_challenge_app/components/common_drawers.dart';
+import 'package:frc_challenge_app/components/user_card.dart';
 import 'package:frc_challenge_app/db_services/auth_service.dart';
 import 'package:frc_challenge_app/db_services/email_db.dart';
 import 'package:frc_challenge_app/db_services/user_db.dart';
+import 'package:frc_challenge_app/models/user.dart';
 import 'package:frc_challenge_app/screens/auth_pages/log_in_screen.dart';
 import 'package:frc_challenge_app/screens/home_pages/profile_screen.dart';
 import 'package:frc_challenge_app/screens/search_screen.dart';
@@ -18,13 +20,16 @@ class FriendSearchScreen extends StatefulWidget {
 }
 
 class _FriendSearchScreen extends State<StatefulWidget> {
+
+  Set<int> users = UserDb.userIdList;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: CommonDrawers.friendDrawer(context, "Search Users"),
       appBar: AppBar(
         title: Text("Search Users"),
-        backgroundColor: Colors.lightBlue[100],
+        backgroundColor: Color.fromRGBO(163,193, 227, 1),
         actions: <Widget>[
           Padding(
               padding: EdgeInsets.only(right: 20.0),
@@ -55,22 +60,14 @@ class _FriendSearchScreen extends State<StatefulWidget> {
               child: ListView.builder(
                   itemCount: UserDb.userIdList.length,
                   itemBuilder: (context, index) {
-                    return Card(
-                      child: ListTile(
-                        title: Text(UserDb
-                            .userMap[UserDb.userIdList.elementAt(index)].name),
-                        subtitle: Text(UserDb
-                            .userMap[UserDb.userIdList.elementAt(index)].bio),
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ProfileScreen(
-                                      user: (UserDb.userMap[UserDb.userIdList
-                                          .elementAt(index)]))));
-                        },
-                      ),
-                    );
+                    User thisUser = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
+                    User atIndex = UserDb.userMap[UserDb.userIdList.elementAt(index)];
+                    return (atIndex.id != thisUser.id) ? UserCard(atIndex, onTapFunction: () async{
+                      await Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen(user: atIndex,)));
+                      setState(() {
+                        users = UserDb.userIdList;
+                      });
+                    }) : Container();
                   })),
         ),
       ),

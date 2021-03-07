@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:frc_challenge_app/components/bottomNavBar.dart';
 import 'package:frc_challenge_app/components/common_app_bar.dart';
 import 'package:frc_challenge_app/components/common_drawers.dart';
+import 'package:frc_challenge_app/components/user_card.dart';
 import 'package:frc_challenge_app/models/user.dart';
 import 'package:frc_challenge_app/db_services/email_db.dart';
 import 'package:frc_challenge_app/db_services/user_db.dart';
@@ -64,34 +65,25 @@ class _RequestsScreen extends State<RequestsScreen> {
                     shrinkWrap: true,
                     itemCount: requestsSent.length,
                     itemBuilder: (context, index) {
+                      User atIndex = requestsSent.elementAt(index);
                       return Dismissible(
                         key: Key("$index"),
-                        child: Card(
-                          child: ListTile(
-                            title: Text("${requestsSent[index].name}"),
-                            onTap: () async{
-                              await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ProfileScreen(
-                                          user: requestsSent[index])));
-
-                              setState(() {
-                                User thisUser = UserDb.userMap[
-                                    UserDb.emailMap[EmailDb.thisEmail]];
-                                List<User> newList = new List<User>();
-                                for (int i = 0;
-                                    i < thisUser.requestSentList.length;
-                                    i++) {
-                                  User u = UserDb.userMap[
-                                      thisUser.requestSentList.elementAt(i)];
-                                  newList.add(u);
-                                }
-                                requestsSent = newList;
-                              });
-                            },
-                          ),
-                        ),
+                        child: UserCard(atIndex, onTapFunction: ()async{
+                          await Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen(user: atIndex,)));
+                          setState(() {
+                            User thisUser = UserDb.userMap[
+                            UserDb.emailMap[EmailDb.thisEmail]];
+                            List<User> newList = new List<User>();
+                            for (int i = 0;
+                            i < thisUser.requestSentList.length;
+                            i++) {
+                              User u = UserDb.userMap[
+                              thisUser.requestSentList.elementAt(i)];
+                              newList.add(u);
+                            }
+                            requestsSent = newList;
+                          });
+                        },),
                         onDismissed: (direction) {
                           User thisUser = UserDb
                               .userMap[UserDb.emailMap[EmailDb.thisEmail]];
@@ -143,49 +135,22 @@ class _RequestsScreen extends State<RequestsScreen> {
                     shrinkWrap: true,
                     itemCount: requestsReceived.length,
                     itemBuilder: (context, index) {
+                      User atIndex = requestsReceived.elementAt(index);
                       return Dismissible(
                         key: Key("$index"),
-                        child: Card(
-                          child: ListTile(
-                            title: Text(requestsReceived[index].name),
-                            onTap: () async {
-                              var result = await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ProfileScreen(
-                                            user: requestsReceived[index],
-                                          )));
-
-                              setState(() {
-                                print("line 75");
-
-                                requestsReceived.clear();
-                                requestsSent.clear();
-
-                                User thisUser = UserDb.userMap[
-                                    UserDb.emailMap[EmailDb.thisEmail]];
-
-                                for (int i = 0;
-                                    i < thisUser.requestReceivedList.length;
-                                    i++) {
-                                  User u = UserDb.userMap[thisUser
-                                      .requestReceivedList
-                                      .elementAt(i)];
-                                  requestsReceived.add(u);
-                                  print("adding ${u.id}");
-                                }
-
-                                for(int i = 0; i < thisUser.requestSentList.length; i++){
-                                  User u = UserDb.userMap[thisUser.requestSentList.elementAt(i)];
-                                  requestsSent.add(u);
-                                  print("adding 2 ${u.id}");
-                                }
-
-                                //initState();
-                                print("length : ${thisUser.requestReceivedList.length}");
-                              });
-                            },
-                          ),
+                        child: UserCard(
+                          atIndex,
+                          onTapFunction: () async {
+                            await Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen(user: atIndex)));
+                            setState(() {
+                              requestsReceived.clear();
+                              User thisUser = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
+                              for (int i = 0; i < thisUser.requestReceivedList.length; i++) {
+                                User u = UserDb.userMap[thisUser.requestReceivedList.elementAt(i)];
+                                requestsReceived.add(u);
+                              }
+                            });
+                          },
                         ),
                         onDismissed: (direction) {
                           if (direction == DismissDirection.startToEnd) {

@@ -100,7 +100,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
       appBar: AppBar(
         title: Text("Create a Post", style: TextStyle(color: Colors.black)),
         centerTitle: true,
-        backgroundColor: Colors.lightBlue[100],
+        backgroundColor: Color.fromRGBO(163,193, 227, 1),
       ),
       body: SingleChildScrollView(
           child: Container(

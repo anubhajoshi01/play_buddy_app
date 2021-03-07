@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:frc_challenge_app/components/bottomNavBar.dart';
 import 'package:frc_challenge_app/components/common_app_bar.dart';
 import 'package:frc_challenge_app/components/common_drawers.dart';
+import 'package:frc_challenge_app/components/event_card_regular.dart';
 import 'package:frc_challenge_app/db_services/email_db.dart';
 import 'package:frc_challenge_app/db_services/post_db.dart';
 import 'package:frc_challenge_app/db_services/user_db.dart';
@@ -12,7 +13,8 @@ import 'package:frc_challenge_app/screens/home_pages/edit_profile_screen.dart';
 import 'package:frc_challenge_app/screens/post_pages/display_post_screen.dart';
 import 'package:frc_challenge_app/services/geolocator.dart';
 import 'package:intl/intl.dart';
-import 'package:frc_challenge_app/screens/friends_pages/friends_screen.dart' as friends;
+import 'package:frc_challenge_app/screens/friends_pages/friends_screen.dart'
+    as friends;
 
 class ProfileScreen extends StatefulWidget {
   final User user;
@@ -28,7 +30,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreen extends State<ProfileScreen> {
   String name;
   String bio;
-  String friendListLength;
+  int numFriends;
   bool isFriend;
   bool requested;
   bool requestRecieved;
@@ -39,7 +41,12 @@ class _ProfileScreen extends State<ProfileScreen> {
     // TODO: implement initState
     super.initState();
     thisUser = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
-    friendListLength = thisUser.friendsUserIdList.length.toString();
+
+    print(this.thisUser.friendsUserIdList.toString());
+
+    numFriends = (this.widget.user != null)
+        ? this.widget.user.friendsUserIdList.length
+        : thisUser.friendsUserIdList.length;
 
     if (this.widget.user == null) {
       name = thisUser.name;
@@ -72,23 +79,21 @@ class _ProfileScreen extends State<ProfileScreen> {
               // alignment: Alignment.centerLeft,
 
               Container(
-
                 padding: EdgeInsets.symmetric(vertical: 24),
-
-                  margin: const EdgeInsets.all(50.0),
-                  width: 150.0,
-                  height: 150.0,
-                  decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      shape: BoxShape.circle,
-
-                  ),
+                margin: const EdgeInsets.all(50.0),
+                width: 150.0,
+                height: 150.0,
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  shape: BoxShape.circle,
+                ),
                 child: Align(
                   alignment: Alignment.topCenter,
-                  child: Icon(Icons.person,
-                  size: 115,
-                  color: Colors.lightBlue[100],
-                ),
+                  child: Icon(
+                    Icons.person,
+                    size: 115,
+                    color: Color.fromRGBO(163, 193, 227, 1),
+                  ),
                 ),
               ),
 
@@ -100,19 +105,15 @@ class _ProfileScreen extends State<ProfileScreen> {
 
               Container(
                 decoration: BoxDecoration(
-                  border: Border.all(
-                    width: 2.0
-                  ),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(5.0),
-                  )
-                ),
-                child: Text(" Friends: $friendListLength ",
+                    border: Border.all(width: 2.0),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(5.0),
+                    )),
+                child: Text(
+                  " Friends: $numFriends ",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-
                 ),
               ),
-
 
               Container(
                 padding: EdgeInsets.symmetric(vertical: 15),
@@ -138,8 +139,8 @@ class _ProfileScreen extends State<ProfileScreen> {
                   ? FlatButton(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18.0),
-                          side: BorderSide(color: Colors.lightBlue[100])),
-                      color: Colors.lightBlue[100],
+                          side: BorderSide(color: Color.fromRGBO(163, 193, 227, 1))),
+                      color: Color.fromRGBO(163, 193, 227, 1),
                       child: Text("Edit", style: TextStyle(fontSize: 20)),
                       onPressed: () async {
                         final result = await Navigator.push(
@@ -176,6 +177,7 @@ class _ProfileScreen extends State<ProfileScreen> {
 
                                 setState(() {
                                   isFriend = false;
+                                  numFriends -= 1;
                                 });
                               },
                             ),
@@ -187,17 +189,16 @@ class _ProfileScreen extends State<ProfileScreen> {
                             Padding(
                               padding: EdgeInsets.symmetric(vertical: 10),
                             ),
-                            (this.widget.user.getUsableEvents().length == 0) ?
-                                Center(
-                                  child: Text("No posts yet"),
-                                ) :
-
-                            SizedBox(
+                            (this.widget.user.getUsableEvents().length == 0)
+                                ? Center(
+                                    child: Text("No posts yet"),
+                                  )
+                                : SizedBox(
                                     width: MediaQuery.of(context).size.width,
                                     height: MediaQuery.of(context).size.height *
                                         0.5,
                                     child: ListView.builder(
-                                      scrollDirection: Axis.vertical,
+                                        scrollDirection: Axis.vertical,
                                         itemCount:
                                             this.widget.user.postIdList.length,
                                         itemBuilder: (context, index) {
@@ -220,39 +221,19 @@ class _ProfileScreen extends State<ProfileScreen> {
                                                           .friendsUserIdList
                                                           .contains(
                                                               thisUser.id)))
-                                              ? Card(
-                                                  child: ListTile(
-                                                    title: Row(
-                                                      children: [
-
-                                                    Text(
-                                                      "${postAt.eventDescription}",
-                                                      style: TextStyle(fontSize: 20),
-                                                    ),
-                                                    Padding(
-                                                      padding: EdgeInsets.only(right: 5, left: 20),
-                                                      child: Icon(Icons.person_outline),
-                                                    ),
-                                                    Padding(
-                                                      padding: EdgeInsets.only(right: 40),
-                                                      child: Text("${postAt.usersSignedUp.length}/${postAt.cap}")),
-                                                      ],
-                                                    ),
-                                                    subtitle: Text(
-                                                        "\n $time" +
-                                                            " \n Address: ${postAt.address}",
-                                                        style: TextStyle(
-                                                            color: Colors.black,
-                                                            fontSize: 15)),
-                                                    onTap: () {
-                                                      var result = Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  DisplayPostScreen(
-                                                                      postAt)));
-                                                    },
-                                                  ),
+                                              ? EventCardRegular(
+                                                  postAt,
+                                                  onTapFunction: () async {
+                                                    await Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                DisplayPostScreen(
+                                                                    postAt)));
+                                                    setState(() {
+                                                      isFriend = true;
+                                                    });
+                                                  },
                                                 )
                                               : Container();
                                         }))
@@ -295,6 +276,7 @@ class _ProfileScreen extends State<ProfileScreen> {
 
                                       setState(() {
                                         isFriend = true;
+                                        numFriends += 1;
                                       });
                                     },
                                   ),

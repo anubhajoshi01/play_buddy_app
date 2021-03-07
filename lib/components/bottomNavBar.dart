@@ -26,7 +26,7 @@ class bottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 65,
-      color: Colors.lightBlue[100],
+      color: Color.fromRGBO(163,193, 227, 1),
       padding: EdgeInsets.only(top: 3, bottom: 30),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -34,7 +34,7 @@ class bottomNavBar extends StatelessWidget {
 
 
           IconButton(
-            icon: Icon(Icons.home, size: 44.0, color: (division == Divisions.HOME) ? Colors.black: Colors.white,),
+            icon: Icon(Icons.home, size: 44.0, color: (division == Divisions.HOME) ? Colors.grey: Colors.white,),
             onPressed: () {
               Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) => PostMapScreen()));
             },
@@ -42,21 +42,21 @@ class bottomNavBar extends StatelessWidget {
 
           //category screen
           IconButton(
-            icon: Icon(Icons.search, size: 44.0, color: (division == Divisions.SEARCH) ? Colors.black : Colors.white,),
+            icon: Icon(Icons.search, size: 44.0, color: (division == Divisions.SEARCH) ? Colors.grey : Colors.white,),
             onPressed: () {
               Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) => ViewCategoryScreen()));
             },
           ),
 
           IconButton(
-            icon: Icon(Icons.people, size: 44.0, color: (division == Divisions.FRIENDS) ? Colors.black: Colors.white,),
+            icon: Icon(Icons.people, size: 44.0, color: (division == Divisions.FRIENDS) ? Colors.grey: Colors.white,),
             onPressed: () {
               Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) => FriendsScreen()));
             },
           ),
 
           IconButton(
-            icon: Icon(Icons.person, size: 44.0, color: (division == Divisions.PROFILE) ? Colors.black : Colors.white,),
+            icon: Icon(Icons.person, size: 44.0, color: (division == Divisions.PROFILE) ? Colors.grey : Colors.white, ),
             onPressed: () {
               Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) =>  ProfileScreen()));
             },
