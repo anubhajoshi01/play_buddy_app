@@ -108,7 +108,7 @@ class _PostMapScreen extends State<PostMapScreen> {
       //add colour
       appBar: AppBar(
         title: Text("View Events"),
-        backgroundColor: Colors.lightBlue[100],
+        backgroundColor: Color.fromRGBO(163,193, 227, 1),
         actions: <Widget>[
           Padding(
               padding: EdgeInsets.only(right: 20),
@@ -146,7 +146,7 @@ class _PostMapScreen extends State<PostMapScreen> {
           Padding(
             padding: EdgeInsets.symmetric(vertical: 20.0),
             child: ToggleSwitch(
-              activeBgColor: Colors.lightBlue[100],
+              activeBgColor: Color.fromRGBO(163,193, 227, 1),
               inactiveBgColor: Colors.grey[400],
               minWidth: 50.0,
               minHeight: 50.0,

@@ -28,7 +28,7 @@ class _SignInScreen extends State<StatefulWidget> {
             "Workout Buddy",
             style: TextStyle(color: Colors.black),
           ),
-          backgroundColor: Colors.lightBlue[100],
+          backgroundColor: Color.fromRGBO(163,193, 227, 1),
         ),
         body: SingleChildScrollView(
           child: Container(
@@ -126,8 +126,8 @@ class _SignInScreen extends State<StatefulWidget> {
                 padding: EdgeInsets.symmetric(vertical: 15),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18.0),
-                    side: BorderSide(color: Colors.lightBlueAccent)),
-                color: Colors.lightBlue[100],
+                    side: BorderSide(color: Color.fromRGBO(163, 193, 227, 1))),
+                color: Color.fromRGBO(163, 193, 227, 1),
                 child: Text(
                   "Sign Up",
                   style: TextStyle(fontSize: 15, color: Colors.black),

@@ -8,7 +8,7 @@ class CommonAppBar {
   static AppBar appBar(String titleString, BuildContext context) {
     return AppBar(
       title: Text(titleString),
-      backgroundColor: Colors.lightBlue[100],
+      backgroundColor: Color.fromRGBO(163,193, 227, 1),
       actions: <Widget>[
         Padding(
           padding: EdgeInsets.only(right: 10.0),

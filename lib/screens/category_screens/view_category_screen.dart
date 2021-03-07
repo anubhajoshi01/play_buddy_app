@@ -21,7 +21,7 @@ class ViewCategoryScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("View Categories"),
-        backgroundColor: Colors.lightBlue[100],
+        backgroundColor: Color.fromRGBO(163,193, 227, 1),
         actions: <Widget>[
           Padding(
               padding: EdgeInsets.only(right: 20.0),

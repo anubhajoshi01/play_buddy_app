@@ -42,7 +42,7 @@ class _ViewCategoryEventsScreen extends State<ViewCategoryEventsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("View Events In Category"),
-        backgroundColor: Colors.lightBlue[100],
+        backgroundColor: Color.fromRGBO(163,193, 227, 1),
         actions: <Widget>[
           Padding(
               padding: EdgeInsets.only(right: 20.0),

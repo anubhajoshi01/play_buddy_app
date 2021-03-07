@@ -66,7 +66,7 @@ class _EditProfileScreen extends State<EditProfileScreen>{
                     borderRadius: BorderRadius.circular(18.0),
                     side: BorderSide(color: Colors.lightBlue[100])
                 ),
-                color: Colors.lightBlue[100],
+                color: Color.fromRGBO(163, 193, 227, 1),
                 child: Text("Done",
                   style: TextStyle(fontSize: 19),
                 ),

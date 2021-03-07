@@ -23,7 +23,7 @@ class EventCardRegular extends StatelessWidget {
             child: Card(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
-                  side: BorderSide(width: 2)),
+                  side: BorderSide(width: 0.3)),
               child: ListTile(
                 title: Column(children: [
                   Row(

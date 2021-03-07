@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:frc_challenge_app/components/bottomNavBar.dart';
 import 'package:frc_challenge_app/components/common_app_bar.dart';
 import 'package:frc_challenge_app/components/common_drawers.dart';
+import 'package:frc_challenge_app/components/user_card.dart';
 import 'package:frc_challenge_app/db_services/email_db.dart';
 import 'package:frc_challenge_app/db_services/user_db.dart';
 import 'package:frc_challenge_app/models/user.dart';
@@ -17,6 +18,7 @@ class FriendsScreen extends StatefulWidget {
 
 class _FriendsScreen extends State<FriendsScreen> {
   List<User> friendList = new List<User>();
+  bool reloadState = false;
 
   @override
   void initState() {
@@ -48,29 +50,15 @@ class _FriendsScreen extends State<FriendsScreen> {
                 scrollDirection: Axis.vertical,
                 itemCount: friendList.length,
                 itemBuilder: (context, index) {
+                  User atIndex = friendList[index];
                   return Dismissible(
                     key: Key("$index"),
-                    child: Card(
-                      child: ListTile(
-                        title: Text("${friendList[index].name}"),
-                        onTap: () async{
-                         await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      ProfileScreen(user: friendList[index])));
-                          setState(() {
-                            List<User> newFriendList = new List<User>();
-                            User thisUser = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
-                            for (int i = 0; i < thisUser.friendsUserIdList.length; i++) {
-                              User u = UserDb.userMap[thisUser.friendsUserIdList.elementAt(i)];
-                              newFriendList.add(u);
-                            }
-                            friendList = newFriendList;
-                          });
-                        },
-                      ),
-                    ),
+                    child: UserCard(atIndex, onTapFunction: ()async{
+                      await Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen(user: atIndex,)));
+                      setState(() {
+                        reloadState = true;
+                      });
+                    }),
                     onDismissed: (direction) {
                       User thisUser =
                           UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];

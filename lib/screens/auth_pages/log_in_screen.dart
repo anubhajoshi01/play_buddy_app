@@ -25,7 +25,7 @@ class _LogInScreen extends State<LogInScreen>{
         title: Text("  Workout Buddy",
             style: TextStyle(color: Colors.black),
         ),
-        backgroundColor: Colors.lightBlue[100],
+        backgroundColor: Color.fromRGBO(163,193, 227, 1),
       ),
         body: SingleChildScrollView(
 
@@ -143,9 +143,9 @@ class _LogInScreen extends State<LogInScreen>{
                     padding: EdgeInsets.symmetric(vertical: 15),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(18.0),
-                        side: BorderSide(color: Colors.lightBlue[100])
+                        side: BorderSide(color: Color.fromRGBO(163, 193, 227, 1))
                     ),
-                    color: Colors.lightBlue[100],
+                    color: Color.fromRGBO(163, 193, 227, 1),
 
                     child: Text("Log In",
                       style: TextStyle(fontSize: 15, color: Colors.black),
