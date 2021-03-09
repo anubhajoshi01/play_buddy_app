@@ -28,10 +28,10 @@ class UserCard extends StatelessWidget {
                   size: 30,
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 20),
+                  padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.02),
                 ),
                 Container(
-                  width: MediaQuery.of(context).size.width*0.8,
+                  width: MediaQuery.of(context).size.width*0.7,
                     height: 60,
                     child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -41,8 +41,8 @@ class UserCard extends StatelessWidget {
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 20)),
                     Text(
-                      (user.bio.length > 60)
-                          ? "${user.bio.substring(0, 60)}..."
+                      (user.bio.length > 20)
+                          ? "${user.bio.substring(0, 20)}..."
                           : "${user.bio}",
                       style: TextStyle(fontSize: 15, color: Colors.grey),
                     )
