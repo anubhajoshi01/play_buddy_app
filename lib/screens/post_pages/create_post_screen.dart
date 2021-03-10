@@ -88,9 +88,13 @@ class _CreatePostScreen extends State<CreatePostScreen> {
   }
 
   Future<Null> selectTime(BuildContext context) async {
-    _time = await showTimePicker(context: context, initialTime: _time);
+    _time = await showTimePicker(context: context, initialTime: selectedTime);
     setState(() {
-      selectedTime = _time;
+      if (_time != null) {
+        selectedTime = _time;
+      }
+      // selectedTime = selectedTime;
+
     });
   }
 
