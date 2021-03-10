@@ -56,7 +56,7 @@ class _ViewSignedUpEvents extends State<ViewSignedUpEvents> {
                   Post postAt = PostDb.localMap[signedUpEvents.elementAt(index).id];
                   String time = DateFormat('kk:mm').format(postAt.eventDateTime);
                   return Dismissible(
-                    key: Key("$index"),
+                    key: Key("$index ${postAt.id}"),
                     child: EventCardRegular(postAt),
                     onDismissed: (direction) {
                       Set<int> usersSignedUpForPost =

@@ -52,7 +52,7 @@ class _FriendsScreen extends State<FriendsScreen> {
                 itemBuilder: (context, index) {
                   User atIndex = friendList[index];
                   return Dismissible(
-                    key: Key("$index"),
+                    key: Key("$index  ${atIndex.id}"),
                     child: UserCard(atIndex, onTapFunction: ()async{
                       await Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen(user: atIndex,)));
                       setState(() {

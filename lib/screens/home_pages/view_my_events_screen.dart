@@ -57,7 +57,7 @@ class _ViewMyEventsScreen extends State<ViewMyEventsScreen> {
                       Post postAt = PostDb.localMap[myPostsList.elementAt(index).id];
                       String time = DateFormat('kk:mm').format(postAt.eventDateTime);
                       return Dismissible(
-                        key: Key("$index"),
+                        key: Key("$index ${postAt.id}"),
                         onDismissed: (direction) {
                           User thisUser = UserDb
                               .userMap[UserDb.emailMap[EmailDb.thisEmail]];

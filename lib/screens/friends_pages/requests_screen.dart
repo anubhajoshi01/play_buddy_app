@@ -67,7 +67,7 @@ class _RequestsScreen extends State<RequestsScreen> {
                     itemBuilder: (context, index) {
                       User atIndex = requestsSent.elementAt(index);
                       return Dismissible(
-                        key: Key("$index"),
+                        key: Key("$index ${atIndex.id}"),
                         child: UserCard(atIndex, onTapFunction: ()async{
                           await Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen(user: atIndex,)));
                           setState(() {
@@ -85,6 +85,11 @@ class _RequestsScreen extends State<RequestsScreen> {
                           });
                         },),
                         onDismissed: (direction) {
+
+                          setState(() {
+                            requestsSent.removeAt(index);
+                          });
+
                           User thisUser = UserDb
                               .userMap[UserDb.emailMap[EmailDb.thisEmail]];
 
@@ -113,9 +118,7 @@ class _RequestsScreen extends State<RequestsScreen> {
                           UserDb.updateData(thatUser.id,
                               requestReceivedList: newRequestRecieved);
 
-                          setState(() {
-                            requestsSent.removeAt(index);
-                          });
+
                         },
                         background: Container(
                           color: Colors.red,
@@ -137,7 +140,7 @@ class _RequestsScreen extends State<RequestsScreen> {
                     itemBuilder: (context, index) {
                       User atIndex = requestsReceived.elementAt(index);
                       return Dismissible(
-                        key: Key("$index"),
+                        key: Key("$index ${atIndex.id}"),
                         child: UserCard(
                           atIndex,
                           onTapFunction: () async {
