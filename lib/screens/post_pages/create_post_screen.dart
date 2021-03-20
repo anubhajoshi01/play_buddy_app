@@ -421,6 +421,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
       selectedCategory,
       cap,
     );
+
     Set<int> posts = thisUser.postIdList;
     posts.add(p.id);
     await UserDb.updateData(thisUser.id, postIdList: posts);

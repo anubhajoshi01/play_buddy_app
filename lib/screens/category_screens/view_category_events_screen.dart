@@ -138,7 +138,7 @@ class _ViewCategoryEventsScreen extends State<ViewCategoryEventsScreen> {
       if ((at.active &&
           at.eventDateTime.isAfter(DateTime.now()) &&
           (at.postType == "public" ||
-              postOwner.friendsUserIdList.contains(thisUser.id)))) {
+              postOwner.friendsUserIdList.contains(thisUser.id)) || postOwner.id == thisUser.id)) {
         itemCount += 1;
       }
     }

@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 
 class EventCardRegular extends StatelessWidget {
   final Post event;
-  Function() onTapFunction;
+  final Function() onTapFunction;
 
   EventCardRegular(this.event, {this.onTapFunction});
 
