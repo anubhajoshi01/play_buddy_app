@@ -125,7 +125,7 @@ class _PostMapScreen extends State<PostMapScreen> {
                 onTap: () {
                   EmailDb.addBool(false);
                   AuthenticationService.signOutUser();
-                  Navigator.push(context,
+                  Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => LogInScreen()));
                 },
               ))

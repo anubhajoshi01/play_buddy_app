@@ -71,7 +71,20 @@ class _ViewMyEventsScreen extends State<ViewMyEventsScreen> {
                             myPostsList.removeAt(index);
                           });
                         },
-                        child: EventCardRegular(postAt),
+                        child: EventCardRegular(postAt, onTapFunction: ()async{
+                          await Navigator.push(context, MaterialPageRoute(builder: (context) => DisplayPostScreen(postAt)));
+                          setState(() {
+                            myPostsList.clear();
+                            User thisUser = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
+                            DateTime now = DateTime.now();
+                            for (int i = 0; i < thisUser.postIdList.length; i++) {
+                              Post p = PostDb.localMap[thisUser.postIdList.elementAt(i)];
+                              if (p.active && p.eventDateTime.isAfter(now)) {
+                                myPostsList.add(p);
+                              }
+                            }
+                          });
+                        },),
                         background: Container(
                           color: Colors.red,
                           child: Icon(Icons.delete)
