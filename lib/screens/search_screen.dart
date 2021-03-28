@@ -5,6 +5,8 @@ import 'package:frc_challenge_app/models/post.dart';
 import 'package:frc_challenge_app/models/user.dart';
 import 'package:frc_challenge_app/screens/home_pages/profile_screen.dart';
 
+//code for serahc bars
+
 class SearchScreen extends StatefulWidget {
   //placeholders for the event posts
   final List<String> list = List.generate(10, (index) => "Event $index");

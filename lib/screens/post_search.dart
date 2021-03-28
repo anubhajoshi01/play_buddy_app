@@ -6,6 +6,8 @@ import 'package:frc_challenge_app/models/post.dart';
 import 'package:frc_challenge_app/models/user.dart';
 import 'package:frc_challenge_app/screens/post_pages/display_post_screen.dart';
 
+//search bar for posts
+
 class PostSearch extends SearchDelegate {
   @override
   List<Widget> buildActions(BuildContext context) {

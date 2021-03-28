@@ -3,6 +3,8 @@ import 'package:hive/hive.dart';
 
 class EmailDb {
 
+  //local database to save email of current user logged in
+
   static bool loggedIn;
   static String thisEmail;
   static Box box;

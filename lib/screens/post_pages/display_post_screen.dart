@@ -11,6 +11,8 @@ import 'package:frc_challenge_app/models/post.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 
+//displays info page for post
+
 class DisplayPostScreen extends StatefulWidget {
   final Post post;
 
@@ -47,7 +49,7 @@ class _DisplayPostScreen extends State<DisplayPostScreen> {
     catch (Exception){
       print("asdfasdfasdfasdfasdfasdfasdfasdfasdfasdf");
     }
-
+  //gets current user
     int thisUser = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]].id;
     owned = this.widget.post.ownerUserId == thisUser;
     t = this.widget.post.eventDateTime;
@@ -57,6 +59,7 @@ class _DisplayPostScreen extends State<DisplayPostScreen> {
 
   @override
   Widget build(BuildContext context) {
+    //marks location on map
      markers.add(new Marker(
         markerId: MarkerId("${this.widget.post.id}"),
         position:
@@ -133,6 +136,7 @@ class _DisplayPostScreen extends State<DisplayPostScreen> {
                 ),
 
                 onPressed: () {
+                  //updates database
                   Set<int> postsSignedUpFor = UserDb
                       .userMap[UserDb.emailMap[EmailDb.thisEmail]]
                       .postsSignedUpFor;
@@ -161,6 +165,7 @@ class _DisplayPostScreen extends State<DisplayPostScreen> {
                   style: TextStyle(color: Colors.black)
                 ),
                 onPressed: () {
+                  //updates database
                   Set<int> postsSignedUpFor = UserDb
                       .userMap[UserDb.emailMap[EmailDb.thisEmail]]
                       .postsSignedUpFor;

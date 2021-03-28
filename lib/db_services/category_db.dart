@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CategoryDb{
 
+  //handles categories saved
+
   static Set<String> categoryList = new Set();
   static Map<String, String> imageUrl = new Map();
   static Map<String, Set<int>> categoryMap = new Map();

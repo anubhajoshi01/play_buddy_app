@@ -8,6 +8,7 @@ class UserDb {
   static final firestoreInstance = Firestore.instance;
   static Map<String, int> emailMap = new Map<String, int>();
 
+  //reads data from database and saves to local map
   static Future<void> syncUserMap() async {
     print("syncing");
     try {
@@ -40,6 +41,7 @@ class UserDb {
     }
   }
 
+  //creates a new user and writes info to database
   static Future<void> writeToDb(String email, String name) async {
     await syncUserMap();
     int id = userIdList.length;
@@ -58,6 +60,7 @@ class UserDb {
     await syncUserMap();
   }
 
+  //updates fields in database
   static Future<void> updateData(int userId,
       {Set<int> friendsUserIdList,
       Set<int> postIdList,
