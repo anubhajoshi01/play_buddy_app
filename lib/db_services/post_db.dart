@@ -7,12 +7,16 @@ import 'package:frc_challenge_app/models/user.dart';
 import 'package:frc_challenge_app/services/geolocator.dart';
 
 class PostDb {
+
+  //handled the database for posts
+
   static Map<int, Post> localMap = new Map<int, Post>();
   static Set<int> postIdList = new Set<int>();
- // static Map<String, Set<int>> categoryMap = new Map();
-  //static Set<String> categoryList = new Set();
+
   static final firestoreInstance = Firestore.instance;
 
+
+  //creates a new document in database from information in parameters
   static Future<Post> createPost(
       int ownerUserId,
       String type,
@@ -25,10 +29,6 @@ class PostDb {
       String sport,
       int cap,
       ) async {
-    //Post currentPost = new Post(postIdList.length, ownerUserId, type, time,
-        //event, des, address, lat, long, numsignedup);
-    //ocalMap[id] = currentPost;
-
     await readDb();
     int id = postIdList.length;
 
@@ -67,6 +67,7 @@ class PostDb {
     return post;
   }
 
+  //reads database and updates map that stores each entry
   static Future<void> readDb() async {
     await CategoryDb.readDb();
     try {
@@ -104,7 +105,7 @@ class PostDb {
     }
   }
 
-
+  //converts string to DateTime object
   static DateTime toDateTime(String str) {
     List<String> split = str.split(" ");
     print("length to date time ${split.length}");
@@ -113,6 +114,7 @@ class PostDb {
     return result;
   }
 
+  //updates field of a Post document in database
   static Future<void> updatePost(int id,{
       String type,
       DateTime time,
@@ -227,6 +229,7 @@ class PostDb {
     return intset;
   }
 
+  //checks event limit set
   static String checkCap (int cap, Set<int> u){
     String str;
     if(u.length < cap){

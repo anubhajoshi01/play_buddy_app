@@ -23,6 +23,8 @@ import 'create_post_screen.dart';
 
 import 'display_post_screen.dart';
 
+//
+
 class PostMapScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -50,6 +52,7 @@ class _PostMapScreen extends State<PostMapScreen> {
     super.initState();
     sortedPos.clear();
     mapMode = true;
+    //toggle between map view and list view
     toggle = ['Map', 'List'];
 
     print("postidlength ${PostDb.postIdList.length}");
@@ -73,6 +76,7 @@ class _PostMapScreen extends State<PostMapScreen> {
     }
 
     print("sortedposlength ${sortedPos.length}");
+    //sorts locations in order of proximity
     sortedPos.sort((a, b) {
       double d1 = Geolocate.distancesM[a.id];
       double d2 = Geolocate.distancesM[b.id];

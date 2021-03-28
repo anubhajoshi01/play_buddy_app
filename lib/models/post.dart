@@ -34,10 +34,6 @@ class Post {
       this.latitude,
       this.longitude,
       this.usersSignedUp,
-
-
-
-
       this.active,
       this.category,
       this.cap,);

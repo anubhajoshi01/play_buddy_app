@@ -29,12 +29,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
 
   static final List categories = CategoryDb.categoryList.toList();
 
-  /*static Map<String, int> mapSports = {
-    "ball games": 0,
-    "track and field": 1,
-    //"restricted": 2
-  }; */
-
+  //fields to fill into database
   String descriptionStr = "";
   String infoStr = "";
   String activity = "";
@@ -46,24 +41,6 @@ class _CreatePostScreen extends State<CreatePostScreen> {
   bool invalidDate = false;
   bool invalidAddress = false;
 
-/*
-  static final List hoursList = [
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "10",
-    "11",
-    "12"
-  ];
-
-  static final List minu */
-
   static DateTime selectedDate = DateTime.now();
   static TimeOfDay selectedTime = TimeOfDay.now();
   static String selectedStatus = "private";
@@ -74,6 +51,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
 
   TimeOfDay _time = TimeOfDay.now();
 
+  //opens timepicker screen
   _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
       context: context,
@@ -87,6 +65,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
       });
   }
 
+  //action when time is picked
   Future<Null> selectTime(BuildContext context) async {
     _time = await showTimePicker(context: context, initialTime: selectedTime);
     setState(() {
@@ -121,20 +100,6 @@ class _CreatePostScreen extends State<CreatePostScreen> {
             ),
           ),
         ),
-
-        // Container(
-        //   alignment: Alignment.centerLeft,
-        //   padding: EdgeInsets.symmetric(vertical: 5),
-        //   child: Text(
-        //     "    Ex: Soccer, Basketball",
-        //     style: TextStyle(
-        //       color: Colors.grey[700],
-        //       fontSize: 14,
-        //
-        //     ),
-        //   ),
-        //
-        // ),
 
         Container(
           padding: EdgeInsets.all(3),
@@ -363,6 +328,8 @@ class _CreatePostScreen extends State<CreatePostScreen> {
             child: Text("Post",
                 style: TextStyle(fontSize: 20, color: Colors.white)),
             onPressed: () async {
+
+              //when pressed, should save info to database
               DateTime time = DateTime(selectedDate.year, selectedDate.month,
                   selectedDate.day, selectedTime.hour, selectedDate.minute);
               bool error = false;
@@ -402,11 +369,12 @@ class _CreatePostScreen extends State<CreatePostScreen> {
     );
   }
 
+  //saves info to database
   Future<void> saveToDb() async {
     print("this email ${EmailDb.thisEmail}");
     print("this user ${UserDb.userMap[EmailDb.thisEmail]}");
     DateTime time = DateTime(selectedDate.year, selectedDate.month,
-        selectedDate.day, selectedTime.hour, selectedDate.minute);
+        selectedDate.day, selectedTime.hour, selectedTime.minute);
     Position pos = await Geolocate.getLatLong(address);
     User thisUser = UserDb.userMap[UserDb.emailMap[EmailDb.thisEmail]];
     Post p = await PostDb.createPost(

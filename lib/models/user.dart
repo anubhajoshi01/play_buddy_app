@@ -18,6 +18,8 @@ class User {
   User(this.id, this.email, this.friendsUserIdList, this.postIdList,
       this.requestSentList, this.requestReceivedList, this.postsSignedUpFor, this.name, this.bio);
 
+  
+  //gets all events of user that aren't old, inactive, or private
    Set<int> getUsableEvents(){
 
      Set<int> events = new Set<int>();

@@ -7,6 +7,8 @@ import 'email_db.dart';
 
 class AuthenticationService{
 
+  //handles authentication
+
   static final firebaseAuth = FirebaseAuth.instance;
   static FirebaseUser user;
 

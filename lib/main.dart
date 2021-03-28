@@ -7,6 +7,8 @@ import 'db_services/email_db.dart';
 import 'db_services/post_db.dart';
 import 'db_services/user_db.dart';
 
+//starts running main
+
 void main() async {
   await Hive.initFlutter();
   await Geolocate.getCurrentLocation();
