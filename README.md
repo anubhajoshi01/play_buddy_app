@@ -1,6 +1,6 @@
 # frc_challenge_app
 
-A new Flutter application.
+An app to encourage physical activity in youth. Allows users to create an account and create/sign-up for sports events in their area.
 
 ## Getting Started
 
