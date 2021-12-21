@@ -7,6 +7,7 @@ The COVID-19 pandemic has been a burden in the lives of many. It has heavily imp
 One of the best ways to motivate physical activity is to have somebody to be alongside you. Whether they motivate you, keep you focussed, or make the activity more fun, our product will solve the barrier for motivation to go outside with the incentive to have someone along with you. When brainstorming ideas, we came to the conclusion that people are all motivated differently. Making an app that encourages competition can dismiss people working out for fun or at their own pace. Conversely, people with no commitment to go outside will choose not to participate in physical activity. With this in mind, we created a service app which works for people of all ages and mindsets when working out, so they can match with people of similar interests and feel welcomed. By matching people with similar fitness goals, a strong tight knit community is formed, and we hope this incentivizes people to become physically active, which in turn improves mental health. 
 
 Libraries/ Components:
+
 Flutter SDK: The entire project was programmed in the Dart language using Flutter SDK
 Firebase Auth: Used built in menthods from Firebase Auth for login/signup and storing user credentials
 Firebase Firestore: Was used as a abacked aspect to store Users and Posts or sports activites as objects with the required fields and values.
