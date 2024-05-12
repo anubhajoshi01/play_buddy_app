@@ -15,6 +15,9 @@ Libraries/ Components:
 5) Geolocator: Used the geolocator library to convert address to latitude/longitude and vice versa. Also used it to get current user location.
 6) Google Maps API: Used it to code the map view and interaction
 
+Here is a quick demo video:
+https://drive.google.com/file/d/1wpYfFxv3x4_kTmDAEV8DdBKtCFApT1Ca/view?usp=sharing 
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
