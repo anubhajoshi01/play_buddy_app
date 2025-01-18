@@ -10,7 +10,7 @@ Libraries/ Components:
 
 1) Flutter SDK: The entire project was programmed in the Dart language using Flutter SDK
 2) Firebase Auth: Used built in menthods from Firebase Auth for login/signup and storing user credentials
-3) Firebase Firestore: Was used as a abacked aspect to store Users and Posts or sports activites as objects with the required fields and values.
+3) Firebase Firestore: Was used as the backend to store Users and Posts or sports activites as objects with the required fields and values.
 4) Hive: Was used as a local database to store currently logged in user information
 5) Geolocator: Used the geolocator library to convert address to latitude/longitude and vice versa. Also used it to get current user location.
 6) Google Maps API: Used it to code the map view and interaction
